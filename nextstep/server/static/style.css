@@ -1,0 +1,45 @@
+body {
+  margin: 0;
+  font-size: 18px;
+  background-color: #EBEFF2;
+  overflow-x: hidden;
+}
+.logo {
+  font-weight: bold;
+  margin-top: 10px;
+}
+  .logo .next {
+    color: #7ab6ec;
+  }
+  .logo .step {
+    color: #55B580;
+  }
+  .notAuthForm {
+    background-color: #fff;
+    padding-top: 15px;
+    padding-bottom: 30px;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-top: 50px;
+    box-shadow: 3px 3px 1px #DCDCDC;
+  }
+
+.headerText {
+  margin-bottom: 20px;
+}
+.acceptText{
+  font-family: 'Roboto', 'sans-serif';
+  font-weight: 300;
+  font-size:14px;
+  margin-left: 0;
+}
+.alreadyHave{
+  margin-top: 20px;
+}
+.profile {
+  background-color: #fff;
+}
+.progressBar{
+  background-color: #fff;
+  margin-left: 30px;
+}
