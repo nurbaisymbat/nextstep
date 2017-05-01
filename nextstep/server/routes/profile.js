@@ -3,6 +3,9 @@ var jwtDecode = require('jwt-decode');
 const router = new express.Router();
 var Personal = require('../models/personal');
 var User = require('../models/user');
+var File = require('../models/file');
+let multiparty = require('multiparty');
+let fs = require('fs');
 
 router.get('/profile', (req, res) => {
 
@@ -83,5 +86,39 @@ router.post('/profileChange', (req, res) => {
         }
       });
 });
+router.post('/upload', (req, res) => {
+  console.log("submitted");
+  let form = new multiparty.Form();
 
+  form.parse(req, (err, fields, files) => {
+    console.log(files);
+    let {path: tempPath, originalFilename} = files.imageFile[0];
+    let copyToPath = "public/files/" + originalFilename;
+    var fileName = originalFilename;
+    fs.readFile(tempPath, (err, data) => {
+      // make copy of image to new location
+      fs.writeFile(copyToPath, data, (err) => {
+        // delete temp image
+        fs.unlink(tempPath, () => {
+          console.log(copyToPath);
+          var token = req.headers.authorization.split(' ')[1];
+          var decoded = jwtDecode(token);
+          var userId = decoded.sub;
+          var lessonNumber = 1;
+          const fileData = {
+            userId: userId,
+            filename: fileName,
+            lesson: lessonNumber
+          }
+          const newFile = new File(fileData);
+          newFile.save((err, fileData) => {
+            res.send({
+              message: "File uploaded"
+            });
+          });
+        });
+      });
+    });
+  })
+});
 module.exports = router;

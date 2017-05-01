@@ -154,3 +154,22 @@ body {
   color: grey;
   font-size: 14px;
 }
+.material{
+  background-color: #fff;
+  padding: 15px 20px;
+  margin-top: 50px;
+}
+.addfile{
+  background-color: #fff;
+  padding: 15px 20px;
+}
+.description{
+  background-color: #fff;
+  padding: 15px 20px;
+  margin-top: 50px;
+  margin-left: 20px;
+  width: 30%;
+  height: 80%;
+  min-height: 80%;
+  //max-height: 100%;
+}

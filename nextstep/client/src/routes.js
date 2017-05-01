@@ -5,6 +5,7 @@ import SignUpPage from './containers/SignUpPage.jsx';
 import ForgotPage from './containers/ForgotPage.jsx';
 import ChangePwdPage from './containers/ChangePwdPage.jsx';
 import ProfilePage from './containers/ProfilePage.jsx';
+import LessonPage from './containers/LessonPage.jsx';
 import Auth from './modules/Auth';
 
 const routes = {
@@ -58,6 +59,16 @@ const routes = {
       getComponent: (location, callback) => {
           if (Auth.isUserAuthenticated()){
             callback(null, ProfilePage);
+          } else {
+            callback(null, SignUpPage);
+          }
+       }
+    },
+    {
+      path: '/lesson',
+      getComponent: (location, callback) => {
+          if (Auth.isUserAuthenticated()){
+            callback(null, LessonPage);
           } else {
             callback(null, SignUpPage);
           }

@@ -11,7 +11,8 @@ const Base = ({ children }) => (
           <li className="eachLink"><IndexLink to="/">Home</IndexLink></li>
             {Auth.isUserAuthenticated() ?(
             <ul className="nav navbar-nav">
-                <li className="eachLink"><Link to="/profile">Profile</Link></li>
+                <li className="eachLink"><Link to="/profile">Профиль</Link></li>
+                <li className="eachLink"><Link to="/lesson">Урок</Link></li>
                 <li className="eachLink"><Link to="/logout">Log out</Link></li>
             </ul>
             ) : (

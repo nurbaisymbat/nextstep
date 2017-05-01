@@ -8,13 +8,9 @@ const months = ["Января", "Февраля", "Марта", "Апреля", 
 
 class ProfilePage extends React.Component {
 
-  /**
-   * Class constructor.
-   */
   constructor(props, context) {
     super(props, context);
 
-    // set the initial component state
     var anotherBDay = new Date().toISOString();
     this.state = {
       errors: {},
@@ -73,7 +69,6 @@ class ProfilePage extends React.Component {
   }
 
   processForm(event) {
-    // prevent default action. in this case, action is the form submission event
     event.preventDefault();
     const email = encodeURIComponent(this.state.user.email);
     const birthDate = encodeURIComponent(this.state.anotherBDay);
