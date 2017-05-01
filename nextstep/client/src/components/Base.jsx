@@ -4,8 +4,8 @@ import Auth from '../modules/Auth';
 
 
 const Base = ({ children }) => (
-  <div>
-    <nav className="navbar menuMain">
+  <div className="row">
+    <nav className="navbar menuMain col-md-2">
       <div className="navbar-header">
         <ul className="nav navbar-nav">
           <li className="eachLink"><IndexLink to="/">Home</IndexLink></li>
@@ -22,7 +22,9 @@ const Base = ({ children }) => (
         </ul>
       </div>
     </nav>
+    <div className="col-md-10">
       {children}
+    </div>
   </div>
 );
 

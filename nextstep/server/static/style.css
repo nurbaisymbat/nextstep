@@ -23,7 +23,11 @@ body {
     margin-top: 50px;
     box-shadow: 3px 3px 1px #DCDCDC;
   }
-
+  .personal {
+    background-color: #fff;
+    padding: 15px 20px;
+    margin-top: 50px;
+  }
 .headerText {
   margin-bottom: 20px;
 }
@@ -39,7 +43,114 @@ body {
 .profile {
   background-color: #fff;
 }
-.progressBar{
+.personalHeader{
+  font-size: 24px;
+}
+.personalLabel{
+  font-size: 14px;
+  text-align: left;
+  padding-top: 10px;
+  color: #A9A9A9;
+}
+.personalInfo{
+  font-size: 14px;
+  color: #555;
+  text-align: left;
+  padding-top: 10px;
+  padding-left: 25px;
+}
+.profileSend{
+  margin-top: 10px;
+}
+.myPencil{
+  margin-top: 10px;
+}
+.myPencilHidden{
+  margin-top: 10px;
+  color: #6495ED;
+}
+.today{
   background-color: #fff;
-  margin-left: 30px;
+  padding: 15px 20px;
+  //margin-top: -130px;
+}
+.stream{
+  width: 95%;
+  background-color: #fff;
+  padding: 15px 20px;
+  margin-top: 50px;
+  margin-left: 5px;
+}
+.myProgress{
+  width: 95%;
+  background-color: #fff;
+  padding: 15px 20px;
+  //margin-top: 100px;
+  margin-left: 5px;
+}
+  .myProgressBar{
+    height: 8px;
+    color: red;
+  }
+  .myProgressPercent{
+    color: #00FF7F;
+    font-weight: bold;
+  }
+.streamImg{
+  width: 70%;
+}
+.streamName{
+  padding-left: 0px;
+}
+.firstStream{
+  margin-top: 25px;
+}
+.btwnUsers{
+  margin: 12px;
+}
+.todayVerticalLineUp{
+  width: 1px;
+  height: 30px;
+  background-color: #DCDCDC;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+.todayVerticalLineDown{
+  width: 1px;
+  height: 30px;
+  background-color: #DCDCDC;
+  margin-top: -8px;
+  margin-bottom: 0px;
+}
+.todayHorizontalLineLeft{
+  width: 40px;
+  height: 1px;
+  background-color: #DCDCDC;
+  margin-top: 15px;
+  margin-bottom: 0px;
+  margin-left: -15px;
+}
+.todayHorizontalLineRight{
+  width: 40px;
+  height: 1px;
+  background-color: #DCDCDC;
+  margin-top: 15px;
+  margin-bottom: 0px;
+  margin-left: 58px;
+}
+.todayImg{
+  width: 40%;
+  margin-top: -25px;
+}
+.todayTime{
+  //text-align: right;
+  color: red;
+  font-size: 14px;
+  margin-bottom: 0px;
+  margin-top: 10px;
+}
+.todayDone{
+  //text-align: right;
+  color: grey;
+  font-size: 14px;
 }

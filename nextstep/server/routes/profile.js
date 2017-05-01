@@ -2,6 +2,7 @@ const express = require('express');
 var jwtDecode = require('jwt-decode');
 const router = new express.Router();
 var Personal = require('../models/personal');
+var User = require('../models/user');
 
 router.get('/profile', (req, res) => {
 
@@ -13,9 +14,17 @@ router.get('/profile', (req, res) => {
         console.log(err);
       }
       else {
-          res.json({
-            personalInfo: personalInfo
-          });
+        User.findOne({_id: userId}).exec(function(err, user){
+          if(err){
+            console.log(err);
+          }
+          else {
+            res.json({
+              user: user,
+              personalInfo: personalInfo
+            });
+          }
+        });
       }
     });
 });
@@ -26,22 +35,29 @@ router.post('/profileChange', (req, res) => {
   var userId = decoded.sub;
     const personalData = {
       userId: userId,
-      firstName: req.body.firstName.trim(),
-      lastName: req.body.lastName.trim(),
+      email: req.body.email.trim(),
       birthDate: req.body.birthDate.trim(),
       city: req.body.city.trim(),
-      phone: req.body.phone.trim(),
-      education: req.body.education.trim()
+      phone: req.body.phone.trim()
     };
     Personal.findOne({userId: userId}).exec(function(err, personalInfo){
         if (personalInfo){
-          Personal.findOneAndUpdate(personalInfo.userId, { $set: {firstName: personalData.firstName, lastName: personalData.lastName, birthDate: personalData.birthDate, city: personalData.city, phone: personalData.phone, education: personalData.education}}, { new: true }, function (err, personalInfo) {
-            if (err) return handleError(err);
+          Personal.findOneAndUpdate(personalInfo.userId, { $set: {birthDate: personalData.birthDate, city: personalData.city, phone: personalData.phone}}, { new: true }, function (err, personalInfo) {
+            if (err){
+              console.log(err);
+            }
 
-            res.json({
-              personalInfo: personalInfo,
-              message: 'Сохранено'
-            });
+            User.findOneAndUpdate(personalInfo.userId, { $set: {email: personalData.email}}, { new: true }, function (err, user) {
+              if (err){
+                console.log(err);
+              }
+
+              res.json({
+                user: user,
+                personalInfo: personalInfo,
+                message: 'Сохранено'
+              });
+            })
           });
         } else {
             const newPersonal = new Personal(personalData);
@@ -50,12 +66,19 @@ router.post('/profileChange', (req, res) => {
             //  console.log('zxcvbnmbnm');
             //  console.log(lastBlog);
               //res.status(200).send(lastBlog);
-              console.log(personalInfo);
-               res.json({
-                success: true,
-                personalInfo: personalInfo,
-                message: 'Сохранено'
-              });
+              //console.log(personalInfo);
+              User.findOneAndUpdate(personalInfo.userId, { $set: {email: personalData.email}}, { new: true }, function (err, user) {
+                if (err){
+                  console.log(err);
+                }
+
+                res.json({
+                  success: true,
+                  user: user,
+                  personalInfo: personalInfo,
+                  message: 'Сохранено'
+                });
+              })
             });
         }
       });

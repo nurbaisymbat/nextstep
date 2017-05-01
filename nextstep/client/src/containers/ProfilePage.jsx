@@ -2,6 +2,9 @@ import React, { PropTypes } from 'react';
 import Auth from '../modules/Auth';
 import Profile from '../components/Profile.jsx';
 import axios from 'axios';
+import DatePicker from 'react-bootstrap-date-picker';
+
+const months = ["Января", "Февраля", "Марта", "Апреля", "Мая", "Июня", "Иля", "Августа", "Сентября", "Октября", "Ноября", "Декабря"];
 
 class ProfilePage extends React.Component {
 
@@ -12,25 +15,39 @@ class ProfilePage extends React.Component {
     super(props, context);
 
     // set the initial component state
+    var anotherBDay = new Date().toISOString();
     this.state = {
       errors: {},
       message: '',
       birthday: '',
       personalInfo: {
-        firstName: '',
-        lastName: '',
         birthDate: '',
         city: '',
-        phone: '',
-        education: ''
+        phone: ''
       },
-      checked: false
+      anotherBDay: anotherBDay,
+      user: {
+        email: '',
+        name: ''
+      },
+      checked: false,
+      hide: false
     };
 
     this.processForm = this.processForm.bind(this);
     this.changeUser = this.changeUser.bind(this);
+    this.changeHide = this.changeHide.bind(this);
+    this.onClick = this.onClick.bind(this);
+    this.componentDidMount = this.componentDidMount.bind(this);
+    this.dateChange = this.dateChange.bind(this);
   }
-
+  onClick(event){
+    this.componentDidMount();
+    this.changeHide();
+    this.setState({
+      checked: false
+    });
+  }
   componentDidMount() {
     axios.get('/profile/profile',  {
       responseType: 'json',
@@ -41,11 +58,15 @@ class ProfilePage extends React.Component {
     })
       .then(res => {
           if (res.data.personalInfo != null){
-            var bithdayDate = new Date(res.data.personalInfo.birthDate)
-            var bday = bithdayDate.getFullYear() + '-' + (bithdayDate.getMonth()+1) + '-' + bithdayDate.getDate();
+            var bithdayDate = new Date(res.data.personalInfo.birthDate);
+
+            var currentMonth = months[bithdayDate.getMonth()];
+            var bday = bithdayDate.getDate() + ' ' + currentMonth + ' ' + bithdayDate.getFullYear();
               this.setState({
                 personalInfo: res.data.personalInfo,
-                birthday: bday
+                birthday: bday,
+                user: res.data.user,
+                anotherBDay: res.data.personalInfo.birthDate
               });
           }
       });
@@ -54,14 +75,11 @@ class ProfilePage extends React.Component {
   processForm(event) {
     // prevent default action. in this case, action is the form submission event
     event.preventDefault();
-
-    const firstName = encodeURIComponent(this.state.personalInfo.firstName);
-    const lastName = encodeURIComponent(this.state.personalInfo.lastName);
-    const birthDate = encodeURIComponent(this.state.birthday);
+    const email = encodeURIComponent(this.state.user.email);
+    const birthDate = encodeURIComponent(this.state.anotherBDay);
     const city = encodeURIComponent(this.state.personalInfo.city);
     const phone = encodeURIComponent(this.state.personalInfo.phone);
-    const education = encodeURIComponent(this.state.personalInfo.education);
-    const formData = `firstName=${firstName}&lastName=${lastName}&birthDate=${birthDate}&city=${city}&phone=${phone}&education=${education}`;
+    const formData = `email=${email}&birthDate=${birthDate}&city=${city}&phone=${phone}`;
     axios.post('/profile/profileChange', formData, {
       responseType: 'json',
       headers: {
@@ -71,12 +89,15 @@ class ProfilePage extends React.Component {
     })
       .then(res => {
         var bithdayDate = new Date(res.data.personalInfo.birthDate);
-        var bday = bithdayDate.getFullYear() + '-' + (bithdayDate.getMonth()+1) + '-' + bithdayDate.getDate();
+        var currentMonth = months[bithdayDate.getMonth()];
+        var bday = bithdayDate.getDate() + ' ' + currentMonth + ' ' + bithdayDate.getFullYear();
           this.setState({
             errors: {},
             personalInfo: res.data.personalInfo,
+            user: res.data.user,
             message: res.data.message,
             checked: false,
+            hide: !this.state.hide,
             birthday: bday
           });
 
@@ -99,12 +120,26 @@ class ProfilePage extends React.Component {
   changeUser(event) {
     const field = event.target.name;
     const personalInfo = this.state.personalInfo;
+    const user = this.state.user;
+    user[field] = event.target.value;
     personalInfo[field] = event.target.value;
-    var bday = event.target.value;
     this.setState({
       personalInfo,
-      birthday: bday,
+      user,
       checked: true
+    });
+  }
+
+  changeHide (){
+    this.setState({
+      hide: !this.state.hide
+    });
+  }
+  dateChange(value){
+    this.setState({
+      birthday: value,
+      checked: true,
+      anotherBDay: value
     });
   }
 
@@ -118,6 +153,11 @@ class ProfilePage extends React.Component {
         checked={this.state.checked}
         message={this.state.message}
         birthday={this.state.birthday}
+        hide={this.state.hide}
+        user={this.state.user}
+        onClick={this.onClick}
+        dateChange={this.dateChange}
+        anotherBDay={this.state.anotherBDay}
       />
     );
   }

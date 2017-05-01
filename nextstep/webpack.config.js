@@ -7,14 +7,24 @@ module.exports = {
     filename: 'app.js'
   },
   module: {
-    loaders: [{
-      test: /\.jsx?$/,
-      include: path.join(__dirname, '/client/src'),
-      loader: 'babel',
-      query: {
-        presets: ["react", "es2015"]
+    loaders: [
+      {
+        test: /\.jsx?$/,
+        include: path.join(__dirname, '/client/src'),
+        loader: 'babel',
+        query: {
+          presets: ["react", "es2015"]
+        }
+      },
+      {
+        test: /\.(jpg|png|svg)$/,
+        loader: 'url-loader',
+        options: {
+          limit: 25000,
+        },
       }
-    }]
+
+    ]
   },
   watch: true
 }
