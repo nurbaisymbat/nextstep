@@ -44,7 +44,6 @@ body {
 .profile {
   background-color: #fff;
 }
-<<<<<<< Updated upstream
 .personalHeader{
   font-size: 24px;
 }
@@ -174,9 +173,9 @@ body {
   height: 80%;
   min-height: 80%;
   //max-height: 100%;
-=======
-.well{
-  background-color: #fff
+}
+.well-white{
+  background-color: #fff;
   height:300px;
 }
 .Glavnaya{
@@ -243,7 +242,7 @@ body {
   height: 10px;
 }
 .thumbnail{
-  background-color:transparent; 
+  background-color:transparent;
   border: 0;
 }
 .thumbnail > img{
@@ -260,11 +259,10 @@ body {
   text-align: left;
   width: 70%;
   display: block;
-  padding: 0; 
+  padding: 0;
 }
 .topText{
   margin-top: 20px;
   margin-bottom: 0px;
   padding-bottom: -10px;
->>>>>>> Stashed changes
 }

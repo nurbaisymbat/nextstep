@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom'
 import React, { Component, PropTypes } from 'react'
- 
+
 
 var daysInterval = 60000;
 
@@ -39,6 +39,7 @@ var TestComponent = React.createClass({
 			      <p className="countBalls">{this.state.secondsRemaining}</p><br/>
 			      <p className="ballText">Осталось дней</p>
 		    </div>
+        </div>
 		</div>
     );
   }
