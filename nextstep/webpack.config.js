@@ -7,12 +7,17 @@ module.exports = {
     filename: 'app.js'
   },
   module: {
+<<<<<<< Updated upstream
     loaders: [
       {
+=======
+      loaders: [{
+>>>>>>> Stashed changes
         test: /\.jsx?$/,
         include: path.join(__dirname, '/client/src'),
         loader: 'babel',
         query: {
+<<<<<<< Updated upstream
           presets: ["react", "es2015"]
         }
       },
@@ -25,6 +30,17 @@ module.exports = {
       }
 
     ]
+=======
+          presets: ["react", "es2015"]}
+      },
+      {
+      test: /\.(jpg|png|svg)$/,
+      loader: 'url-loader',
+      options: {
+        limit: 25000,
+      },
+    }],
+>>>>>>> Stashed changes
   },
   watch: true
 }
