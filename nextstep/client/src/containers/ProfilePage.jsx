@@ -4,14 +4,11 @@ import Profile from '../components/Profile.jsx';
 import axios from 'axios';
 import DatePicker from 'react-bootstrap-date-picker';
 
-const months = ["Января", "Февраля", "Марта", "Апреля", "Мая", "Июня", "Иля", "Августа", "Сентября", "Октября", "Ноября", "Декабря"];
-
 class ProfilePage extends React.Component {
 
   constructor(props, context) {
     super(props, context);
 
-    var anotherBDay = new Date().toISOString();
     this.state = {
       errors: {},
       message: '',
@@ -21,13 +18,15 @@ class ProfilePage extends React.Component {
         city: '',
         phone: ''
       },
-      anotherBDay: anotherBDay,
       user: {
         email: '',
         name: ''
       },
       checked: false,
-      hide: false
+      hide: false,
+      notes: [],
+      messageNotes: '',
+      myProgress: {}
     };
 
     this.processForm = this.processForm.bind(this);
@@ -54,73 +53,94 @@ class ProfilePage extends React.Component {
     })
       .then(res => {
           if (res.data.personalInfo != null){
-            var bithdayDate = new Date(res.data.personalInfo.birthDate);
-
-            var currentMonth = months[bithdayDate.getMonth()];
-            var bday = bithdayDate.getDate() + ' ' + currentMonth + ' ' + bithdayDate.getFullYear();
+            if(res.data.notes != null){
               this.setState({
                 personalInfo: res.data.personalInfo,
-                birthday: bday,
+                birthday: res.data.personalInfo.birthDate,
                 user: res.data.user,
-                anotherBDay: res.data.personalInfo.birthDate
+                notes: res.data.notes,
+                myProgress: res.data.myProgress
               });
+            } else {
+
+              this.setState({
+                personalInfo: res.data.personalInfo,
+                birthday: res.data.personalInfo.birthDate,
+                user: res.data.user,
+                messageNotes: 'У вас нет заметок на сегодня',
+                myProgress: res.data.myProgress
+              });
+            }
+
+          } else {
+            if(res.data.notes != null){
+              this.setState({
+                user: res.data.user,
+                notes: res.data.notes,
+                myProgress: res.data.myProgress
+              });
+            } else {
+              this.setState({
+                user: res.data.user,
+                messageNotes: 'У вас нет заметок на сегодня',
+                myProgress: res.data.myProgress
+              });
+
+            }
           }
       });
   }
 
   processForm(event) {
     event.preventDefault();
-    const email = encodeURIComponent(this.state.user.email);
-    const birthDate = encodeURIComponent(this.state.anotherBDay);
+    const birthDate = encodeURIComponent(this.state.birthday);
     const city = encodeURIComponent(this.state.personalInfo.city);
     const phone = encodeURIComponent(this.state.personalInfo.phone);
-    const formData = `email=${email}&birthDate=${birthDate}&city=${city}&phone=${phone}`;
-    axios.post('/profile/profileChange', formData, {
-      responseType: 'json',
-      headers: {
-      'Content-type': 'application/x-www-form-urlencoded',
-      'Authorization': `bearer ${Auth.getToken()}`
-      }
-    })
-      .then(res => {
-        var bithdayDate = new Date(res.data.personalInfo.birthDate);
-        var currentMonth = months[bithdayDate.getMonth()];
-        var bday = bithdayDate.getDate() + ' ' + currentMonth + ' ' + bithdayDate.getFullYear();
-          this.setState({
-            errors: {},
-            personalInfo: res.data.personalInfo,
-            user: res.data.user,
-            message: res.data.message,
-            checked: false,
-            hide: !this.state.hide,
-            birthday: bday
-          });
+    if((birthDate.length ==0) || (city.length == 0) || (phone.length == 0)){
+      this.setState({
+        message: "Запоните все поля"
+      });
+    }
+    else {
 
-
-      })
-        .catch(error => {
-        if (error.response) {
-          //console.log(error.response);
-          const errors = error.response ? error.response : {};
-          errors.summary = "Нeизвестная ошибка";
-          this.setState({
-            errors
-          });
-          //console.log(error.response.data.errors.name);
-          //console.log(errors.summary);
+      const formData = `birthDate=${birthDate}&city=${city}&phone=${phone}`;
+      axios.post('/profile/profileChange', formData, {
+        responseType: 'json',
+        headers: {
+        'Content-type': 'application/x-www-form-urlencoded',
+        'Authorization': `bearer ${Auth.getToken()}`
         }
-        });
+      })
+        .then(res => {
+
+            this.setState({
+              errors: {},
+              checked: false,
+              hide: !this.state.hide,
+            });
+            this.componentDidMount();
+        })
+          .catch(error => {
+          if (error.response) {
+            //console.log(error.response);
+            const errors = error.response ? error.response : {};
+            errors.summary = "Нeизвестная ошибка";
+            this.setState({
+              errors
+            });
+            //console.log(error.response.data.errors.name);
+            //console.log(errors.summary);
+          }
+          });
+    }
   }
 
   changeUser(event) {
     const field = event.target.name;
     const personalInfo = this.state.personalInfo;
-    const user = this.state.user;
-    user[field] = event.target.value;
     personalInfo[field] = event.target.value;
     this.setState({
       personalInfo,
-      user,
       checked: true
     });
   }
@@ -133,11 +153,9 @@ class ProfilePage extends React.Component {
   dateChange(value){
     this.setState({
       birthday: value,
-      checked: true,
-      anotherBDay: value
+      checked: true
     });
   }
-
   render() {
     return (
       <Profile
@@ -152,7 +170,9 @@ class ProfilePage extends React.Component {
         user={this.state.user}
         onClick={this.onClick}
         dateChange={this.dateChange}
-        anotherBDay={this.state.anotherBDay}
+        notes={this.state.notes}
+        messageNotes={this.state.messageNotes}
+        myProgress={this.state.myProgress}
       />
     );
   }

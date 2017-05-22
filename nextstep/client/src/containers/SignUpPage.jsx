@@ -16,7 +16,8 @@ class SignUpPage extends React.Component {
       user: {
         email: '',
         name: '',
-        password: ''
+        password: '',
+        trelloUser: ''
       },
       passwordConfirm: '',
       checked: false
@@ -38,9 +39,10 @@ class SignUpPage extends React.Component {
     event.preventDefault();
 
     const name = encodeURIComponent(this.state.user.name);
+    const trelloUser = encodeURIComponent(this.state.user.trelloUser);
     const email = encodeURIComponent(this.state.user.email);
     const password = encodeURIComponent(this.state.user.password);
-    const formData = `name=${name}&email=${email}&password=${password}`;
+    const formData = `name=${name}&email=${email}&password=${password}&trelloUser=${trelloUser}`;
     axios.post('/auth/signup', formData, {
       responseType: 'json',
       headers: {

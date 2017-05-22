@@ -7,8 +7,15 @@ const UserSchema = new mongoose.Schema({
     type: String,
     index: { unique: true }
   },
+  trelloUser: {
+    type: String,
+    index: { unique: true }
+  },
   password: String,
-  name: String
+  name: String,
+  signedDate: { type: Date, default: Date.now },
+  status: Number,
+  points: Number
 });
 
 UserSchema.methods.comparePassword = function comparePassword(password, callback) {

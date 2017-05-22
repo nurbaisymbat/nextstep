@@ -14,5 +14,12 @@ module.exports.connect = (uri) => {
   // load models
   require('./user');
   require('./personal');
-  require('./file');
+  require('./myfile');
+  require('./book');
+  require('./booknotes');
+  require('./insight');
+  require('./lesson');
+  require('./movie');
+  require('./movienotes');
+  require('./points');
 };

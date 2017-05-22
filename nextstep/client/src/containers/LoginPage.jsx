@@ -33,16 +33,9 @@ class LoginPage extends React.Component {
     this.changeUser = this.changeUser.bind(this);
   }
 
-  /**
-   * Process the form.
-   *
-   * @param {object} event - the JavaScript event object
-   */
   processForm(event) {
-    // prevent default action. in this case, action is the form submission event
     event.preventDefault();
 
-    // create a string for an HTTP body message
     const email = encodeURIComponent(this.state.user.email);
     const password = encodeURIComponent(this.state.user.password);
     const formData = `email=${email}&password=${password}`;
@@ -63,7 +56,6 @@ class LoginPage extends React.Component {
 
           // save the token
           Auth.authenticateUser(res.data.token);
-
           // change the current URL to /
           this.context.router.replace('/');
         }

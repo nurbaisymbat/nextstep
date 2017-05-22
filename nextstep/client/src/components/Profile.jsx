@@ -1,6 +1,8 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import DatePicker from 'react-bootstrap-date-picker';
+import moment from 'moment';
+moment.locale('ru');
 
 const Profile = ({
   onSubmit,
@@ -14,14 +16,17 @@ const Profile = ({
   user,
   onClick,
   dateChange,
-  anotherBDay
+  notes,
+  messageNotes,
+  myProgress
 }) => (
 <div className="container">
+<h3><em>Профиль</em></h3>
   <div className="row text-center">
   <div className="col-md-7">
     <div className="row personal well">
       <div className="col-md-4">
-        <img src={require('../../../public/img/no-user-image.jpg')} className="img-thumbnail" />
+        <img src={require('../../../public/img/256x256bb.jpg')} className="img-thumbnail" />
       </div>
       <div className="col-md-8">
         <div className="row">
@@ -45,7 +50,7 @@ const Profile = ({
           <div className="row">
             <p>
               <span className="col-sm-4 personalLabel">Дата рождения:</span>
-              <span className="col-sm-8 personalInfo">{birthday}</span>
+              <span className="col-sm-8 personalInfo">{moment(birthday).format('LL')}</span>
             </p>
           </div>
           <div className="row">
@@ -64,18 +69,16 @@ const Profile = ({
         <div hidden={!hide}>
           <form action="/" onSubmit={onSubmit} className="form-horizontal">
             <div className="row">
+              <p>
                 <span className="col-sm-4 personalLabel">E-mail:</span>
-                <div className="col-sm-8">
-                  <input type="e-mail" className="form-control" placeholder="E-mail"
-                  name="email"
-                  onChange={onChange}
-                  value={user.email}/>
-                </div>
+                <span className="col-sm-8 personalInfo">{user.email}</span>
+              </p>
             </div>
+            {message && <p style={{ fontSize: '14px', color: 'red' }}>{message}</p>}
             <div className="row">
                 <span className="col-sm-4 personalLabel">Дата рождения:</span>
                 <div className="col-sm-8">
-                  <DatePicker value={anotherBDay} onChange={dateChange} />
+                  <DatePicker value={birthday} onChange={dateChange} />
                 </div>
             </div>
             <div className="row">
@@ -110,151 +113,74 @@ const Profile = ({
     </div>
     <div className="row today well">
       <h4 className="text-center">Сегодня</h4>
-      <div className="row eachToday">
-        <div className="col-md-5 text-right">
-          <p className="todayTime">1 час назад</p>
-          <p className="todayDone">Посмотрел фильм Гении дизайна и заполнил пункты (10/10)</p>
-        </div>
-        <div className="col-md-2">
-          <hr className="todayVerticalLineUp"/>
-          <hr className="todayHorizontalLineLeft"/>
-          <img src={require('../../../public/img/red-circle.png')} className="todayImg"/>
-          <hr className="todayVerticalLineDown"/>
-        </div>
-        <div className="col-md-5">
-        </div>
-      </div>
-      <div className="row eachToday">
-        <div className="col-md-5">
-        </div>
-        <div className="col-md-2">
-          <hr className="todayVerticalLineUp"/>
-          <hr className="todayHorizontalLineRight"/>
-          <img src={require('../../../public/img/red-circle.png')} className="todayImg"/>
-          <hr className="todayVerticalLineDown"/>
-        </div>
-        <div className="col-md-5 text-left">
-          <p className="todayTime">1 час назад</p>
-          <p className="todayDone">Посмотрел фильм Гении дизайна и заполнил пункты (10/10)</p>
-        </div>
-      </div>
-      <div className="row eachToday">
-        <div className="col-md-5 text-right">
-          <p className="todayTime">1 час назад</p>
-          <p className="todayDone">Посмотрел фильм Гении дизайна и заполнил пункты (10/10)</p>
-        </div>
-        <div className="col-md-2">
-          <hr className="todayVerticalLineUp"/>
-          <hr className="todayHorizontalLineLeft"/>
-          <img src={require('../../../public/img/red-circle.png')} className="todayImg"/>
-          <hr className="todayVerticalLineDown"/>
-        </div>
-        <div className="col-md-5">
-        </div>
-      </div>
-      <div className="row eachToday">
-        <div className="col-md-5">
-        </div>
-        <div className="col-md-2">
-          <hr className="todayVerticalLineUp"/>
-          <hr className="todayHorizontalLineRight"/>
-          <img src={require('../../../public/img/red-circle.png')} className="todayImg"/>
-          <hr className="todayVerticalLineDown"/>
-        </div>
-        <div className="col-md-5 text-left">
-          <p className="todayTime">1 час назад</p>
-          <p className="todayDone">Посмотрел фильм Гении дизайна и заполнил пункты (10/10)</p>
-        </div>
-      </div>
-      <div className="row eachToday">
-        <div className="col-md-5 text-right">
-          <p className="todayTime">1 час назад</p>
-          <p className="todayDone">Посмотрел фильм Гении дизайна и заполнил пункты (10/10)</p>
-        </div>
-        <div className="col-md-2">
-          <hr className="todayVerticalLineUp"/>
-          <hr className="todayHorizontalLineLeft"/>
-          <img src={require('../../../public/img/red-circle.png')} className="todayImg"/>
-          <hr className="todayVerticalLineDown"/>
-        </div>
-        <div className="col-md-5">
-        </div>
-      </div>
-
+      {notes.length < 1 ?(
+        <h5 className="text-center">{messageNotes}</h5>
+      ):(
+        <div></div>
+      )}
+      {notes.map((note, n) =>
+          <div key={n}>
+            {(note.type == 'movie') && (n%2==0) ?(
+              <div className="row eachToday ">
+                <div className="col-md-6 text-right eachToday-left">
+                  <p className="todayTime">{note.date} часа назад</p>
+                  <p className="todayDone">Посмотрел фильм {note.title} и заполнил пункты ({note.num}/10)</p>
+                </div>
+                <div className="col-md-2 myCircle-left">
+                  <hr className="todayHorizontalLineLeft"/>
+                  <img src={require('../../../public/img/red-circle.png')} className="todayImg"/>
+                </div>
+              </div>
+            ):((note.type == 'movie') && (n%2==1)) ?(
+              <div className="row eachToday">
+                <div className="col-md-6 text-left eachToday-right">
+                  <p className="todayTime">{note.date} часа назад</p>
+                  <p className="todayDone">Посмотрел фильм {note.title} и заполнил пункты ({note.num}/10)</p>
+                </div>
+                <div className="col-md-2 myCircle-right">
+                  <hr className="todayHorizontalLineRight"/>
+                  <img src={require('../../../public/img/red-circle.png')} className="todayImg"/>
+                </div>
+              </div>
+            ):((note.type == 'book') && (n%2==0)) ?(
+              <div className="row eachToday ">
+                <div className="col-md-6 text-right eachToday-left">
+                  <p className="todayTime">{note.date} часа назад</p>
+                  <p className="todayDone">Прочитал книгу {note.title} и заполнил пункты ({note.num}/10)</p>
+                </div>
+                <div className="col-md-2 myCircle-left">
+                  <hr className="todayHorizontalLineLeft"/>
+                  <img src={require('../../../public/img/red-circle.png')} className="todayImg"/>
+                </div>
+              </div>
+            ):(
+              <div className="row eachToday">
+                <div className="col-md-6 text-left eachToday-right">
+                  <p className="todayTime">{note.date} часа назад</p>
+                  <p className="todayDone">Прочитал книгу {note.title} и заполнил пункты ({note.num}/10)</p>
+                </div>
+                <div className="col-md-2 myCircle-right">
+                  <hr className="todayHorizontalLineRight"/>
+                  <img src={require('../../../public/img/red-circle.png')} className="todayImg"/>
+                </div>
+              </div>
+            )}
+          </div>
+      )}
     </div>
     </div>
     <div className="col-md-4 ">
-      <div className="row stream well">
-        <h4 className="text-left">Поток</h4>
-        <div className="row firstStream">
-          <div className="col-md-3">
-            <img src={require('../../../public/img/no-user-image.jpg')} className="img-circle streamImg" />
-          </div>
-          <div className="col-md-9 text-left streamName">
-            <h5>Тимур</h5>
-          </div>
-        </div>
-        <hr className="btwnUsers"/>
-        <div className="row">
-          <div className="col-md-3">
-            <img src={require('../../../public/img/no-user-image.jpg')} className="img-circle streamImg" />
-          </div>
-          <div className="col-md-9 text-left streamName">
-            <h5>Света</h5>
-          </div>
-        </div>
-        <hr className="btwnUsers"/>
-        <div className="row">
-          <div className="col-md-3">
-            <img src={require('../../../public/img/no-user-image.jpg')} className="img-circle streamImg" />
-          </div>
-          <div className="col-md-9 text-left streamName">
-            <h5>Айгерим</h5>
-          </div>
-        </div>
-        <hr className="btwnUsers"/>
-        <div className="row">
-          <div className="col-md-3">
-            <img src={require('../../../public/img/no-user-image.jpg')} className="img-circle streamImg" />
-          </div>
-          <div className="col-md-9 text-left streamName">
-            <h5>Евгений</h5>
-          </div>
-        </div>
-        <hr className="btwnUsers"/>
-        <div className="row">
-          <div className="col-md-3">
-            <img src={require('../../../public/img/no-user-image.jpg')} className="img-circle streamImg" />
-          </div>
-          <div className="col-md-9 text-left streamName">
-            <h5>Арман</h5>
-          </div>
-        </div>
-      </div>
       <div className="row myProgress well">
         <h4 className="text-left">Прогресс</h4>
         <div className="row">
           <div className="col-md-12">
             <div className="row">
               <h5 className="col-md-8 text-left">Урок</h5>
-              <h5 className="col-md-4 text-right myProgressPercent">80</h5>
+              <h5 className="col-md-4 text-right myProgressPercent">{myProgress.task}</h5>
             </div>
             <div className="progress myProgressBar">
               <div className="progress-bar" role="progressbar" aria-valuenow="70"
-                    aria-valuemin="0" aria-valuemax="100" style={{"width": "80%"}}>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-md-12">
-            <div className="row">
-              <h5 className="col-md-8 text-left">Задача</h5>
-              <h5 className="col-md-4 text-right myProgressPercent">50</h5>
-            </div>
-            <div className="progress myProgressBar">
-              <div className="progress-bar progress-bar-success" role="progressbar" aria-valuenow="70"
-                    aria-valuemin="0" aria-valuemax="100" style={{"width": "50%"}}>
+                    aria-valuemin="0" aria-valuemax="100" style={{"width": myProgress.task}}>
               </div>
             </div>
           </div>
@@ -263,11 +189,11 @@ const Profile = ({
           <div className="col-md-12">
             <div className="row">
               <h5 className="col-md-8 text-left">Фильм</h5>
-              <h5 className="col-md-4 text-right myProgressPercent">70</h5>
+              <h5 className="col-md-4 text-right myProgressPercent">{myProgress.video}</h5>
             </div>
             <div className="progress myProgressBar">
-              <div className="progress-bar progress-bar-info" role="progressbar" aria-valuenow="70"
-                    aria-valuemin="0" aria-valuemax="100" style={{"width": "70%"}}>
+              <div className="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="70"
+                    aria-valuemin="0" aria-valuemax="100" style={{"width": myProgress.video}}>
               </div>
             </div>
           </div>
@@ -276,11 +202,11 @@ const Profile = ({
           <div className="col-md-12">
             <div className="row">
               <h5 className="col-md-8 text-left">Книга</h5>
-              <h5 className="col-md-4 text-right myProgressPercent">65</h5>
+              <h5 className="col-md-4 text-right myProgressPercent">{myProgress.book}</h5>
             </div>
             <div className="progress myProgressBar">
-              <div className="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="70"
-                    aria-valuemin="0" aria-valuemax="100" style={{"width": "65%"}}>
+              <div className="progress-bar progress-bar-info" role="progressbar" aria-valuenow="70"
+                    aria-valuemin="0" aria-valuemax="100" style={{"width": myProgress.book}}>
               </div>
             </div>
           </div>
@@ -289,11 +215,11 @@ const Profile = ({
           <div className="col-md-12">
             <div className="row">
               <h5 className="col-md-8 text-left">Инсайт</h5>
-              <h5 className="col-md-4 text-right myProgressPercent">65</h5>
+              <h5 className="col-md-4 text-right myProgressPercent">{myProgress.insight}</h5>
             </div>
             <div className="progress myProgressBar">
               <div className="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="70"
-                    aria-valuemin="0" aria-valuemax="100" style={{"width": "65%"}}>
+                    aria-valuemin="0" aria-valuemax="100" style={{"width": myProgress.insight}}>
               </div>
             </div>
           </div>
@@ -311,7 +237,6 @@ Profile.propTypes = {
   personalInfo: PropTypes.object.isRequired,
   message: PropTypes.string.isRequired,
   birthday: PropTypes.string.isRequired,
-  user: PropTypes.object.isRequired,
   onClick: PropTypes.func.isRequired,
   dateChange: PropTypes.func.isRequired
 };

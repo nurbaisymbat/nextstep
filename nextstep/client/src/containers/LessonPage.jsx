@@ -2,22 +2,36 @@ import React, { PropTypes } from 'react';
 import Auth from '../modules/Auth';
 import Lesson from '../components/Lesson.jsx';
 import axios from 'axios';
+import getYouTubeID from 'get-youtube-id';
 
 const opts = {
       height: '390',
       width: '640',
-      playerVars: { // https://developers.google.com/youtube/player_parameters
-        autoplay: 1
-      }
+      //playerVars: { // https://developers.google.com/youtube/player_parameters
+        autoplay: 0
+      //}
     };
-
+const tomorrow = new Date();
+tomorrow.setDate(tomorrow.getDate() + 1);
 class LessonPage extends React.Component {
 
   constructor(props) {
     super(props);
 
     this.state = {
-      file: ''
+      myLesson: {
+        _id: '',
+        title: '',
+        description: '',
+        url: '',
+        tasks: ['','','']
+      },
+      tasks: ['','',''],
+      videoId: '',
+      file: '',
+      filename: '',
+      message: '',
+      deadline: tomorrow
     };
 
     this._onReady = this._onReady.bind(this);
@@ -29,13 +43,29 @@ class LessonPage extends React.Component {
     // access to player in all event handlers via event.target
     event.target.pauseVideo();
   }
+  componentDidMount() {
+    axios.get('/profile/getlesson',  {
+      responseType: 'json',
+      headers: {
+        'Content-type': 'application/x-www-form-urlencoded',
+        'Authorization': `bearer ${Auth.getToken()}`
+      }
+    })
+      .then(res => {
+        //console.log(res.data.movie);
+          this.setState({
+            myLesson: res.data.lesson,
+            videoId: getYouTubeID(res.data.lesson.url),
+            tasks: res.data.lesson.tasks
+          });
+      });
+  }
   _handleSubmit(e) {
     e.preventDefault();
-    console.log(this.state.file);
     return new Promise((resolve, reject) => {
       let imageFormData = new FormData();
       imageFormData.append('imageFile', this.state.file);
-      axios.post('/profile/upload', imageFormData, {
+      axios.post('/profile/upload?lessonId='+this.state.myLesson._id, imageFormData, {
         responseType: 'json',
         headers: {
         'Content-type': 'application/x-www-form-urlencoded',
@@ -43,9 +73,9 @@ class LessonPage extends React.Component {
         }
       })
         .then(res => {
-            console.log(res.data.message);
             this.setState({
-              message: res.data.message
+              message: res.data.message,
+              filename: ''
             });
         });
     });
@@ -58,9 +88,9 @@ class LessonPage extends React.Component {
     let file = e.target.files[0];
 
     reader.onloadend = () => {
-      console.log(reader);
       this.setState({
-        file: file
+        file: file,
+        filename: file.name
       });
     }
 
@@ -73,6 +103,12 @@ class LessonPage extends React.Component {
       _onReady={this._onReady}
       _handleImageChange={this._handleImageChange}
       _handleSubmit={this._handleSubmit}
+      filename={this.state.filename}
+      message={this.state.message}
+      myLesson={this.state.myLesson}
+      videoId={this.state.videoId}
+      deadline={this.state.deadline}
+      tasks={this.state.tasks}
       />
     );
   }

@@ -8,7 +8,7 @@ const LoginForm = ({
   successMessage,
   user
 }) => (
-<div className="container">
+<div className="container" style={{marginTop: '7%', marginLeft: '10%'}}>
   <div className="row text-center">
   <div className="col-sm-5 col-sm-offset-3">
   <h2 className="logo"><span className="next">Next</span><span className="step">Step</span></h2>

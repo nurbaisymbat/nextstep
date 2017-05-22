@@ -11,7 +11,7 @@ const HomePage = ({
   checkAccept,
   checked
 }) => (
-<div className="container">
+<div className="container" style={{marginTop: '3%', marginLeft: '10%'}}>
   <div className="row text-center">
   <div className="col-sm-5 col-sm-offset-3">
   <h2 className="logo"><span className="next">Next</span><span className="step">Step</span></h2>
@@ -30,6 +30,12 @@ const HomePage = ({
           name="name"
           onChange={onChange}
           value={user.name} />
+        </div>
+        <div className="form-group">
+          <input type="text" className="form-control" placeholder="Логин с Trello"
+          name="trelloUser"
+          onChange={onChange}
+          value={user.trelloUser} />
         </div>
         <div className="form-group">
           <input type="password" className="form-control" placeholder="Пароль"

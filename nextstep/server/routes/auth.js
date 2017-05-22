@@ -108,12 +108,13 @@ router.post('/signup', (req, res, next) => {
         message: 'Could not process the form.'
       });
     }
+    else {
 
+    }
     return res.status(200).json({
       success: true,
       message: 'Вы успешно зарегистрировались.'
     });
-    res
   })(req, res, next);
 });
 
@@ -142,8 +143,6 @@ router.post('/login', (req, res, next) => {
         message: 'Could not process the form.'
       });
     }
-
-
     return res.json({
       success: true,
       message: 'Вы успешно авторизовались!',

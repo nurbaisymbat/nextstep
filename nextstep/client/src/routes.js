@@ -1,29 +1,65 @@
 import Base from './components/Base.jsx';
+import BaseA from './components/BaseA.jsx';
 import DashboardPage from './containers/DashboardPage.jsx';
+import DashboardAdminPage from './containers/DashboardAdminPage.jsx';
 import LoginPage from './containers/LoginPage.jsx';
 import SignUpPage from './containers/SignUpPage.jsx';
 import ForgotPage from './containers/ForgotPage.jsx';
 import ChangePwdPage from './containers/ChangePwdPage.jsx';
 import ProfilePage from './containers/ProfilePage.jsx';
 import LessonPage from './containers/LessonPage.jsx';
+import MoviePage from './containers/MoviePage.jsx';
+import BookPage from './containers/BookPage.jsx';
+import ProgramPage from './containers/ProgramPage.jsx';
+import InsightPage from './containers/InsightPage.jsx';
+import SettingsPage from './containers/SettingsPage.jsx';
+import UsersPage from './containers/UsersPage.jsx';
+import UserProfilePage from './containers/UserProfilePage.jsx';
+import NotesPage from './containers/NotesPage.jsx';
+import MovieNotePage from './containers/MovieNotePage.jsx';
+import BookNotePage from './containers/BookNotePage.jsx';
+import LessonNotePage from './containers/LessonNotePage.jsx';
+import InsightNotePage from './containers/InsightNotePage.jsx';
 import Auth from './modules/Auth';
+var jwtDecode = require('jwt-decode');
 
 const routes = {
   // base component (wrapper for the whole application).
-  component: Base,
+  getComponent: (location, callback) => {
+    if (Auth.isUserAuthenticated()){
+      var token = Auth.getToken();
+      var decoded = jwtDecode(token);
+      var userStatus = decoded.userstatus;
+      if(userStatus == 1){
+        callback(null, BaseA);
+      }
+      else {
+        callback(null, Base);
+      }
+    } else {
+      callback(null, Base);
+    }
+  },
   childRoutes: [
 
     {
       path: '/',
       getComponent: (location, callback) => {
         if (Auth.isUserAuthenticated()){
-          callback(null, DashboardPage);
+          var token = Auth.getToken();
+          var decoded = jwtDecode(token);
+          var userStatus = decoded.userstatus;
+          if(userStatus == 1){
+            callback(null, DashboardAdminPage);
+          }
+          else {
+            callback(null, DashboardPage);
+          }
         } else {
           callback(null, SignUpPage);
         }
       }
     },
-
     {
       path: '/login',
       getComponent: (location, callback) => {
@@ -73,6 +109,72 @@ const routes = {
             callback(null, SignUpPage);
           }
        }
+    },
+    {
+      path: '/movie',
+      getComponent: (location, callback) => {
+          if (Auth.isUserAuthenticated()){
+            callback(null, MoviePage);
+          } else {
+            callback(null, SignUpPage);
+          }
+       }
+    },
+    {
+      path: '/book',
+      getComponent: (location, callback) => {
+          if (Auth.isUserAuthenticated()){
+            callback(null, BookPage);
+          } else {
+            callback(null, SignUpPage);
+          }
+       }
+    },
+    {
+      path: '/insight',
+      getComponent: (location, callback) => {
+          if (Auth.isUserAuthenticated()){
+            callback(null, InsightPage);
+          } else {
+            callback(null, SignUpPage);
+          }
+       }
+    },
+    {
+      path: '/program',
+      component: ProgramPage
+    },
+    {
+      path: '/settings',
+      component: SettingsPage
+    },
+    {
+      path: '/users',
+      component: UsersPage
+    },
+    {
+      path: '/userProfile',
+      component: UserProfilePage
+    },
+    {
+      path: '/notes',
+      component: NotesPage
+    },
+    {
+      path: '/movieNote',
+      component: MovieNotePage
+    },
+    {
+      path: '/bookNote',
+      component: BookNotePage
+    },
+    {
+      path: '/lessonNote',
+      component: LessonNotePage
+    },
+    {
+      path: '/insightNote',
+      component: InsightNotePage
     },
     {
       path: '/logout',

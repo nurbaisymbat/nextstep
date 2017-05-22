@@ -1,44 +1,35 @@
 import React, { PropTypes } from 'react';
 import { Link, IndexLink } from 'react-router';
 import Auth from '../modules/Auth';
-const src = require('./img.jpg');
 
 const Base = ({ children }) => (
   <div className="row">
-    <nav className="navbar menuMain col-md-2 well well-white">
-
-      <div className="nav-logo">
-        <p className="nav-text">NextStep</p>
-      </div>
-
-      <div className="thumbnail nav-foto text-center">
-        <img src={src} className="img-circle" />
-
-      </div>
-        <p className="userName">
-        userName
-        <br/>
-        <span className="glyphicon glyphicon-cog navglyphicon"></span>
-        <span className="glyphicon glyphicon-off navglyphicon"></span>
-        </p>
-      <div className="navbar-header">
-        <ul className="nav nav-stacked">
-          <li className="eachLink"><IndexLink to="/">Home</IndexLink></li>
-            {Auth.isUserAuthenticated() ?(
+      {Auth.isUserAuthenticated() ?(
+        <div className="col-md-2 well-white">
+        <div className="nav-logo" style={{marginBottom: '30%', marginLeft: '-9%'}}>
+          <h2 className="logo"><span className="next">Next</span><span className="step">Step</span></h2>
+        </div>
+        <div className="thumbnail text-center" style={{marginBottom: '30%',marginLeft: '-15%'}}>
+          <Link to="/profile"><img src={require('../../../public/img/no-user-image.jpg')} className="img-circle" style={{width: '50%'}}/></Link>
+          <h4 className="text-center"><Link to="/profile"><span className="glyphicon glyphicon-cog navglyphicon"></span></Link>
+          <Link to="/logout"><span className="glyphicon glyphicon-off navglyphicon"></span></Link></h4>
+        </div>
+        <nav className="navbar">
+          <div className="navbar-header">
             <ul className="nav nav-stacked">
-              <li className="eachLink"><Link to="/profile">Профиль</Link></li>
-              <li className="eachLink"><Link to="/lesson">Урок</Link></li>
-                <li className="eachLink"><Link to="/logout">Log out</Link></li>
+                <li className="eachLink"><IndexLink to="/"><span className="glyphicon glyphicon-home" style={{marginRight: '10px'}}></span>Главная</IndexLink></li>
+                <li className="eachLink"><Link to="/lesson"><span className="glyphicon glyphicon-calendar" style={{marginRight: '10px'}}></span>Урок</Link></li>
+                <li className="eachLink"><Link to="/movie"><span className="glyphicon glyphicon-film" style={{marginRight: '10px'}}></span>Фильм</Link></li>
+                <li className="eachLink"><Link to="/book"><span className="glyphicon glyphicon-book" style={{marginRight: '10px'}}></span>Книга</Link></li>
+                <li className="eachLink"><Link to="/insight"><span className="glyphicon glyphicon-facetime-video" style={{marginRight: '10px'}}></span>Инсайт</Link></li>
             </ul>
-            ) : (
-            <ul className="nav nav-stacked">
-                <li className="eachLink"><Link to="/login" >Log in</Link></li>
-                </ul>
-              )}
-        </ul>
-      </div>
-      </nav>
-    <div className="col-md-10">
+          </div>
+        </nav>
+        </div>
+        ) : (
+          <div></div>
+        )}
+    <div className="col-md-10 baseChilds">
       {children}
     </div>
   </div>

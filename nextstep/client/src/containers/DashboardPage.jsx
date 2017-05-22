@@ -3,20 +3,21 @@ import Auth from '../modules/Auth';
 import Dashboard from '../components/Dashboard.jsx';
 import axios from 'axios';
 
+const today = new Date();
+
 class DashboardPage extends React.Component {
 
-  /**
-   * Class constructor.
-   */
-  constructor(props) {
-    super(props);
+  constructor(props, context) {
+    super(props, context);
 
     this.state = {
-      userId: '',
-      username: '',
-      useremail: ''
-
-
+      user: {},
+      remainedDays: 0,
+      remainedDaysPercent: '',
+      maxPoints: 0,
+      maxPointsPercent: '',
+      users: [],
+      myTrello: {}
     };
   }
 
@@ -29,24 +30,50 @@ class DashboardPage extends React.Component {
       }
     })
       .then(res => {
-        this.setState({
-          userId: res.data.userId,
-          username: res.data.username,
-          useremail: res.data.useremail
-        });
+          var userDate = new Date(res.data.user.signedDate);
+          var millisecondsPerDay = 24 * 60 * 60 * 1000;
+          var findDifference = (56-Math.round((today-userDate) / millisecondsPerDay));
+          var remainedPercent = Math.round((findDifference*100)/56);
+          if(remainedPercent>50){
+            this.setState({
+              user: res.data.user,
+              remainedDays: findDifference,
+              remainedDaysPercent: 'progress-circle over50 p'+remainedPercent,
+              maxPoints: res.data.maxPoints,
+              maxPointsPercent: res.data.maxPointsPercent,
+              users: res.data.users,
+              myTrello: res.data.myTrello
+            });
+          }else{
+            this.setState({
+              user: res.data.user,
+              remainedDays: findDifference,
+              remainedDaysPercent: 'progress-circle p'+remainedPercent,
+              maxPoints: res.data.maxPoints,
+              maxPointsPercent: res.data.maxPointsPercent,
+              users: res.data.users,
+              myTrello: res.data.myTrello
+            });
+          }
       });
   }
 
   render() {
     return (
         <Dashboard
-              userId={this.state.userId}
-              username={this.state.username}
-              useremail={this.state.useremail}
+              user={this.state.user}
+              remainedDays={this.state.remainedDays}
+              remainedDaysPercent={this.state.remainedDaysPercent}
+              maxPoints={this.state.maxPoints}
+              maxPointsPercent={this.state.maxPointsPercent}
+              users={this.state.users}
+              myTrello={this.state.myTrello}
               />);
   }
 
 }
 
-
+DashboardPage.contextTypes = {
+  router: PropTypes.object.isRequired
+};
 export default DashboardPage;
