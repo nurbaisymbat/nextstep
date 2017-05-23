@@ -10,8 +10,8 @@ var MovieNotes = require('../models/movienotes');
 var BookNotes = require('../models/booknotes');
 moment.locale('ru');
 
-var trellokey = "8cb68cae49674c1888f615a6ff332c26";
-var trellotoken = "ad6f7144ae2d2c66f528bc5eca841f30e149b8167eba02d7c2a1b0ca5defc556";
+var trellokey = "8982410617159f8bb7e64248ed2cf4c4";
+var trellotoken = "96b9dd8c810d235e3423b1b178d37bd1c7a18784c91492cbb0f324b90d9cd7b7";
 
 router.get('/dashboard', (req, res) => {
   if (!req.headers.authorization) {
@@ -117,7 +117,7 @@ router.get('/dashboard', (req, res) => {
                   var myTrello = {}; //card name, card desc, since, due, members.username
                   var myCards = [];
                   var myMembers = [];
-                  var path = 'https://api.trello.com/1/lists/59219f6107818467d17f8bfa/cards?fields=name,desc,dateLastActivity,due&members=true&member_fields=username&key='+trellokey+'&token='+trellotoken;
+                  var path = 'https://api.trello.com/1/lists/5923d058ca1832bda3eab39c/cards?fields=name,desc,dateLastActivity,due&members=true&member_fields=username&key='+trellokey+'&token='+trellotoken;
                 			request(
                 				{
                 					method: 'GET',

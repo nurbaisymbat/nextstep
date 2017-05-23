@@ -240,40 +240,52 @@ router.get('/added', (req, res) => {
             console.log(err);
           }
           else if(book && movie && lesson){
+            book.sort(function(a,b) {return (a.day < b.day) ? -1 : ((b.day < a.day) ? 1 : 0);} );
+            movie.sort(function(a,b) {return (a.day < b.day) ? -1 : ((b.day < a.day) ? 1 : 0);} );
+            lesson.sort(function(a,b) {return (a.day < b.day) ? -1 : ((b.day < a.day) ? 1 : 0);} );
             res.json({
                 book: book,
                 movie: movie,
                 lesson: lesson
             });
           } else if (book && movie && !lesson){
+            book.sort(function(a,b) {return (a.day < b.day) ? -1 : ((b.day < a.day) ? 1 : 0);} );
+            movie.sort(function(a,b) {return (a.day < b.day) ? -1 : ((b.day < a.day) ? 1 : 0);} );
             res.json({
                 book: book,
                 movie: movie,
                 message: "Уроков не найдено"
             });
           } else if (book && !movie && lesson){
+            book.sort(function(a,b) {return (a.day < b.day) ? -1 : ((b.day < a.day) ? 1 : 0);} );
+            lesson.sort(function(a,b) {return (a.day < b.day) ? -1 : ((b.day < a.day) ? 1 : 0);} );
             res.json({
                 book: book,
                 lesson: lesson,
                 message: "Фильмов не найдено"
             });
           } else if (!book && movie && lesson){
+            movie.sort(function(a,b) {return (a.day < b.day) ? -1 : ((b.day < a.day) ? 1 : 0);} );
+            lesson.sort(function(a,b) {return (a.day < b.day) ? -1 : ((b.day < a.day) ? 1 : 0);} );
             res.json({
                 movie: movie,
                 lesson: lesson,
                 message: "Книг не найдено"
             });
           } else if (!book && !movie && lesson){
+            lesson.sort(function(a,b) {return (a.day < b.day) ? -1 : ((b.day < a.day) ? 1 : 0);} );
             res.json({
                 lesson: lesson,
                 message: "Книг и фильмов не найдено"
             });
           } else if (!book && movie && !lesson){
+            movie.sort(function(a,b) {return (a.day < b.day) ? -1 : ((b.day < a.day) ? 1 : 0);} );
             res.json({
                 movie: movie,
                 message: "Книг и фильмов не найдено"
             });
           } else if (book && !movie && !lesson){
+            book.sort(function(a,b) {return (a.day < b.day) ? -1 : ((b.day < a.day) ? 1 : 0);} );
             res.json({
                 book: book,
                 message: "Книг и фильмов не найдено"
