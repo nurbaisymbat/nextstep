@@ -1,6 +1,5 @@
 const express = require('express');
 var jwtDecode = require('jwt-decode');
-var request  = require('request')
 const router = new express.Router();
 var User = require('../models/user');
 var Points = require('../models/points');
@@ -9,9 +8,6 @@ var Insight = require('../models/insight');
 var MovieNotes = require('../models/movienotes');
 var BookNotes = require('../models/booknotes');
 moment.locale('ru');
-
-var trellokey = "8982410617159f8bb7e64248ed2cf4c4";
-var trellotoken = "96b9dd8c810d235e3423b1b178d37bd1c7a18784c91492cbb0f324b90d9cd7b7";
 
 router.get('/dashboard', (req, res) => {
   if (!req.headers.authorization) {
@@ -114,52 +110,19 @@ router.get('/dashboard', (req, res) => {
 
                 } else {
                   maxPointsPercent = (user.points * 100)/maxPoints;
-                  var myTrello = {}; //card name, card desc, since, due, members.username
-                  var myCards = [];
-                  var myMembers = [];
-                  var path = 'https://api.trello.com/1/lists/5923d058ca1832bda3eab39c/cards?fields=name,desc,dateLastActivity,due&members=true&member_fields=username&key='+trellokey+'&token='+trellotoken;
-                			request(
-                				{
-                					method: 'GET',
-                					uri: path,
-                					json: true
-                				},
-                				function (error, response, body) {
-                					if(response.statusCode == 200){
-                            myCards = body;
-                            myCards.forEach(function(cardItem){
-                              myMembers = cardItem.members;
-                              myMembers.forEach(function(memberItem){
-                                if(memberItem.username == user.trelloUser){
-                                  myTrello = {
-                                    cardname: cardItem.name,
-                                    carddesc: cardItem.desc,
-                                    cardsince: cardItem.dateLastActivity,
-                                    carddue: cardItem.due,
-                                  }
-                                }
-                              });
-                            });
-                            res.status(200).send({
-                              user: user,
-                              maxPoints: maxPoints,
-                              maxPointsPercent: maxPointsPercent+'%',
-                              users: users,
-                              myTrello: myTrello
-                            });
-                					} else {
-                						console.log('error: '+ response.statusCode);
-                						console.log(body);
-                					}
-                				});
+                  res.status(200).send({
+                      user: user,
+                      maxPoints: maxPoints,
+                      maxPointsPercent: maxPointsPercent+'%',
+                      users: users
+                  });
                 }
-
               }
             })
           }
         })
       }
-    });
+    })
 });
 
 module.exports = router;

@@ -16,8 +16,7 @@ class DashboardPage extends React.Component {
       remainedDaysPercent: '',
       maxPoints: 0,
       maxPointsPercent: '',
-      users: [],
-      myTrello: {}
+      users: []
     };
   }
 
@@ -41,8 +40,7 @@ class DashboardPage extends React.Component {
               remainedDaysPercent: 'progress-circle over50 p'+remainedPercent,
               maxPoints: res.data.maxPoints,
               maxPointsPercent: res.data.maxPointsPercent,
-              users: res.data.users,
-              myTrello: res.data.myTrello
+              users: res.data.users
             });
           }else{
             this.setState({
@@ -51,8 +49,7 @@ class DashboardPage extends React.Component {
               remainedDaysPercent: 'progress-circle p'+remainedPercent,
               maxPoints: res.data.maxPoints,
               maxPointsPercent: res.data.maxPointsPercent,
-              users: res.data.users,
-              myTrello: res.data.myTrello
+              users: res.data.users
             });
           }
       });
@@ -67,7 +64,6 @@ class DashboardPage extends React.Component {
               maxPoints={this.state.maxPoints}
               maxPointsPercent={this.state.maxPointsPercent}
               users={this.state.users}
-              myTrello={this.state.myTrello}
               />);
   }
 

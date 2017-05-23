@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react';
 import moment from 'moment';
-import Trello from './Trello.jsx';
 moment.locale('ru');
 
 const Dashboard = ({
@@ -9,7 +8,8 @@ const Dashboard = ({
   remainedDaysPercent,
   maxPoints,
   maxPointsPercent,
-  users
+  users,
+  myTrello
   }) => (
   <div className="container">
   <h3><em>Главная</em></h3>
@@ -88,7 +88,24 @@ const Dashboard = ({
           </div>
         </div>
         <div className="row remainedDays well" style={{paddingBottom: '50px'}}>
-          <Trello />
+          <div className="row" style={{paddingRight: '15px'}}>
+            <div className="col-md-9"><h4>Текущая задача</h4></div>
+            <div className="col-md-3 text-right" style={{marginTop: '10px'}}><span className="label label-success">В процессе</span></div>
+          </div>
+          <h4 className="text-uppercase text-success" style={{marginTop: '40px'}}>{myTrello.cardname}</h4>
+          <div className="text-muted" style={{marginTop: '40px'}}>
+            {myTrello.carddesc}
+          </div>
+          <div className="row" style={{marginTop: '40px'}}>
+            <div className="col-md-9">
+              <h5>Дата начала</h5>
+              <h5 className="text-muted">{moment(myTrello.cardsince).format('L')}</h5>
+            </div>
+            <div className="col-md-3">
+              <h5>Дата сдачи</h5>
+              <h5 className="text-muted">{moment(myTrello.carddue).format('L')}</h5>
+            </div>
+          </div>
         </div>
       </div>
     </div>
