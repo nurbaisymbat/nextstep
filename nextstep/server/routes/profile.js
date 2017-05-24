@@ -928,6 +928,63 @@ router.get('/getlessonnote', (req, res) => {
   })
 });
 
+router.get('/gettrello', (req, res) => {
+  var token = req.headers.authorization.split(' ')[1];
+  var decoded = jwtDecode(token);
+  var userId = decoded.sub;
+  User.findOne({_id: userId}).exec(function(err, user){
+    if(err){ console.log(err) }
+    else {
+      var path = 'https://api.trello.com/1/members/'+user.trelloUser+'?boards=all&board_fields=name&key='+trellokey;
+      //var path = 'https://api.trello.com/1/lists/5923d058ca1832bda3eab39c/cards?fields=name,desc,dateLastActivity,due&members=true&member_fields=username&key='+trellokey+'&token='+trellotoken;
+      //var path = 'https://api.trello.com/1/members/'+user.trelloUser+'/boards/?filter=all&key='+trellokey;
+      request({
+          method: 'GET',
+          uri: path,
+          json: true },
+          function (error, response, body) {
+            if(response.statusCode == 200){
+              var myId = body.boards.filter(function(board) {
+                                return board.name.indexOf('Задачи') > -1; })[0].id;
+              var pathSec = 'https://api.trello.com/1/boards/'+myId+'/lists?fields=id,name&key='+trellokey;
+              request({
+                  method: 'GET',
+                  uri: pathSec,
+                  json: true },
+                  function (error, response, body) {
+                    if(response.statusCode == 200){
+                      var myListId = body.filter(function(list) {
+                                        return list.name.indexOf('В процессе') > -1; })[0].id;
+                      var pathThird = 'https://api.trello.com/1/lists/'+myListId+'/cards?fields=name,desc,dateLastActivity,due&key='+trellokey;
+                      request({
+                          method: 'GET',
+                          uri: pathThird,
+                          json: true },
+                          function (error, response, body){
+                              if(response.statusCode == 200){
+                                res.status(200).send({
+                                      myTrello: body
+                                });
+                              } else {
+                                console.log('error: '+ response.statusCode);
+                                console.log(body);
+                              }
+                          });
+
+                    } else {
+                      console.log('error: '+ response.statusCode);
+                      console.log(body);
+                    }
+              });
+            } else {
+              console.log('error: '+ response.statusCode);
+              console.log(body);
+            }
+      });
+    }
+  })
+});
+
 //POST REQUESTS
 
 router.post('/profileChange', (req, res) => {
@@ -1473,49 +1530,5 @@ router.post('/downloadFile', (req, res, err) => {
   var file = path.join(__dirname, '/../../public/files/'+filename);
   res.download(file);
 })
-
-router.get('/gettrello', (req, res) => {
-  var token = req.headers.authorization.split(' ')[1];
-  var decoded = jwtDecode(token);
-  var userId = decoded.sub;
-  User.findOne({_id: userId}).exec(function(err, user){
-    if(err){ console.log(err) }
-    else {
-      var myTrello = {}; //card name, card desc, since, due, members.username
-      var myCards = [];
-      var myMembers = [];
-      var path = 'https://api.trello.com/1/lists/5923d058ca1832bda3eab39c/cards?fields=name,desc,dateLastActivity,due&members=true&member_fields=username&key='+trellokey+'&token='+trellotoken;
-      request({
-          method: 'GET',
-          uri: path,
-          json: true },
-          function (error, response, body) {
-            if(response.statusCode == 200){
-              //console.log(body)
-              myCards = body;
-              myCards.forEach(function(cardItem){
-                myMembers = cardItem.members;
-                myMembers.forEach(function(memberItem){
-                  if(memberItem.username == user.trelloUser){
-                      myTrello = {
-                      cardname: cardItem.name,
-                      carddesc: cardItem.desc,
-                      cardsince: cardItem.dateLastActivity,
-                      carddue: cardItem.due,
-                      }
-                    }
-                });
-              });
-              res.status(200).send({
-                    myTrello: myTrello
-              });
-            } else {
-              console.log('error: '+ response.statusCode);
-              console.log(body);
-            }
-      });
-    }
-  })
-});
 
 module.exports = router;

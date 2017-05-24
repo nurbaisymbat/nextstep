@@ -55,53 +55,53 @@ const Book = ({
       <div className="col-md-4 myNotes well">
         <h4>Мои заметки</h4>
         {bookNoteList.length == 0 ?(
-          <div className="eachTask eachTaskFirst">
+          <div className="eachTask" style={{paddingTop: '10px', paddingBottom: '10px'}}>
             <h5>У вас пока нет заметок</h5>
           </div>
         ): ((bookNoteList.length == 1) && (bookNoteList[0].approved == 1))?(
             <div className={showOthers}>
-              <div className="eachTask eachTaskFirst bg-success">
+              <div className="eachTask bg-success" style={{paddingTop: '10px', paddingBottom: '10px'}}>
                 <div>{bookNoteList[0].text}</div>
                 <h5><small>{moment(bookNoteList[0].date).format('llll')}</small></h5>
               </div>
             </div>
         ):((bookNoteList.length == 1) && (bookNoteList[0].approved == 2))?(
           <div className={showOthers}>
-            <div className="eachTask eachTaskFirst bg-danger">
+            <div className="eachTask bg-danger" style={{paddingTop: '10px', paddingBottom: '10px'}}>
               <div>{bookNoteList[0].text}</div>
               <h5><small>{moment(bookNoteList[0].date).format('llll')}</small></h5>
             </div>
           </div>
         ):((bookNoteList.length == 1) && (bookNoteList[0].approved == 0))?(
           <div className={showOthers}>
-            <div className="eachTask eachTaskFirst">
+            <div className="eachTask" style={{paddingTop: '10px', paddingBottom: '10px'}}>
               <div>{bookNoteList[0].text}</div>
               <h5><small>{moment(bookNoteList[0].date).format('llll')}</small></h5>
             </div>
           </div>
         ):((bookNoteList.length > 1) && (bookNoteList[0].approved == 1))?(
           <div className={showOthers}>
-            <div className="eachTask eachTaskFirst bg-success">
+            <div className="eachTask bg-success" style={{paddingTop: '10px', paddingBottom: '10px'}}>
               <div>{bookNoteList[0].text}</div>
               <h5><small>{moment(bookNoteList[0].date).format('llll')}</small></h5>
             </div>
-            <div className="btn-show-hide" onClick={checkShowOthers} id="showNotes">
+            <div className="btn-show-hide" onClick={checkShowOthers} id="showNotes" style={{marginTop: '10px'}}>
               Показать все
             </div>
           </div>
         ):((bookNoteList.length > 1) && (bookNoteList[0].approved == 2))?(
           <div className={showOthers}>
-            <div className="eachTask eachTaskFirst bg-danger">
+            <div className="eachTask bg-danger" style={{paddingTop: '10px', paddingBottom: '10px'}}>
               <div>{bookNoteList[0].text}</div>
               <h5><small>{moment(bookNoteList[0].date).format('llll')}</small></h5>
             </div>
-            <div className="btn-show-hide" onClick={checkShowOthers} id="showNotes">
+            <div className="btn-show-hide" onClick={checkShowOthers} id="showNotes" style={{marginTop: '10px'}}>
               Показать все
             </div>
           </div>
         ):(
             <div className={showOthers}>
-              <div className="eachTask eachTaskFirst">
+              <div className="eachTask" style={{paddingTop: '10px', paddingBottom: '10px'}}>
                 <div>{bookNoteList[0].text}</div>
                 <h5><small>{moment(bookNoteList[0].date).format('llll')}</small></h5>
               </div>

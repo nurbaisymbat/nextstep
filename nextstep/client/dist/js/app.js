@@ -44481,7 +44481,7 @@
 	    var _this = _possibleConstructorReturn(this, (Trello.__proto__ || Object.getPrototypeOf(Trello)).call(this, props));
 
 	    _this.state = {
-	      myTrello: {},
+	      myTrello: [],
 	      checkloading: false
 	    };
 	    return _this;
@@ -44533,52 +44533,7 @@
 	            )
 	          )
 	        ),
-	        this.state.checkloading ? _react2.default.createElement(
-	          'div',
-	          null,
-	          _react2.default.createElement(
-	            'h4',
-	            { className: 'text-uppercase text-success', style: { marginTop: '40px' } },
-	            this.state.myTrello.cardname
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'text-muted', style: { marginTop: '40px' } },
-	            this.state.myTrello.carddesc
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'row', style: { marginTop: '40px' } },
-	            _react2.default.createElement(
-	              'div',
-	              { className: 'col-md-9' },
-	              _react2.default.createElement(
-	                'h5',
-	                null,
-	                '\u0414\u0430\u0442\u0430 \u043D\u0430\u0447\u0430\u043B\u0430'
-	              ),
-	              _react2.default.createElement(
-	                'h5',
-	                { className: 'text-muted' },
-	                (0, _moment2.default)(this.state.myTrello.cardsince).format('L')
-	              )
-	            ),
-	            _react2.default.createElement(
-	              'div',
-	              { className: 'col-md-3' },
-	              _react2.default.createElement(
-	                'h5',
-	                null,
-	                '\u0414\u0430\u0442\u0430 \u0441\u0434\u0430\u0447\u0438'
-	              ),
-	              _react2.default.createElement(
-	                'h5',
-	                { className: 'text-muted' },
-	                (0, _moment2.default)(this.state.myTrello.carddue).format('L')
-	              )
-	            )
-	          )
-	        ) : _react2.default.createElement(
+	        !this.state.checkloading ? _react2.default.createElement(
 	          'div',
 	          { className: 'text-center' },
 	          _react2.default.createElement(
@@ -44587,7 +44542,56 @@
 	            '\u041F\u043E\u0434\u043E\u0436\u0434\u0438\u0442\u0435'
 	          ),
 	          _react2.default.createElement('img', { src: __webpack_require__(396), style: { width: '20%', marginTop: '20px' } })
-	        )
+	        ) : _react2.default.createElement('div', null),
+	        this.state.myTrello.map(function (trello, t) {
+	          return _react2.default.createElement(
+	            'div',
+	            { key: t },
+	            _react2.default.createElement(
+	              'h4',
+	              { className: 'text-uppercase text-success', style: { marginTop: '40px' } },
+	              trello.name
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'text-muted', style: { marginTop: '20px' } },
+	              trello.desc
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'row', style: { marginTop: '20px' } },
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'col-md-9' },
+	                _react2.default.createElement(
+	                  'h5',
+	                  null,
+	                  '\u0414\u0430\u0442\u0430 \u043D\u0430\u0447\u0430\u043B\u0430'
+	                ),
+	                _react2.default.createElement(
+	                  'h5',
+	                  { className: 'text-muted' },
+	                  (0, _moment2.default)(trello.dateLastActivity).format('L')
+	                )
+	              ),
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'col-md-3' },
+	                _react2.default.createElement(
+	                  'h5',
+	                  null,
+	                  '\u0414\u0430\u0442\u0430 \u0441\u0434\u0430\u0447\u0438'
+	                ),
+	                _react2.default.createElement(
+	                  'h5',
+	                  { className: 'text-muted' },
+	                  (0, _moment2.default)(trello.due).format('L')
+	                )
+	              )
+	            ),
+	            _react2.default.createElement('hr', null)
+	          );
+	        })
 	      );
 	    }
 	  }]);
@@ -63263,7 +63267,7 @@
 	          { className: showOthers },
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'eachTask eachTaskFirst bg-success' },
+	            { className: 'eachTask bg-success', style: { paddingTop: '10px', paddingBottom: '10px' } },
 	            _react2.default.createElement(
 	              'div',
 	              null,
@@ -63284,7 +63288,7 @@
 	          { className: showOthers },
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'eachTask eachTaskFirst bg-danger' },
+	            { className: 'eachTask bg-danger', style: { paddingTop: '10px', paddingBottom: '10px' } },
 	            _react2.default.createElement(
 	              'div',
 	              null,
@@ -63305,7 +63309,7 @@
 	          { className: showOthers },
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'eachTask eachTaskFirst' },
+	            { className: 'eachTask', style: { paddingTop: '10px', paddingBottom: '10px' } },
 	            _react2.default.createElement(
 	              'div',
 	              null,
@@ -63326,7 +63330,7 @@
 	          { className: showOthers },
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'eachTask eachTaskFirst bg-success' },
+	            { className: 'eachTask bg-success', style: { paddingTop: '10px', paddingBottom: '10px' } },
 	            _react2.default.createElement(
 	              'div',
 	              null,
@@ -63344,7 +63348,7 @@
 	          ),
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'btn-show-hide', onClick: checkShowOthers, id: 'showNotes' },
+	            { className: 'btn-show-hide', onClick: checkShowOthers, id: 'showNotes', style: { marginTop: '10px' } },
 	            '\u041F\u043E\u043A\u0430\u0437\u0430\u0442\u044C \u0432\u0441\u0435'
 	          )
 	        ) : movieNoteList.length > 1 && movieNoteList[0].approved == 2 ? _react2.default.createElement(
@@ -63352,7 +63356,7 @@
 	          { className: showOthers },
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'eachTask eachTaskFirst bg-danger' },
+	            { className: 'eachTask bg-danger', style: { paddingTop: '10px', paddingBottom: '10px' } },
 	            _react2.default.createElement(
 	              'div',
 	              null,
@@ -63370,7 +63374,7 @@
 	          ),
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'btn-show-hide', onClick: checkShowOthers, id: 'showNotes' },
+	            { className: 'btn-show-hide', onClick: checkShowOthers, id: 'showNotes', style: { marginTop: '10px' } },
 	            '\u041F\u043E\u043A\u0430\u0437\u0430\u0442\u044C \u0432\u0441\u0435'
 	          )
 	        ) : _react2.default.createElement(
@@ -63378,7 +63382,7 @@
 	          { className: showOthers },
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'eachTask eachTaskFirst' },
+	            { className: 'eachTask', style: { paddingTop: '10px', paddingBottom: '10px' } },
 	            _react2.default.createElement(
 	              'div',
 	              null,
@@ -63857,7 +63861,7 @@
 	        ),
 	        bookNoteList.length == 0 ? _react2.default.createElement(
 	          'div',
-	          { className: 'eachTask eachTaskFirst' },
+	          { className: 'eachTask', style: { paddingTop: '10px', paddingBottom: '10px' } },
 	          _react2.default.createElement(
 	            'h5',
 	            null,
@@ -63868,7 +63872,7 @@
 	          { className: showOthers },
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'eachTask eachTaskFirst bg-success' },
+	            { className: 'eachTask bg-success', style: { paddingTop: '10px', paddingBottom: '10px' } },
 	            _react2.default.createElement(
 	              'div',
 	              null,
@@ -63889,7 +63893,7 @@
 	          { className: showOthers },
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'eachTask eachTaskFirst bg-danger' },
+	            { className: 'eachTask bg-danger', style: { paddingTop: '10px', paddingBottom: '10px' } },
 	            _react2.default.createElement(
 	              'div',
 	              null,
@@ -63910,7 +63914,7 @@
 	          { className: showOthers },
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'eachTask eachTaskFirst' },
+	            { className: 'eachTask', style: { paddingTop: '10px', paddingBottom: '10px' } },
 	            _react2.default.createElement(
 	              'div',
 	              null,
@@ -63931,7 +63935,7 @@
 	          { className: showOthers },
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'eachTask eachTaskFirst bg-success' },
+	            { className: 'eachTask bg-success', style: { paddingTop: '10px', paddingBottom: '10px' } },
 	            _react2.default.createElement(
 	              'div',
 	              null,
@@ -63949,7 +63953,7 @@
 	          ),
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'btn-show-hide', onClick: checkShowOthers, id: 'showNotes' },
+	            { className: 'btn-show-hide', onClick: checkShowOthers, id: 'showNotes', style: { marginTop: '10px' } },
 	            '\u041F\u043E\u043A\u0430\u0437\u0430\u0442\u044C \u0432\u0441\u0435'
 	          )
 	        ) : bookNoteList.length > 1 && bookNoteList[0].approved == 2 ? _react2.default.createElement(
@@ -63957,7 +63961,7 @@
 	          { className: showOthers },
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'eachTask eachTaskFirst bg-danger' },
+	            { className: 'eachTask bg-danger', style: { paddingTop: '10px', paddingBottom: '10px' } },
 	            _react2.default.createElement(
 	              'div',
 	              null,
@@ -63975,7 +63979,7 @@
 	          ),
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'btn-show-hide', onClick: checkShowOthers, id: 'showNotes' },
+	            { className: 'btn-show-hide', onClick: checkShowOthers, id: 'showNotes', style: { marginTop: '10px' } },
 	            '\u041F\u043E\u043A\u0430\u0437\u0430\u0442\u044C \u0432\u0441\u0435'
 	          )
 	        ) : _react2.default.createElement(
@@ -63983,7 +63987,7 @@
 	          { className: showOthers },
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'eachTask eachTaskFirst' },
+	            { className: 'eachTask', style: { paddingTop: '10px', paddingBottom: '10px' } },
 	            _react2.default.createElement(
 	              'div',
 	              null,

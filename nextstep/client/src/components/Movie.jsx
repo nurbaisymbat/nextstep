@@ -62,48 +62,48 @@ const Movie = ({
           </div>
         ): ((movieNoteList.length == 1) && (movieNoteList[0].approved == 1)) ?(
           <div className={showOthers}>
-            <div className="eachTask eachTaskFirst bg-success">
+            <div className="eachTask bg-success" style={{paddingTop: '10px', paddingBottom: '10px'}}>
               <div>{movieNoteList[0].text}</div>
               <h5><small>{moment(movieNoteList[0].date).format('llll')}</small></h5>
             </div>
           </div>
         ):((movieNoteList.length == 1) && (movieNoteList[0].approved == 2))?(
           <div className={showOthers}>
-            <div className="eachTask eachTaskFirst bg-danger">
+            <div className="eachTask bg-danger" style={{paddingTop: '10px', paddingBottom: '10px'}}>
               <div>{movieNoteList[0].text}</div>
               <h5><small>{moment(movieNoteList[0].date).format('llll')}</small></h5>
             </div>
           </div>
         ):((movieNoteList.length == 1) && (movieNoteList[0].approved == 0))?(
           <div className={showOthers}>
-            <div className="eachTask eachTaskFirst">
+            <div className="eachTask" style={{paddingTop: '10px', paddingBottom: '10px'}}>
               <div>{movieNoteList[0].text}</div>
               <h5><small>{moment(movieNoteList[0].date).format('llll')}</small></h5>
             </div>
           </div>
         ):((movieNoteList.length > 1) && (movieNoteList[0].approved == 1))?(
           <div className={showOthers}>
-            <div className="eachTask eachTaskFirst bg-success">
+            <div className="eachTask bg-success" style={{paddingTop: '10px', paddingBottom: '10px'}}>
               <div>{movieNoteList[0].text}</div>
               <h5><small>{moment(movieNoteList[0].date).format('llll')}</small></h5>
             </div>
-            <div className="btn-show-hide" onClick={checkShowOthers} id="showNotes">
+            <div className="btn-show-hide" onClick={checkShowOthers} id="showNotes" style={{marginTop: '10px'}}>
               Показать все
             </div>
           </div>
         ):((movieNoteList.length > 1) && (movieNoteList[0].approved == 2))?(
           <div className={showOthers}>
-            <div className="eachTask eachTaskFirst bg-danger">
+            <div className="eachTask bg-danger" style={{paddingTop: '10px', paddingBottom: '10px'}}>
               <div>{movieNoteList[0].text}</div>
               <h5><small>{moment(movieNoteList[0].date).format('llll')}</small></h5>
             </div>
-            <div className="btn-show-hide" onClick={checkShowOthers} id="showNotes">
+            <div className="btn-show-hide" onClick={checkShowOthers} id="showNotes" style={{marginTop: '10px'}}>
               Показать все
             </div>
           </div>
         ):(
           <div className={showOthers}>
-            <div className="eachTask eachTaskFirst">
+            <div className="eachTask" style={{paddingTop: '10px', paddingBottom: '10px'}}>
               <div>{movieNoteList[0].text}</div>
               <h5><small>{moment(movieNoteList[0].date).format('llll')}</small></h5>
             </div>
