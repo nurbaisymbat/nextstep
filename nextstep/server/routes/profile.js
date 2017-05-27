@@ -903,10 +903,5 @@ router.post('/approvenote', (req, res, err) => {
   })
 })
 
-router.post('/downloadFile', (req, res, err) => {
-  var filename = req.query.filename;
-  var file = path.join(__dirname, '/../../public/files/'+filename);
-  res.download(file);
-})
 
 module.exports = router;

@@ -65,7 +65,7 @@ class LessonNotePage extends React.Component {
     event.preventDefault();
     var filename = this.state.lessonnote.filename
     var request = new XMLHttpRequest();
-    request.open("GET", "/profile/downloadFile", true);
+    request.open("GET", "/auth/downloadFile", true);
     request.responseType = "blob";
     request.onload = function (e) {
         if (this.status === 200) {

@@ -20,13 +20,14 @@ module.exports = (req, res, next) => {
     if (err) { return res.status(401).end(); }
 
     const userId = decoded.sub;
-
+    console.log(userId)
     // check if a user exists
     return User.findById(userId, (userErr, user) => {
       if (userErr || !user) {
         return res.status(401).end();
       }
 
+      console.log(user)
       return next();
     });
   });

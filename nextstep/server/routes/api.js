@@ -764,7 +764,6 @@ router.post('/upload', (req, res) => {
 
 router.post('/uploadImg', (req, res) => {
   let form = new multiparty.Form();
-  console.log("here")
   form.parse(req, (err, fields, files) => {
     let {path: tempPath, originalFilename} = files.imageFile[0];
     let copyToPath = "public/userImgs/" + originalFilename;
@@ -777,11 +776,9 @@ router.post('/uploadImg', (req, res) => {
             if(err) {return res.status(401).end();}
             else {
                 var userId = decoded.sub;
-                console.log(userId)
                 User.findOneAndUpdate({_id: userId}, { $set: {myImg: fileName}}, { new: true }, function (err, user) {
                   if(err) { console.log(err) }
                   else {
-                    console.log(user)
                     res.send({
                       user: user
                     });
@@ -830,7 +827,5 @@ router.post('/addmovienote', (req, res, err) => {
     }
   });
 });
-
-
 
 module.exports = router;
