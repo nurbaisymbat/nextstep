@@ -30,7 +30,7 @@ const routes = {
     if (Auth.isUserAuthenticated()){
       var token = Auth.getToken();
       jwt.verify(token, config.jwtSecret, (err, decoded) => {
-        if (err) { return res.status(401).end(); }
+        if (err) { console.log(err) }
         else {
           var userStatus = decoded.userstatus;
           if(userStatus == 1){
