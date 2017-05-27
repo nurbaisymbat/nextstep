@@ -5,15 +5,17 @@ import Auth from '../modules/Auth';
 import axios from 'axios';
 
 class Base extends React.Component {
-  super(props);
+  constructor(props) {
+    super(props);
 
-  this.state = {
-    user: {
-      myImg: '',
-      name: ''
-    }
-  };
-}
+    this.state = {
+      user: {
+        myImg: '',
+        name: ''
+      }
+    };
+  }
+
 componentDidMount(){
   axios.get('/api/getUser',  {
     responseType: 'json',
