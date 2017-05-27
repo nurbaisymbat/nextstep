@@ -10,7 +10,8 @@ class Base extends React.Component {
 
     this.state = {
       user: {
-        myImg: ''
+        myImg: '',
+        name: ''
       }
     };
 

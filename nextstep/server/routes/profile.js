@@ -187,6 +187,7 @@ router.get('/getprofile', (req, res) => {
     task: '',
     insight: ''
   };
+  var tempCount = 0;
   Personal.findOne({userId: userId}).exec(function(err, personalInfo){
       if (err){
         console.log(err);
@@ -232,9 +233,13 @@ router.get('/getprofile', (req, res) => {
                                         type: "book"
                                     };
                                     xAll.push(bookDate);
+                                    tempCount ++;
                                   }
                               });
-
+                              xAll.forEach( function (arrayItem){
+                                arrayItem.num = tempCount;
+                              });
+                              tempCount = 0;
                               MovieNotes.find({userId: user._id}, (err, movienotes) => {
                                 myProgress.video = (Math.round(movienotes.length*100/maxProgress.video))+'%';
                                 movienotes.forEach( function (arrayItem){
@@ -247,8 +252,13 @@ router.get('/getprofile', (req, res) => {
                                         type: "movie"
                                       };
                                       xAll.push(movieDate);
+                                      tempCount ++;
                                     }
                                 });
+                                xAll.forEach( function (arrayItem){
+                                  arrayItem.num = tempCount;
+                                });
+                                tempCount = 0;
                                 xAll.sort(function(a,b) {return (a.date > b.date) ? -1 : ((b.date > a.date) ? 1 : 0);} );
                                 for (var i in xAll) {
                                   var myHour =  today.getHours() - xAll[i].date.getHours();
@@ -322,9 +332,13 @@ router.get('/getprofile', (req, res) => {
                                         type: "book"
                                     };
                                     xAll.push(bookDate);
+                                    tempCount ++;
                                   }
                               });
-
+                              xAll.forEach( function (arrayItem){
+                                arrayItem.num = tempCount;
+                              });
+                              tempCount = 0;
                               MovieNotes.find({userId: user._id}, (err, movienotes) => {
                                 myProgress.video = (Math.round(movienotes.length*100/maxProgress.video))+'%';
                                 movienotes.forEach( function (arrayItem){
@@ -337,8 +351,13 @@ router.get('/getprofile', (req, res) => {
                                         type: "movie"
                                       };
                                       xAll.push(movieDate);
+                                      tempCount ++;
                                     }
                                 });
+                                xAll.forEach( function (arrayItem){
+                                  arrayItem.num = tempCount;
+                                });
+                                tempCount = 0;
                                 xAll.sort(function(a,b) {return (a.date > b.date) ? -1 : ((b.date > a.date) ? 1 : 0);} );
                                 for (var i in xAll) {
                                   var myHour =  today.getHours() - xAll[i].date.getHours();
