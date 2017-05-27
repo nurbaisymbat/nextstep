@@ -650,7 +650,7 @@ router.post('/profileChange', (req, res) => {
             } else {
                 const newPersonal = new Personal(personalData);
                 newPersonal.save((err, personalInfo) => {
-                  if (err) { return done(err); }
+                  if (err) { console.log(err) }
                     if (err){
                       console.log(err);
                     }

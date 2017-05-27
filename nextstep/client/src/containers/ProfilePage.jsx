@@ -13,7 +13,10 @@ class ProfilePage extends React.Component {
       errors: {},
       message: '',
       birthday: '',
-      personalInfo: {},
+      personalInfo: {
+        city: '',
+        phone: ''
+      },
       user: {
         email: '',
         name: '',
@@ -79,13 +82,23 @@ class ProfilePage extends React.Component {
               this.setState({
                 user: res.data.user,
                 notes: res.data.notes,
-                myProgress: res.data.myProgress
+                myProgress: res.data.myProgress,
+                personalInfo: {
+                  city: '',
+                  phone: ''
+                },
+                birthday: ''
               });
             } else {
               this.setState({
                 user: res.data.user,
                 messageNotes: 'У вас нет заметок на сегодня',
-                myProgress: res.data.myProgress
+                myProgress: res.data.myProgress,
+                personalInfo: {
+                  city: '',
+                  phone: ''
+                },
+                birthday: ''
               });
 
             }

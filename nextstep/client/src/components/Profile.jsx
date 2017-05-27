@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 import DatePicker from 'react-bootstrap-date-picker';
+import InputElement from 'react-input-mask';
 import moment from 'moment';
 moment.locale('ru');
 
@@ -73,7 +74,7 @@ const Profile = ({
               <span className="col-sm-8 personalInfo">{user.email}</span>
             </p>
           </div>
-          {Object.getOwnPropertyNames(personalInfo).length === 0 ?(
+          {(personalInfo.city.length == 0) || (personalInfo.phone.length == 0) || (birthday.length == 0) ?(
             <div>
             <div className="row">
               <p>
@@ -144,7 +145,7 @@ const Profile = ({
             <div className="row">
                 <span className="col-sm-4 personalLabel">Номер:</span>
                 <div className="col-sm-8">
-                  <input type="text" className="form-control" placeholder="Номер"
+                  <InputElement mask="+7 (999) 999-99-99" className="form-control" placeholder="Номер"
                   name="phone"
                   onChange={onChange}
                   value={personalInfo.phone}/>

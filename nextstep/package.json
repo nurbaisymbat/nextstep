@@ -29,6 +29,7 @@
     "react-bootstrap": "^0.31.0",
     "react-bootstrap-date-picker": "^5.0.1",
     "react-dom": "^15.4.1",
+    "react-input-mask": "^0.8.0",
     "react-router": "^4.1.1",
     "react-youtube": "^7.4.0",
     "url-loader": "^0.5.8",

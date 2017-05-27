@@ -6,7 +6,7 @@ const PersonalSchema = new mongoose.Schema({
   userId: {type: mongoose.Schema.Types.ObjectId, ref: 'User', unique: true},
   birthDate: Date,
   city: String,
-  phone: Number
+  phone: String
 });
 
 

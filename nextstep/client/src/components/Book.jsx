@@ -44,7 +44,7 @@ const Book = ({
             <div className="form-group">
               <textarea className="form-control" rows="5" placeholder="Текст заметки..." onChange={_handleChange} value={myBookNote} disabled={checkLength}/>
             </div>
-            <button type="submit" name="sendNote" className="btn btn-primary send-note-btn" disabled={checkLength}>Отпарвить</button>
+            <button type="submit" name="sendNote" className="btn btn-primary send-note-btn" disabled={checkLength}>Отправить</button>
           </form>
         </div>
       </div>
