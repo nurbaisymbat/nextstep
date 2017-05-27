@@ -22,7 +22,8 @@ const Profile = ({
   myProgress,
   uploadMyImage,
   changeImg,
-  imagePreviewUrl
+  imagePreviewUrl,
+  uploaded
 }) => (
 <div className="container">
 <h3><em>Профиль</em></h3>
@@ -43,7 +44,7 @@ const Profile = ({
                 Обзор <input type="file" className="btn btn-default btn-block" onChange={changeImg} style={{height: 'inherit'}}/>
             </span>
           </div>
-          <button type="submit" className="btn btn-default btn-block" style={{marginTop: '5px'}}> Загрузить </button>
+          <button type="submit" className="btn btn-default btn-block" style={{marginTop: '5px'}} disabled={!uploaded}> Загрузить </button>
         </form>
         <div hidden={hide}>
         {(user.myImg.length > 0) ?(

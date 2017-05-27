@@ -25,7 +25,8 @@ class ProfilePage extends React.Component {
       messageNotes: '',
       myProgress: {},
       file: '',
-      imagePreviewUrl: ''
+      imagePreviewUrl: '',
+      uploaded: false
     };
 
     this.processForm = this.processForm.bind(this);
@@ -163,7 +164,8 @@ class ProfilePage extends React.Component {
     reader.onloadend = () => {
       this.setState({
         file: file,
-        imagePreviewUrl: reader.result
+        imagePreviewUrl: reader.result,
+        uploaded: true
       });
     }
     reader.readAsDataURL(file)
@@ -183,7 +185,9 @@ class ProfilePage extends React.Component {
       })
         .then(res => {
             this.setState({
-              user: res.data.user
+              user: res.data.user,
+              uploaded: false,
+              hide: !this.state.hide
             });
         });
     });
@@ -209,6 +213,7 @@ class ProfilePage extends React.Component {
         uploadMyImage={this.uploadMyImage}
         changeImg={this.changeImg}
         imagePreviewUrl={this.state.imagePreviewUrl}
+        uploaded={this.state.uploaded}
       />
     );
   }
