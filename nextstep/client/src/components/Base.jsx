@@ -3,20 +3,33 @@ import PropTypes from 'prop-types';
 import { Link, IndexLink } from 'react-router';
 import Auth from '../modules/Auth';
 import axios from 'axios';
-const jwt = require('jsonwebtoken');
-const config = require('../../../config');
-
-var token = Auth.getToken();
-var userImg = '';
-var userName = '';
-jwt.verify(token, config.jwtSecret, (err, decoded) => {
-  userImg = decoded.userImg;
-  userName = decoded.userName;
-})
 
 class Base extends React.Component {
+  super(props);
+
+  this.state = {
+    user: {
+      myImg: '',
+      name: ''
+    }
+  };
+}
+componentDidMount(){
+  axios.get('/api/getUser',  {
+    responseType: 'json',
+    headers: {
+      'Content-type': 'application/x-www-form-urlencoded',
+      'Authorization': `bearer ${Auth.getToken()}`
+    }
+  })
+    .then(res => {
+        this.setState({
+          user: res.data.user
+        });
+    });
+}
   render() {
-        return (
+    return (
       <div className="row">
         {Auth.isUserAuthenticated() ?(
           <div className="col-md-2 well-white">
@@ -24,12 +37,12 @@ class Base extends React.Component {
             <h2 className="logo"><span className="next">Next</span><span className="step">Step</span></h2>
           </div>
           <div className="thumbnail text-center" style={{marginBottom: '30%',marginLeft: '-15%'}}>
-          {userImg.length > 0 ?(
-            <Link to="/profile_page"><img src={require('../../../public/userImgs/'+userImg)} className="img-circle" style={{width: '50%'}}/></Link>
+          {this.state.user.myImg.length > 0 ?(
+            <Link to="/profile_page"><img src={require('../../../public/userImgs/'+this.state.user.myImg)} className="img-circle" style={{width: '50%'}}/></Link>
           ):(
             <Link to="/profile_page"><img src={require('../../../public/img/no-user-image.jpg')} className="img-circle" style={{width: '50%'}}/></Link>
           )}
-            <h5>{userName}</h5>
+            <h5>{this.state.user.name}</h5>
             <h4 className="text-center"><Link to="/profile_page"><span className="glyphicon glyphicon-cog navglyphicon"></span></Link>
             <Link to="/logout"><span className="glyphicon glyphicon-off navglyphicon"></span></Link></h4>
           </div>
