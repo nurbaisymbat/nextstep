@@ -4,15 +4,6 @@ import Profile from '../components/Profile.jsx';
 import axios from 'axios';
 import DatePicker from 'react-bootstrap-date-picker';
 
-const jwt = require('jsonwebtoken');
-const config = require('../../../config');
-
-var token = Auth.getToken();
-var userImg = '';
-jwt.verify(token, config.jwtSecret, (err, decoded) => {
-  userImg = decoded.userImg;
-})
-
 class ProfilePage extends React.Component {
 
   constructor(props) {
@@ -26,7 +17,7 @@ class ProfilePage extends React.Component {
       user: {
         email: '',
         name: '',
-        myImg: userImg
+        myImg: ''
       },
       checked: false,
       hide: false,
