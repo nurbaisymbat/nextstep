@@ -50,94 +50,96 @@ const Movie = ({
             </form>
         </div>
       </div>
-      <div className="col-md-4 description well">
-        <h4>Описание</h4>
-        <h4 className="text-uppercase text-primary">"{myMovie.title}"</h4>
-        <h4><small>{myMovie.description}</small></h4>
-      </div>
-      <div className="col-md-4 myNotes well">
-        <h4>Мои заметки</h4>
-        {movieNoteList.length == 0 ?(
-          <div className="eachTask eachTaskFirst">
-            <h5>У вас пока нет заметок</h5>
-          </div>
-        ): ((movieNoteList.length == 1) && (movieNoteList[0].approved == 1)) ?(
-          <div className={showOthers}>
-            <div className="eachTask bg-success" style={{paddingTop: '10px', paddingBottom: '10px'}}>
-              <div>{movieNoteList[0].text}</div>
-              <h5><small>{moment(movieNoteList[0].date).format('llll')}</small></h5>
-            </div>
-          </div>
-        ):((movieNoteList.length == 1) && (movieNoteList[0].approved == 2))?(
-          <div className={showOthers}>
-            <div className="eachTask bg-danger" style={{paddingTop: '10px', paddingBottom: '10px'}}>
-              <div>{movieNoteList[0].text}</div>
-              <h5><small>{moment(movieNoteList[0].date).format('llll')}</small></h5>
-            </div>
-          </div>
-        ):((movieNoteList.length == 1) && (movieNoteList[0].approved == 0))?(
-          <div className={showOthers}>
-            <div className="eachTask" style={{paddingTop: '10px', paddingBottom: '10px'}}>
-              <div>{movieNoteList[0].text}</div>
-              <h5><small>{moment(movieNoteList[0].date).format('llll')}</small></h5>
-            </div>
-          </div>
-        ):((movieNoteList.length > 1) && (movieNoteList[0].approved == 1))?(
-          <div className={showOthers}>
-            <div className="eachTask bg-success" style={{paddingTop: '10px', paddingBottom: '10px'}}>
-              <div>{movieNoteList[0].text}</div>
-              <h5><small>{moment(movieNoteList[0].date).format('llll')}</small></h5>
-            </div>
-            <div className="btn-show-hide" onClick={checkShowOthers} id="showNotes" style={{marginTop: '10px'}}>
-              Показать все
-            </div>
-          </div>
-        ):((movieNoteList.length > 1) && (movieNoteList[0].approved == 2))?(
-          <div className={showOthers}>
-            <div className="eachTask bg-danger" style={{paddingTop: '10px', paddingBottom: '10px'}}>
-              <div>{movieNoteList[0].text}</div>
-              <h5><small>{moment(movieNoteList[0].date).format('llll')}</small></h5>
-            </div>
-            <div className="btn-show-hide" onClick={checkShowOthers} id="showNotes" style={{marginTop: '10px'}}>
-              Показать все
-            </div>
-          </div>
-        ):(
-          <div className={showOthers}>
-            <div className="eachTask" style={{paddingTop: '10px', paddingBottom: '10px'}}>
-              <div>{movieNoteList[0].text}</div>
-              <h5><small>{moment(movieNoteList[0].date).format('llll')}</small></h5>
-            </div>
-            <div className="btn-show-hide" onClick={checkShowOthers} id="showNotes">
-              Показать все
-            </div>
-          </div>
-        )}
-        <div className={hideOthers}>
-        {movieNoteList.map((notes, i) =>
-          <div key={i}>
-            {notes.approved == 1 ?(
-              <div className="eachTask bg-success" style={{paddingTop: '10px', paddingBottom: '10px'}}>
-                <div>{notes.text}</div>
-                <h5><small>{moment(notes.date).format('llll')}</small></h5>
-              </div>
-            ):(notes.approved == 2)?(
-              <div className="eachTask bg-danger" style={{paddingTop: '10px', paddingBottom: '10px'}}>
-                <div>{notes.text}</div>
-                <h5><small>{moment(notes.date).format('llll')}</small></h5>
-              </div>
-            ):(
-              <div className="eachTask" style={{paddingTop: '10px', paddingBottom: '10px'}}>
-                <div>{notes.text}</div>
-                <h5><small>{moment(notes.date).format('llll')}</small></h5>
-              </div>
-            )}
-            <hr style={{marginTop: '5px', marginBottom: '5px'}}/>
-          </div>
-        )}
-        <div className="btn-show-hide" onClick={checkShowOthers} id="hideNotes">
-          Скрыть все
+      <div className="col-md-4">
+        <div className="description well">
+          <h4>Описание</h4>
+          <h4 className="text-uppercase text-primary">"{myMovie.title}"</h4>
+          <h4><small>{myMovie.description}</small></h4>
         </div>
+        <div className="myNotes well">
+          <h4>Мои заметки</h4>
+          {movieNoteList.length == 0 ?(
+            <div className="eachTask eachTaskFirst">
+              <h5>У вас пока нет заметок</h5>
+            </div>
+          ): ((movieNoteList.length == 1) && (movieNoteList[0].approved == 1)) ?(
+            <div className={showOthers}>
+              <div className="eachTask bg-success" style={{paddingTop: '10px', paddingBottom: '10px'}}>
+                <div>{movieNoteList[0].text}</div>
+                <h5><small>{moment(movieNoteList[0].date).format('llll')}</small></h5>
+              </div>
+            </div>
+          ):((movieNoteList.length == 1) && (movieNoteList[0].approved == 2))?(
+            <div className={showOthers}>
+              <div className="eachTask bg-danger" style={{paddingTop: '10px', paddingBottom: '10px'}}>
+                <div>{movieNoteList[0].text}</div>
+                <h5><small>{moment(movieNoteList[0].date).format('llll')}</small></h5>
+              </div>
+            </div>
+          ):((movieNoteList.length == 1) && (movieNoteList[0].approved == 0))?(
+            <div className={showOthers}>
+              <div className="eachTask" style={{paddingTop: '10px', paddingBottom: '10px'}}>
+                <div>{movieNoteList[0].text}</div>
+                <h5><small>{moment(movieNoteList[0].date).format('llll')}</small></h5>
+              </div>
+            </div>
+          ):((movieNoteList.length > 1) && (movieNoteList[0].approved == 1))?(
+            <div className={showOthers}>
+              <div className="eachTask bg-success" style={{paddingTop: '10px', paddingBottom: '10px'}}>
+                <div>{movieNoteList[0].text}</div>
+                <h5><small>{moment(movieNoteList[0].date).format('llll')}</small></h5>
+              </div>
+              <div className="btn-show-hide" onClick={checkShowOthers} id="showNotes" style={{marginTop: '10px'}}>
+                Показать все
+              </div>
+            </div>
+          ):((movieNoteList.length > 1) && (movieNoteList[0].approved == 2))?(
+            <div className={showOthers}>
+              <div className="eachTask bg-danger" style={{paddingTop: '10px', paddingBottom: '10px'}}>
+                <div>{movieNoteList[0].text}</div>
+                <h5><small>{moment(movieNoteList[0].date).format('llll')}</small></h5>
+              </div>
+              <div className="btn-show-hide" onClick={checkShowOthers} id="showNotes" style={{marginTop: '10px'}}>
+                Показать все
+              </div>
+            </div>
+          ):(
+            <div className={showOthers}>
+              <div className="eachTask" style={{paddingTop: '10px', paddingBottom: '10px'}}>
+                <div>{movieNoteList[0].text}</div>
+                <h5><small>{moment(movieNoteList[0].date).format('llll')}</small></h5>
+              </div>
+              <div className="btn-show-hide" onClick={checkShowOthers} id="showNotes">
+                Показать все
+              </div>
+            </div>
+          )}
+          <div className={hideOthers}>
+          {movieNoteList.map((notes, i) =>
+            <div key={i}>
+              {notes.approved == 1 ?(
+                <div className="eachTask bg-success" style={{paddingTop: '10px', paddingBottom: '10px'}}>
+                  <div>{notes.text}</div>
+                  <h5><small>{moment(notes.date).format('llll')}</small></h5>
+                </div>
+              ):(notes.approved == 2)?(
+                <div className="eachTask bg-danger" style={{paddingTop: '10px', paddingBottom: '10px'}}>
+                  <div>{notes.text}</div>
+                  <h5><small>{moment(notes.date).format('llll')}</small></h5>
+                </div>
+              ):(
+                <div className="eachTask" style={{paddingTop: '10px', paddingBottom: '10px'}}>
+                  <div>{notes.text}</div>
+                  <h5><small>{moment(notes.date).format('llll')}</small></h5>
+                </div>
+              )}
+              <hr style={{marginTop: '5px', marginBottom: '5px'}}/>
+            </div>
+          )}
+          <div className="btn-show-hide" onClick={checkShowOthers} id="hideNotes">
+            Скрыть все
+          </div>
+          </div>
         </div>
       </div>
     </div>

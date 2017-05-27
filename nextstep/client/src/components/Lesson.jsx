@@ -44,7 +44,7 @@ const Lesson = ({
           </form>
         </div>
       </div>
-      <div className="col-md-4 description well">
+      <div className="col-md-4 myLesson well">
         <h4>Описание</h4>
         <h4 className="text-uppercase text-primary">Тема: "{myLesson.title}"</h4>
         <h4><small>{myLesson.description}</small></h4>
