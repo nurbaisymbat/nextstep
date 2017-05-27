@@ -27851,7 +27851,7 @@
 	        var token = _Auth2.default.getToken();
 	        jwt.verify(token, config.jwtSecret, function (err, decoded) {
 	          if (err) {
-	            return res.status(401).end();
+	            console.log(err);
 	          } else {
 	            var userStatus = decoded.userstatus;
 	            if (userStatus == 1) {

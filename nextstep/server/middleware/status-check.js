@@ -12,7 +12,6 @@ module.exports = (req, res, next) => {
       if (err) { return res.status(401).end(); }
 
       const userStatus = decoded.userstatus;
-      console.log(userStatus)
       if(userStatus == 1){
         return next();
       } else {
