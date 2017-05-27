@@ -7,8 +7,9 @@ import axios from 'axios';
 class Base extends React.Component {
   render() {
     return (
-      <div className="row">
+      <div>
         {Auth.isUserAuthenticated() ?(
+          <div className="row">
           <div className="col-md-2 well-white">
           <div className="nav-logo" style={{marginBottom: '30%', marginLeft: '-9%'}}>
             <h2 className="logo"><span className="next">Next</span><span className="step">Step</span></h2>
@@ -30,12 +31,16 @@ class Base extends React.Component {
             </div>
           </nav>
           </div>
+          <div className="col-md-10 baseChilds">
+            {this.props.children}
+          </div>
+          </div>
           ) : (
-            <div></div>
+            <div>
+              {this.props.children}
+            </div>
           )}
-      <div className="col-md-10 baseChilds">
-        {this.props.children}
-      </div>
+
     </div>);
   }
 }

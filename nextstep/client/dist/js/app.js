@@ -28027,117 +28027,125 @@
 	    value: function render() {
 	      return _react2.default.createElement(
 	        'div',
-	        { className: 'row' },
+	        null,
 	        _Auth2.default.isUserAuthenticated() ? _react2.default.createElement(
 	          'div',
-	          { className: 'col-md-2 well-white' },
+	          { className: 'row' },
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'nav-logo', style: { marginBottom: '30%', marginLeft: '-9%' } },
+	            { className: 'col-md-2 well-white' },
 	            _react2.default.createElement(
-	              'h2',
-	              { className: 'logo' },
+	              'div',
+	              { className: 'nav-logo', style: { marginBottom: '30%', marginLeft: '-9%' } },
 	              _react2.default.createElement(
-	                'span',
-	                { className: 'next' },
-	                'Next'
-	              ),
-	              _react2.default.createElement(
-	                'span',
-	                { className: 'step' },
-	                'Step'
+	                'h2',
+	                { className: 'logo' },
+	                _react2.default.createElement(
+	                  'span',
+	                  { className: 'next' },
+	                  'Next'
+	                ),
+	                _react2.default.createElement(
+	                  'span',
+	                  { className: 'step' },
+	                  'Step'
+	                )
 	              )
-	            )
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'thumbnail text-center', style: { marginBottom: '30%', marginLeft: '-15%' } },
-	            _react2.default.createElement(
-	              _reactRouter.Link,
-	              { to: '/profile_page' },
-	              _react2.default.createElement('img', { src: __webpack_require__(277), className: 'img-circle', style: { width: '50%' } })
 	            ),
 	            _react2.default.createElement(
-	              'h4',
-	              { className: 'text-center' },
+	              'div',
+	              { className: 'thumbnail text-center', style: { marginBottom: '30%', marginLeft: '-15%' } },
 	              _react2.default.createElement(
 	                _reactRouter.Link,
 	                { to: '/profile_page' },
-	                _react2.default.createElement('span', { className: 'glyphicon glyphicon-cog navglyphicon' })
+	                _react2.default.createElement('img', { src: __webpack_require__(277), className: 'img-circle', style: { width: '50%' } })
 	              ),
 	              _react2.default.createElement(
-	                _reactRouter.Link,
-	                { to: '/logout' },
-	                _react2.default.createElement('span', { className: 'glyphicon glyphicon-off navglyphicon' })
+	                'h4',
+	                { className: 'text-center' },
+	                _react2.default.createElement(
+	                  _reactRouter.Link,
+	                  { to: '/profile_page' },
+	                  _react2.default.createElement('span', { className: 'glyphicon glyphicon-cog navglyphicon' })
+	                ),
+	                _react2.default.createElement(
+	                  _reactRouter.Link,
+	                  { to: '/logout' },
+	                  _react2.default.createElement('span', { className: 'glyphicon glyphicon-off navglyphicon' })
+	                )
 	              )
-	            )
-	          ),
-	          _react2.default.createElement(
-	            'nav',
-	            { className: 'navbar' },
+	            ),
 	            _react2.default.createElement(
-	              'div',
-	              { className: 'navbar-header' },
+	              'nav',
+	              { className: 'navbar' },
 	              _react2.default.createElement(
-	                'ul',
-	                { className: 'nav nav-stacked' },
+	                'div',
+	                { className: 'navbar-header' },
 	                _react2.default.createElement(
-	                  'li',
-	                  { className: 'eachLink' },
+	                  'ul',
+	                  { className: 'nav nav-stacked' },
 	                  _react2.default.createElement(
-	                    _reactRouter.IndexLink,
-	                    { to: '/' },
-	                    _react2.default.createElement('span', { className: 'glyphicon glyphicon-home', style: { marginRight: '10px' } }),
-	                    '\u0413\u043B\u0430\u0432\u043D\u0430\u044F'
-	                  )
-	                ),
-	                _react2.default.createElement(
-	                  'li',
-	                  { className: 'eachLink' },
+	                    'li',
+	                    { className: 'eachLink' },
+	                    _react2.default.createElement(
+	                      _reactRouter.IndexLink,
+	                      { to: '/' },
+	                      _react2.default.createElement('span', { className: 'glyphicon glyphicon-home', style: { marginRight: '10px' } }),
+	                      '\u0413\u043B\u0430\u0432\u043D\u0430\u044F'
+	                    )
+	                  ),
 	                  _react2.default.createElement(
-	                    _reactRouter.Link,
-	                    { to: '/lesson' },
-	                    _react2.default.createElement('span', { className: 'glyphicon glyphicon-calendar', style: { marginRight: '10px' } }),
-	                    '\u0423\u0440\u043E\u043A'
-	                  )
-	                ),
-	                _react2.default.createElement(
-	                  'li',
-	                  { className: 'eachLink' },
+	                    'li',
+	                    { className: 'eachLink' },
+	                    _react2.default.createElement(
+	                      _reactRouter.Link,
+	                      { to: '/lesson' },
+	                      _react2.default.createElement('span', { className: 'glyphicon glyphicon-calendar', style: { marginRight: '10px' } }),
+	                      '\u0423\u0440\u043E\u043A'
+	                    )
+	                  ),
 	                  _react2.default.createElement(
-	                    _reactRouter.Link,
-	                    { to: '/movie' },
-	                    _react2.default.createElement('span', { className: 'glyphicon glyphicon-film', style: { marginRight: '10px' } }),
-	                    '\u0424\u0438\u043B\u044C\u043C'
-	                  )
-	                ),
-	                _react2.default.createElement(
-	                  'li',
-	                  { className: 'eachLink' },
+	                    'li',
+	                    { className: 'eachLink' },
+	                    _react2.default.createElement(
+	                      _reactRouter.Link,
+	                      { to: '/movie' },
+	                      _react2.default.createElement('span', { className: 'glyphicon glyphicon-film', style: { marginRight: '10px' } }),
+	                      '\u0424\u0438\u043B\u044C\u043C'
+	                    )
+	                  ),
 	                  _react2.default.createElement(
-	                    _reactRouter.Link,
-	                    { to: '/book' },
-	                    _react2.default.createElement('span', { className: 'glyphicon glyphicon-book', style: { marginRight: '10px' } }),
-	                    '\u041A\u043D\u0438\u0433\u0430'
-	                  )
-	                ),
-	                _react2.default.createElement(
-	                  'li',
-	                  { className: 'eachLink' },
+	                    'li',
+	                    { className: 'eachLink' },
+	                    _react2.default.createElement(
+	                      _reactRouter.Link,
+	                      { to: '/book' },
+	                      _react2.default.createElement('span', { className: 'glyphicon glyphicon-book', style: { marginRight: '10px' } }),
+	                      '\u041A\u043D\u0438\u0433\u0430'
+	                    )
+	                  ),
 	                  _react2.default.createElement(
-	                    _reactRouter.Link,
-	                    { to: '/insight' },
-	                    _react2.default.createElement('span', { className: 'glyphicon glyphicon-facetime-video', style: { marginRight: '10px' } }),
-	                    '\u0418\u043D\u0441\u0430\u0439\u0442'
+	                    'li',
+	                    { className: 'eachLink' },
+	                    _react2.default.createElement(
+	                      _reactRouter.Link,
+	                      { to: '/insight' },
+	                      _react2.default.createElement('span', { className: 'glyphicon glyphicon-facetime-video', style: { marginRight: '10px' } }),
+	                      '\u0418\u043D\u0441\u0430\u0439\u0442'
+	                    )
 	                  )
 	                )
 	              )
 	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'col-md-10 baseChilds' },
+	            this.props.children
 	          )
-	        ) : _react2.default.createElement('div', null),
-	        _react2.default.createElement(
+	        ) : _react2.default.createElement(
 	          'div',
-	          { className: 'col-md-10 baseChilds' },
+	          null,
 	          this.props.children
 	        )
 	      );
@@ -48722,7 +48730,7 @@
 	      { className: 'row text-center' },
 	      _react2.default.createElement(
 	        'div',
-	        { className: 'col-sm-5 col-sm-offset-4', style: { marginTop: '3%' } },
+	        { className: 'col-md-5 center-block', style: { marginTop: '3%' } },
 	        _react2.default.createElement(
 	          'h2',
 	          { className: 'logo' },
@@ -49022,7 +49030,7 @@
 	      { className: 'row text-center' },
 	      _react2.default.createElement(
 	        'div',
-	        { className: 'col-sm-5 col-sm-offset-4', style: { marginTop: '3%' } },
+	        { className: 'col-md-5 center-block', style: { marginTop: '3%' } },
 	        _react2.default.createElement(
 	          'h2',
 	          { className: 'logo' },
@@ -49299,7 +49307,7 @@
 	      { className: 'row text-center' },
 	      _react2.default.createElement(
 	        'div',
-	        { className: 'col-sm-5 col-sm-offset-4', style: { marginTop: '3%' } },
+	        { className: 'col-md-5 center-block', style: { marginTop: '3%' } },
 	        _react2.default.createElement(
 	          'h2',
 	          { className: 'logo' },
@@ -49563,7 +49571,7 @@
 	      { className: 'row text-center' },
 	      _react2.default.createElement(
 	        'div',
-	        { className: 'col-sm-5 col-sm-offset-4', style: { marginTop: '3%' } },
+	        { className: 'col-md-5 center-block', style: { marginTop: '3%' } },
 	        _react2.default.createElement(
 	          'h2',
 	          { className: 'logo' },

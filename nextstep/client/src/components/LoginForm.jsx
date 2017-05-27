@@ -11,7 +11,7 @@ const LoginForm = ({
 }) => (
 <div className="container">
   <div className="row text-center">
-  <div className="col-sm-5 col-sm-offset-4" style={{marginTop: '3%'}}>
+  <div className="col-md-5 center-block" style={{marginTop: '3%'}}>
   <h2 className="logo"><span className="next">Next</span><span className="step">Step</span></h2>
     <div className="notAuthForm">
       <form action="/" onSubmit={onSubmit}>

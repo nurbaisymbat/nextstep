@@ -5,6 +5,9 @@ body {
   background-color: #EBEFF2;
   overflow-x: hidden;
 }
+.center-block{
+  float:none
+}
 .logo {
   font-weight: bold;
   margin-top: 10px;
