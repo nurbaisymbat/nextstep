@@ -26,7 +26,7 @@ const BaseA = ({ children }) => (
         ) : (
           <div></div>
         )}
-    <div className="col-md-10 baseChilds">
+    <div className="col-md-10 col-md-offset-2">
       {children}
     </div>
   </div>

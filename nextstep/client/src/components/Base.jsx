@@ -5,6 +5,37 @@ import Auth from '../modules/Auth';
 import axios from 'axios';
 
 class Base extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      user: {
+        myImg: ''
+      }
+    };
+
+    this.loadImg = this.loadImg.bind(this);
+  }
+  loadImg() {
+    axios.get('/api/getUser',  {
+      responseType: 'json',
+      headers: {
+        'Content-type': 'application/x-www-form-urlencoded',
+        'Authorization': `bearer ${Auth.getToken()}`
+      }
+    })
+      .then(res => {
+          this.setState({
+            user: res.data.user
+          });
+      });
+  }
+  componentWillMount(){
+      this.loadImg();
+  }
+  componentWillUpdate(){
+      this.loadImg();
+  }
   render() {
     return (
       <div>
@@ -15,7 +46,14 @@ class Base extends React.Component {
             <h2 className="logo"><span className="next">Next</span><span className="step">Step</span></h2>
           </div>
           <div className="thumbnail text-center" style={{marginBottom: '30%',marginLeft: '-15%'}}>
+          {this.state.user.myImg.length > 0?(
+            <Link to="/profile_page"><img src={require('../../../public/userImgs/'+this.state.user.myImg)} className="img-circle" style={{width: '50%'}}/></Link>
+
+          ):(
             <Link to="/profile_page"><img src={require('../../../public/img/no-user-image.jpg')} className="img-circle" style={{width: '50%'}}/></Link>
+
+          )}
+            <h5>{this.state.user.name}</h5>
             <h4 className="text-center"><Link to="/profile_page"><span className="glyphicon glyphicon-cog navglyphicon"></span></Link>
             <Link to="/logout"><span className="glyphicon glyphicon-off navglyphicon"></span></Link></h4>
           </div>
@@ -31,7 +69,7 @@ class Base extends React.Component {
             </div>
           </nav>
           </div>
-          <div className="col-md-10 baseChilds">
+          <div className="col-md-10 col-md-offset-2">
             {this.props.children}
           </div>
           </div>

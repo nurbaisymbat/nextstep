@@ -8,6 +8,9 @@ body {
 .center-block{
   float:none
 }
+/*.container {
+  margin-left: 37%;
+}*/
 .logo {
   font-weight: bold;
   margin-top: 10px;
@@ -174,6 +177,7 @@ body {
   margin-top: -1%;
   padding-top: 2%;
   padding-bottom: 20%;
+  position: fixed;
 }
 
 
