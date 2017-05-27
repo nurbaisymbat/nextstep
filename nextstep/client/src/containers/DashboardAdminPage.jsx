@@ -1,4 +1,4 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
 import Auth from '../modules/Auth';
 import DashboardAdmin from '../components/DashboardAdmin.jsx';
 import axios from 'axios';
@@ -7,8 +7,8 @@ const today = new Date();
 
 class DashboardAdminPage extends React.Component {
 
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
 
     this.state = {
       maxPoints: 0,
@@ -45,7 +45,4 @@ class DashboardAdminPage extends React.Component {
 
 }
 
-DashboardAdminPage.contextTypes = {
-  router: PropTypes.object.isRequired
-};
 export default DashboardAdminPage;

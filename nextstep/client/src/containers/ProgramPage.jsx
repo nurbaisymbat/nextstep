@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import Auth from '../modules/Auth';
 import Program from '../components/Program.jsx';
 import axios from 'axios';
@@ -207,13 +207,11 @@ class ProgramPage extends React.Component {
       })
         .catch(error => {
         if (error.response) {
-          //console.log(error.response);
           const errors = error.response ? error.response : {};
           errors.summary = error.data.message;
           this.setState({
             errors
           });
-          //console.log(error.response.data.errors.name);
           console.log(errors.data.message);
         }
         });
@@ -238,7 +236,6 @@ class ProgramPage extends React.Component {
       checkNavBar: 3,
       myBook: result[0]
     });
-      //console.log(this.state.myBook)
   }
   setNewBook(){
     this.setState({
@@ -306,13 +303,11 @@ class ProgramPage extends React.Component {
       })
         .catch(error => {
         if (error.response) {
-          //console.log(error.response);
           const errors = error.response ? error.response : {};
           errors.summary = error.data.message;
           this.setState({
             errors
           });
-          //console.log(error.response.data.errors.name);
           console.log(errors.data.message);
         }
         });
@@ -404,13 +399,11 @@ class ProgramPage extends React.Component {
       })
         .catch(error => {
         if (error.response) {
-          //console.log(error.response);
           const errors = error.response ? error.response : {};
           errors.summary = error.data.message;
           this.setState({
             errors
           });
-          //console.log(error.response.data.errors.name);
           console.log(errors.data.message);
         }
         });

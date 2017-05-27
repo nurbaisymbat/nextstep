@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 import moment from 'moment';
 
@@ -16,7 +17,11 @@ const UserProfile = ({
 <div className="col-md-7">
   <div className="row personal well">
     <div className="col-md-4">
+    {user.myImg.length > 0 ?(
+      <img src={require('../../../public/userImgs/'+user.myImg)} className="img-thumbnail" />
+    ):(
       <img src={require('../../../public/img/no-user-image.jpg')} className="img-thumbnail" />
+    )}
     </div>
     <div className="col-md-8">
       <div className="row">

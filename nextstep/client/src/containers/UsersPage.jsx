@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import Auth from '../modules/Auth';
 import Users from '../components/Users.jsx';
 import axios from 'axios';
@@ -25,7 +25,8 @@ class UsersPage extends React.Component {
     axios.get('/profile/getusers',  {
       responseType: 'json',
       headers: {
-        'Content-type': 'application/x-www-form-urlencoded'
+        'Content-type': 'application/x-www-form-urlencoded',
+        'Authorization': `bearer ${Auth.getToken()}`
       }
     })
       .then(res => {

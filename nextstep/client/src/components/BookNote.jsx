@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 import YouTube from 'react-youtube';
 import moment from 'moment';
@@ -21,7 +22,11 @@ const BookNote = ({
     <div className="col-md-4 description well">
     <div className="row">
       <div className="col-md-3">
-        <img src={require('../../../public/img/no-user-image.jpg')} className="img-circle" style={{width: '70px'}}/>
+      {user.myImg.length > 0 ?(
+        <img src={require('../../../public/userImgs/'+user.myImg)} className="img-circle" style={{width: '70px'}} />
+      ):(
+        <img src={require('../../../public/img/no-user-image.jpg')} className="img-circle" style={{width: '70px'}} />
+      )}
       </div>
       <div className="col-md-9">
       <h4>{user.name}</h4>

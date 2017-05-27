@@ -21,9 +21,13 @@ module.exports = {
         options: {
           limit: 25000,
         },
-      }
-
+      },
+      { test: /\.json$/, loader: "json-loader" }
     ]
+  },
+  node: {
+    net: 'empty',
+    dns: 'empty'
   },
   watch: true
 }

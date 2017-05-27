@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import Auth from '../modules/Auth';
 import Insight from '../components/Insight.jsx';
 import axios from 'axios';
@@ -6,9 +6,7 @@ import axios from 'axios';
 const opts = {
       height: '390',
       width: '640',
-      //playerVars: { // https://developers.google.com/youtube/player_parameters
-        autoplay: 0
-      //}
+      autoplay: 0
     };
 
 class InsightPage extends React.Component {
@@ -30,7 +28,7 @@ class InsightPage extends React.Component {
   }
 
   componentDidMount() {
-    axios.get('/profile/insight',  {
+    axios.get('/api/insight',  {
       responseType: 'json',
       headers: {
         'Content-type': 'application/x-www-form-urlencoded',
@@ -38,7 +36,6 @@ class InsightPage extends React.Component {
       }
     })
       .then(res => {
-        //console.log(res.data.movie);
           this.setState({
               messageErr: res.data.message,
               checkDate: res.data.checkDate
@@ -46,7 +43,6 @@ class InsightPage extends React.Component {
       });
   }
   _onReady(event) {
-    // access to player in all event handlers via event.target
     event.target.pauseVideo();
   }
 
@@ -64,7 +60,7 @@ class InsightPage extends React.Component {
     else {
       const myInsight = encodeURIComponent(this.state.myInsight);
       const formData = `myInsight=${myInsight}`;
-      axios.post('/profile/insightUpload', formData, {
+      axios.post('/api/insightUpload', formData, {
         responseType: 'json',
         headers: {
         'Content-type': 'application/x-www-form-urlencoded',

@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 import DatePicker from 'react-bootstrap-date-picker';
 import moment from 'moment';
@@ -18,7 +19,10 @@ const Profile = ({
   dateChange,
   notes,
   messageNotes,
-  myProgress
+  myProgress,
+  uploadMyImage,
+  changeImg,
+  imagePreviewUrl
 }) => (
 <div className="container">
 <h3><em>Профиль</em></h3>
@@ -26,7 +30,28 @@ const Profile = ({
   <div className="col-md-7">
     <div className="row personal well">
       <div className="col-md-4">
-        <img src={require('../../../public/img/256x256bb.jpg')} className="img-thumbnail" />
+        <form action="/" hidden={!hide} onSubmit={uploadMyImage}>
+        {(imagePreviewUrl.length > 0) && (user.myImg.length >= 0) ?(
+          <img src={imagePreviewUrl} className="img-thumbnail"/>
+        ): (imagePreviewUrl.length == 0) && (user.myImg.length > 0) ?(
+          <img src={require('../../../public/userImgs/'+user.myImg)} className="img-thumbnail"/>
+        ):(
+          <img src={require('../../../public/img/256x256bb.jpg')} className="img-thumbnail"/>
+        )}
+          <div className="input-group-addon" style={{borderRadius: '3px'}}>
+            <span className="btn-file">
+                Обзор <input type="file" className="btn btn-default btn-block" onChange={changeImg} style={{height: 'inherit'}}/>
+            </span>
+          </div>
+          <button type="submit" className="btn btn-default btn-block" style={{marginTop: '5px'}}> Загрузить </button>
+        </form>
+        <div hidden={hide}>
+        {(user.myImg.length > 0) ?(
+          <img src={require('../../../public/userImgs/'+user.myImg)} className="img-thumbnail"/>
+        ):(
+          <img src={require('../../../public/img/256x256bb.jpg')} className="img-thumbnail" />
+        )}
+        </div>
       </div>
       <div className="col-md-8">
         <div className="row">
@@ -47,24 +72,49 @@ const Profile = ({
               <span className="col-sm-8 personalInfo">{user.email}</span>
             </p>
           </div>
-          <div className="row">
-            <p>
-              <span className="col-sm-4 personalLabel">Дата рождения:</span>
-              <span className="col-sm-8 personalInfo">{moment(birthday).format('LL')}</span>
-            </p>
-          </div>
-          <div className="row">
-            <p>
-              <span className="col-sm-4 personalLabel">Город:</span>
-              <span className="col-sm-8 personalInfo">{personalInfo.city}</span>
-            </p>
-          </div>
-          <div className="row">
-            <p>
-              <span className="col-sm-4 personalLabel">Номер:</span>
-              <span className="col-sm-8 personalInfo">{personalInfo.phone}</span>
-            </p>
-          </div>
+          {Object.getOwnPropertyNames(personalInfo).length === 0 ?(
+            <div>
+            <div className="row">
+              <p>
+                <span className="col-sm-4 personalLabel">Дата рождения:</span>
+                <span className="col-sm-8 personalInfo">Неизвестно</span>
+              </p>
+            </div>
+            <div className="row">
+              <p>
+                <span className="col-sm-4 personalLabel">Город:</span>
+                <span className="col-sm-8 personalInfo">Неизвестно</span>
+              </p>
+            </div>
+            <div className="row">
+              <p>
+                <span className="col-sm-4 personalLabel">Номер:</span>
+                <span className="col-sm-8 personalInfo">Неизвестно</span>
+              </p>
+            </div>
+            </div>
+          ):(
+            <div>
+            <div className="row">
+              <p>
+                <span className="col-sm-4 personalLabel">Дата рождения:</span>
+                <span className="col-sm-8 personalInfo">{moment(birthday).format('LL')}</span>
+              </p>
+            </div>
+            <div className="row">
+              <p>
+                <span className="col-sm-4 personalLabel">Город:</span>
+                <span className="col-sm-8 personalInfo">{personalInfo.city}</span>
+              </p>
+            </div>
+            <div className="row">
+              <p>
+                <span className="col-sm-4 personalLabel">Номер:</span>
+                <span className="col-sm-8 personalInfo">{personalInfo.phone}</span>
+              </p>
+            </div>
+            </div>
+          )}
         </div>
         <div hidden={!hide}>
           <form action="/" onSubmit={onSubmit} className="form-horizontal">

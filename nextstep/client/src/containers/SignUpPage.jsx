@@ -1,16 +1,13 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import HomePage from '../components/HomePage.jsx';
 import axios from 'axios';
 
 class SignUpPage extends React.Component {
 
-  /**
-   * Class constructor.
-   */
   constructor(props, context) {
     super(props, context);
 
-    // set the initial component state
     this.state = {
       errors: {},
       user: {
@@ -29,13 +26,7 @@ class SignUpPage extends React.Component {
     this.checkAccept = this.checkAccept.bind(this);
   }
 
-  /**
-   * Process the form.
-   *
-   * @param {object} event - the JavaScript event object
-   */
   processForm(event) {
-    // prevent default action. in this case, action is the form submission event
     event.preventDefault();
 
     const name = encodeURIComponent(this.state.user.name);
@@ -49,40 +40,28 @@ class SignUpPage extends React.Component {
         'Content-type': 'application/x-www-form-urlencoded'}
     })
       .then(res => {
-        //console.log(res);
         if (res.status === 200) {
-          // success
 
-          // change the component-container state
           this.setState({
             errors: {}
           });
 
           localStorage.setItem('successMessage', res.data.message);
 
-          // make a redirect
           this.context.router.replace('/login');
         }
       })
         .catch(error => {
         if (error.response) {
-          //console.log(error.response);
           const errors = error.response ? error.response : {};
           errors.summary = error.response.data.message;
           this.setState({
             errors
           });
-          //console.log(error.response.data.errors.name);
-          //console.log(errors.summary);
         }
         });
   }
 
-  /**
-   * Change the user object.
-   *
-   * @param {object} event - the JavaScript event object
-   */
   changeUser(event) {
     const field = event.target.name;
     const user = this.state.user;
@@ -117,9 +96,7 @@ class SignUpPage extends React.Component {
       checked: !this.state.checked
     });
   }
-  /**
-   * Render the component.
-   */
+
   render() {
     return (
       <HomePage

@@ -1,32 +1,40 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import Auth from '../modules/Auth';
 import Profile from '../components/Profile.jsx';
 import axios from 'axios';
 import DatePicker from 'react-bootstrap-date-picker';
 
+const jwt = require('jsonwebtoken');
+const config = require('../../../config');
+
+var token = Auth.getToken();
+var userImg = '';
+jwt.verify(token, config.jwtSecret, (err, decoded) => {
+  userImg = decoded.userImg;
+})
+
 class ProfilePage extends React.Component {
 
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
 
     this.state = {
       errors: {},
       message: '',
       birthday: '',
-      personalInfo: {
-        birthDate: '',
-        city: '',
-        phone: ''
-      },
+      personalInfo: {},
       user: {
         email: '',
-        name: ''
+        name: '',
+        myImg: userImg
       },
       checked: false,
       hide: false,
       notes: [],
       messageNotes: '',
-      myProgress: {}
+      myProgress: {},
+      file: '',
+      imagePreviewUrl: ''
     };
 
     this.processForm = this.processForm.bind(this);
@@ -35,6 +43,8 @@ class ProfilePage extends React.Component {
     this.onClick = this.onClick.bind(this);
     this.componentDidMount = this.componentDidMount.bind(this);
     this.dateChange = this.dateChange.bind(this);
+    this.uploadMyImage = this.uploadMyImage.bind(this);
+    this.changeImg = this.changeImg.bind(this);
   }
   onClick(event){
     this.componentDidMount();
@@ -44,7 +54,7 @@ class ProfilePage extends React.Component {
     });
   }
   componentDidMount() {
-    axios.get('/profile/profile',  {
+    axios.get('/api/profile',  {
       responseType: 'json',
       headers: {
         'Content-type': 'application/x-www-form-urlencoded',
@@ -104,7 +114,7 @@ class ProfilePage extends React.Component {
     else {
 
       const formData = `birthDate=${birthDate}&city=${city}&phone=${phone}`;
-      axios.post('/profile/profileChange', formData, {
+      axios.post('/api/profileChange', formData, {
         responseType: 'json',
         headers: {
         'Content-type': 'application/x-www-form-urlencoded',
@@ -122,14 +132,11 @@ class ProfilePage extends React.Component {
         })
           .catch(error => {
           if (error.response) {
-            //console.log(error.response);
             const errors = error.response ? error.response : {};
             errors.summary = "Нeизвестная ошибка";
             this.setState({
               errors
             });
-            //console.log(error.response.data.errors.name);
-            //console.log(errors.summary);
           }
           });
     }
@@ -156,6 +163,41 @@ class ProfilePage extends React.Component {
       checked: true
     });
   }
+  changeImg(e){
+    e.preventDefault();
+
+    let reader = new FileReader();
+    let file = e.target.files[0];
+
+    reader.onloadend = () => {
+      this.setState({
+        file: file,
+        imagePreviewUrl: reader.result
+      });
+    }
+    reader.readAsDataURL(file)
+  }
+
+  uploadMyImage(e){
+    e.preventDefault();
+    return new Promise((resolve, reject) => {
+      let imageFormData = new FormData();
+      imageFormData.append('imageFile', this.state.file);
+      axios.post('/api/uploadImg', imageFormData, {
+        responseType: 'json',
+        headers: {
+        'Content-type': 'application/x-www-form-urlencoded',
+        'Authorization': `bearer ${Auth.getToken()}`
+        }
+      })
+        .then(res => {
+            this.setState({
+              user: res.data.user
+            });
+        });
+    });
+  }
+
   render() {
     return (
       <Profile
@@ -173,14 +215,13 @@ class ProfilePage extends React.Component {
         notes={this.state.notes}
         messageNotes={this.state.messageNotes}
         myProgress={this.state.myProgress}
+        uploadMyImage={this.uploadMyImage}
+        changeImg={this.changeImg}
+        imagePreviewUrl={this.state.imagePreviewUrl}
       />
     );
   }
 
 }
-
-ProfilePage.contextTypes = {
-  router: PropTypes.object.isRequired
-};
 
 export default ProfilePage;

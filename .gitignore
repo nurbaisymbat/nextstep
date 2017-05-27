@@ -1,2 +1,4 @@
 /nextstep/client/dist
 /nextstep/node_modules
+/nextstep/public/userImgs
+/nextstep/public/files

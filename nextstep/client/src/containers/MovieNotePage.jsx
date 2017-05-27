@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import Auth from '../modules/Auth';
 import MovieNote from '../components/MovieNote.jsx';
 import axios from 'axios';
@@ -7,9 +7,7 @@ import getYouTubeID from 'get-youtube-id';
 const opts = {
       height: '390',
       width: '640',
-      //playerVars: { // https://developers.google.com/youtube/player_parameters
-        autoplay: 0
-      //}
+      autoplay: 0
     };
 
 class MovieNotePage extends React.Component {
@@ -20,7 +18,9 @@ class MovieNotePage extends React.Component {
     this.state = {
       movieNoteId: props.location.query.note,
       movienote: {},
-      user: {},
+      user: {
+        myImg: ''
+      },
       movie: {},
       videoId: ''
     };
@@ -28,14 +28,14 @@ class MovieNotePage extends React.Component {
     this.onApprove = this.onApprove.bind(this);
   }
   _onReady(event) {
-    // access to player in all event handlers via event.target
     event.target.pauseVideo();
   }
   componentDidMount() {
     axios.get('/profile/getmovienote?movieNoteId='+this.state.movieNoteId,  {
       responseType: 'json',
       headers: {
-        'Content-type': 'application/x-www-form-urlencoded'
+        'Content-type': 'application/x-www-form-urlencoded',
+        'Authorization': `bearer ${Auth.getToken()}`
       }
     })
       .then(res => {

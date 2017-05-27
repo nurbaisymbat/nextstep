@@ -15,7 +15,8 @@ const UserSchema = new mongoose.Schema({
   name: String,
   signedDate: { type: Date, default: Date.now },
   status: Number,
-  points: Number
+  points: Number,
+  myImg: { type: String, default: ''}
 });
 
 UserSchema.methods.comparePassword = function comparePassword(password, callback) {

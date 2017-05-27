@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import Auth from '../modules/Auth';
 import BookNote from '../components/BookNote.jsx';
 import axios from 'axios';
@@ -12,7 +12,9 @@ class BookNotePage extends React.Component {
     this.state = {
       bookNoteId: props.location.query.note,
       booknote: {},
-      user: {},
+      user: {
+        myImg: ''
+      },
       book: {}
     };
     this.onApprove = this.onApprove.bind(this);
@@ -21,7 +23,8 @@ class BookNotePage extends React.Component {
     axios.get('/profile/getbooknote?bookNoteId='+this.state.bookNoteId,  {
       responseType: 'json',
       headers: {
-        'Content-type': 'application/x-www-form-urlencoded'
+        'Content-type': 'application/x-www-form-urlencoded',
+        'Authorization': `bearer ${Auth.getToken()}`
       }
     })
       .then(res => {

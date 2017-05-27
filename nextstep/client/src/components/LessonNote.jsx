@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 import YouTube from 'react-youtube';
 import moment from 'moment';
@@ -19,7 +20,11 @@ const LessonNote = ({
       <h4>Урок: <span className="text-uppercase text-primary">"{lesson.title}"</span></h4>
       <div className="row" style={{marginTop: '25px'}}>
         <div className="col-md-2">
-          <img src={require('../../../public/img/no-user-image.jpg')} className="img-circle" style={{width: '70px'}}/>
+        {user.myImg.length > 0 ?(
+          <img src={require('../../../public/userImgs/'+user.myImg)} className="img-circle" style={{width: '70px'}} />
+        ):(
+          <img src={require('../../../public/img/no-user-image.jpg')} className="img-circle" style={{width: '70px'}} />
+        )}
         </div>
         <div className="col-md-7">
           <h4>{user.name}</h4>

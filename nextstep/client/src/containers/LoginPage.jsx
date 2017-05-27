@@ -1,13 +1,11 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import Auth from '../modules/Auth';
 import LoginForm from '../components/LoginForm.jsx';
 import axios from 'axios';
 
 class LoginPage extends React.Component {
 
-  /**
-   * Class constructor.
-   */
   constructor(props, context) {
     super(props, context);
 
@@ -19,7 +17,6 @@ class LoginPage extends React.Component {
       localStorage.removeItem('successMessage');
     }
 
-    // set the initial component state
     this.state = {
       errors: {},
       successMessage,
@@ -42,21 +39,18 @@ class LoginPage extends React.Component {
     axios.post('/auth/login', formData, {
       responseType: 'json',
       headers: {
-        'Content-type': 'application/x-www-form-urlencoded'}
+        'Content-type': 'application/x-www-form-urlencoded',
+        'Authorization': `bearer ${Auth.getToken()}`
+      }
     })
       .then(res => {
-        //console.log(res);
         if (res.status === 200) {
-          // success
 
-          // change the component-container state
           this.setState({
             errors: {}
           });
 
-          // save the token
           Auth.authenticateUser(res.data.token);
-          // change the current URL to /
           this.context.router.replace('/');
         }
       })
@@ -72,11 +66,6 @@ class LoginPage extends React.Component {
         });
   }
 
-  /**
-   * Change the user object.
-   *
-   * @param {object} event - the JavaScript event object
-   */
   changeUser(event) {
     const field = event.target.name;
     const user = this.state.user;
@@ -85,12 +74,8 @@ class LoginPage extends React.Component {
     this.setState({
       user
     });
-    //console.log(user);
   }
 
-  /**
-   * Render the component.
-   */
   render() {
     return (
       <LoginForm

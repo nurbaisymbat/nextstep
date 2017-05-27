@@ -1,4 +1,4 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
 import Auth from '../modules/Auth';
 import Dashboard from '../components/Dashboard.jsx';
 import axios from 'axios';
@@ -69,7 +69,4 @@ class DashboardPage extends React.Component {
 
 }
 
-DashboardPage.contextTypes = {
-  router: PropTypes.object.isRequired
-};
 export default DashboardPage;

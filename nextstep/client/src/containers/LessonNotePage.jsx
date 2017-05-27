@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import Auth from '../modules/Auth';
 import LessonNote from '../components/LessonNote.jsx';
 import axios from 'axios';
@@ -14,7 +14,9 @@ class LessonNotePage extends React.Component {
     this.state = {
       lessonNoteId: props.location.query.note,
       lessonnote: {},
-      user: {},
+      user: {
+        myImg: ''
+      },
       lesson: {},
       tasks: [],
       deadline: tomorrow
@@ -27,7 +29,8 @@ class LessonNotePage extends React.Component {
     axios.get('/profile/getlessonnote?lessonNoteId='+this.state.lessonNoteId,  {
       responseType: 'json',
       headers: {
-        'Content-type': 'application/x-www-form-urlencoded'
+        'Content-type': 'application/x-www-form-urlencoded',
+        'Authorization': `bearer ${Auth.getToken()}`
       }
     })
       .then(res => {
@@ -49,7 +52,8 @@ class LessonNotePage extends React.Component {
     axios.post('/profile/approvenote', formData,  {
       responseType: 'json',
       headers: {
-        'Content-type': 'application/x-www-form-urlencoded'
+        'Content-type': 'application/x-www-form-urlencoded',
+        'Authorization': `bearer ${Auth.getToken()}`
       }
     })
       .then(res => {

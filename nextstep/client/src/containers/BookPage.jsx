@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import Auth from '../modules/Auth';
 import Book from '../components/Book.jsx';
 import axios from 'axios';
@@ -33,7 +33,7 @@ class BookPage extends React.Component {
   }
 
   componentDidMount() {
-    axios.get('/profile/getbook',  {
+    axios.get('/api/getbook',  {
       responseType: 'json',
       headers: {
         'Content-type': 'application/x-www-form-urlencoded',
@@ -112,7 +112,7 @@ class BookPage extends React.Component {
     const bookNoteText = encodeURIComponent(this.state.myBookNote);
     const bookId = encodeURIComponent(this.state.myBook._id);
     const formData = `bookNoteText=${bookNoteText}&bookId=${bookId}`;
-    axios.post('/profile/addbooknote', formData, {
+    axios.post('/api/addbooknote', formData, {
       responseType: 'json',
       headers: {
       'Content-type': 'application/x-www-form-urlencoded',

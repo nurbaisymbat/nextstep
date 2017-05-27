@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import moment from 'moment';
 import Trello from './Trello.jsx';
 moment.locale('ru');
@@ -32,14 +33,17 @@ const Dashboard = ({
         </div>
         <div className="row totalPoints well">
           <h4>Топ стажеров</h4>
-          {users.map((userr, u) =>
+          {users.slice(0, 5).map((userr, u) =>
               <div key={u}>
-              {u < 5 ?(
                 <div>
                   <div className="row">
                     <div className="col-md-1"><h4 style={{marginTop: '16px'}}>{u+1}</h4></div>
                     <div className="col-md-2">
+                    {userr.myImg.length > 0 ?(
+                      <img src={require('../../../public/userImgs/'+userr.myImg)} className="img-circle" style={{width: '50px'}}/>
+                    ):(
                       <img src={require('../../../public/img/no-user-image.jpg')} className="img-circle" style={{width: '50px'}}/>
+                    )}
                     </div>
                     <div className="col-md-6">
                       <h5>{userr.name}</h5>
@@ -58,10 +62,6 @@ const Dashboard = ({
                   </div>
                   </div>
                 </div>
-              ):(
-                <div></div>
-              )}
-
               </div>
           )}
         </div>

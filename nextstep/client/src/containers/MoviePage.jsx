@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import Auth from '../modules/Auth';
 import Movie from '../components/Movie.jsx';
 import axios from 'axios';
@@ -7,9 +7,7 @@ import getYouTubeID from 'get-youtube-id';
 const opts = {
       height: '390',
       width: '640',
-      //playerVars: { // https://developers.google.com/youtube/player_parameters
-        autoplay: 0
-      //}
+      autoplay: 0
     };
 class MoviePage extends React.Component {
 
@@ -43,11 +41,10 @@ class MoviePage extends React.Component {
   }
 
   _onReady(event) {
-    // access to player in all event handlers via event.target
     event.target.pauseVideo();
   }
   componentDidMount() {
-    axios.get('/profile/getmovie',  {
+    axios.get('/api/getmovie',  {
       responseType: 'json',
       headers: {
         'Content-type': 'application/x-www-form-urlencoded',
@@ -125,7 +122,7 @@ class MoviePage extends React.Component {
     const movieNoteText = encodeURIComponent(this.state.myMovieNote);
     const movieId = encodeURIComponent(this.state.myMovie._id);
     const formData = `movieNoteText=${movieNoteText}&movieId=${movieId}`;
-    axios.post('/profile/addmovienote', formData, {
+    axios.post('/api/addmovienote', formData, {
       responseType: 'json',
       headers: {
       'Content-type': 'application/x-www-form-urlencoded',

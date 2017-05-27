@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 
 const HomePage = ({
@@ -11,9 +12,9 @@ const HomePage = ({
   checkAccept,
   checked
 }) => (
-<div className="container" style={{marginTop: '3%', marginLeft: '10%'}}>
+<div className="container">
   <div className="row text-center">
-  <div className="col-sm-5 col-sm-offset-3">
+  <div className="col-sm-5 col-sm-offset-4" style={{marginTop: '3%'}}>
   <h2 className="logo"><span className="next">Next</span><span className="step">Step</span></h2>
     <div className="notAuthForm">
       <form action="/" onSubmit={onSubmit}>

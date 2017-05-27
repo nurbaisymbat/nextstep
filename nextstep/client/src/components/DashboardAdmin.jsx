@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 const DashboardAdmin = ({
   users,
@@ -32,14 +33,17 @@ const DashboardAdmin = ({
       <div className="col-md-6">
         <div className="row remainedDays well">
           <h4>Топ стажеров</h4>
-          {users.map((user, u) =>
+          {users.slice(0, 5).map((user, u) =>
               <div key={u}>
-              {u < 5 ?(
                 <div>
                   <div className="row">
                     <div className="col-md-1"><h4 style={{marginTop: '16px'}}>{u+1}</h4></div>
                     <div className="col-md-2">
+                    {user.myImg.length > 0 ?(
+                      <img src={require('../../../public/userImgs/'+user.myImg)} className="img-circle" style={{width: '50px'}}/>
+                    ):(
                       <img src={require('../../../public/img/no-user-image.jpg')} className="img-circle" style={{width: '50px'}}/>
+                    )}
                     </div>
                     <div className="col-md-6">
                       <h5>{user.name}</h5>
@@ -58,10 +62,6 @@ const DashboardAdmin = ({
                   </div>
                   </div>
                 </div>
-              ):(
-                <div></div>
-              )}
-
               </div>
           )}
         </div>

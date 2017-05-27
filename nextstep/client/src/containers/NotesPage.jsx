@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import Auth from '../modules/Auth';
 import Notes from '../components/Notes.jsx';
 import axios from 'axios';
@@ -26,7 +26,8 @@ class NotesPage extends React.Component {
     axios.get('/profile/getnotes',  {
       responseType: 'json',
       headers: {
-        'Content-type': 'application/x-www-form-urlencoded'
+        'Content-type': 'application/x-www-form-urlencoded',
+        'Authorization': `bearer ${Auth.getToken()}`
       }
     })
       .then(res => {

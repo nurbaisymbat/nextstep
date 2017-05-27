@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import Auth from '../modules/Auth';
 import Lesson from '../components/Lesson.jsx';
 import axios from 'axios';
@@ -7,9 +7,7 @@ import getYouTubeID from 'get-youtube-id';
 const opts = {
       height: '390',
       width: '640',
-      //playerVars: { // https://developers.google.com/youtube/player_parameters
-        autoplay: 0
-      //}
+      autoplay: 0
     };
 const tomorrow = new Date();
 tomorrow.setDate(tomorrow.getDate() + 1);
@@ -40,11 +38,10 @@ class LessonPage extends React.Component {
   }
 
   _onReady(event) {
-    // access to player in all event handlers via event.target
     event.target.pauseVideo();
   }
   componentDidMount() {
-    axios.get('/profile/getlesson',  {
+    axios.get('/api/getlesson',  {
       responseType: 'json',
       headers: {
         'Content-type': 'application/x-www-form-urlencoded',
@@ -52,7 +49,6 @@ class LessonPage extends React.Component {
       }
     })
       .then(res => {
-        //console.log(res.data.movie);
           this.setState({
             myLesson: res.data.lesson,
             videoId: getYouTubeID(res.data.lesson.url),
@@ -65,7 +61,7 @@ class LessonPage extends React.Component {
     return new Promise((resolve, reject) => {
       let imageFormData = new FormData();
       imageFormData.append('imageFile', this.state.file);
-      axios.post('/profile/upload?lessonId='+this.state.myLesson._id, imageFormData, {
+      axios.post('/api/upload?lessonId='+this.state.myLesson._id, imageFormData, {
         responseType: 'json',
         headers: {
         'Content-type': 'application/x-www-form-urlencoded',

@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import Auth from '../modules/Auth';
 import UserProfile from '../components/UserProfile.jsx';
 import axios from 'axios';
@@ -12,7 +12,9 @@ class UserProfilePage extends React.Component {
     this.state = {
       userId: props.location.query.user,
       personalInfo: {},
-      user: {},
+      user: {
+        myImg: ''
+      },
       notes: [],
       messageNotes: '',
       myProgress: {}
@@ -24,7 +26,8 @@ class UserProfilePage extends React.Component {
     axios.get('/profile/getprofile?userId='+this.state.userId,  {
       responseType: 'json',
       headers: {
-        'Content-type': 'application/x-www-form-urlencoded'
+        'Content-type': 'application/x-www-form-urlencoded',
+        'Authorization': `bearer ${Auth.getToken()}`
       }
     })
       .then(res => {

@@ -1,16 +1,12 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import ForgotForm from '../components/ForgotForm.jsx';
 import axios from 'axios';
 
 class ForgotPage extends React.Component {
 
-  /**
-   * Class constructor.
-   */
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
 
-    // set the initial component state
     this.state = {
       errors: {},
       user: {
@@ -23,13 +19,7 @@ class ForgotPage extends React.Component {
     this.changeUser = this.changeUser.bind(this);
   }
 
-  /**
-   * Process the form.
-   *
-   * @param {object} event - the JavaScript event object
-   */
   processForm(event) {
-    // prevent default action. in this case, action is the form submission event
     event.preventDefault();
 
     const email = encodeURIComponent(this.state.user.email);
@@ -40,11 +30,8 @@ class ForgotPage extends React.Component {
         'Content-type': 'application/x-www-form-urlencoded'}
     })
       .then(res => {
-        //console.log(res);
         if (res.status === 200) {
-          // success
 
-          // change the component-container state
           this.setState({
             errors: {},
             user: {
@@ -52,13 +39,10 @@ class ForgotPage extends React.Component {
             },
             successMessage: 'Ссылка для восстанавления пароля отправлен Вам на почту'
           });
-
-          // make a redirect
         }
       })
         .catch(error => {
         if (error.response) {
-          //console.log(error.response);
           const errors = this.state.errors;
           errors.summary = 'Аккаунт с этой электронной почтой не зарегистрирован';
           this.setState({
@@ -67,17 +51,10 @@ class ForgotPage extends React.Component {
               email: ''
             }
           });
-          //console.log(error.response.data.errors.name);
-          //console.log(errors.summary);
         }
         });
   }
 
-  /**
-   * Change the user object.
-   *
-   * @param {object} event - the JavaScript event object
-   */
   changeUser(event) {
     const field = event.target.name;
     const user = this.state.user;
@@ -86,9 +63,7 @@ class ForgotPage extends React.Component {
       user
     });
   }
-  /**
-   * Render the component.
-   */
+
   render() {
     return (
       <ForgotForm
@@ -102,9 +77,5 @@ class ForgotPage extends React.Component {
   }
 
 }
-
-ForgotPage.contextTypes = {
-  router: PropTypes.object.isRequired
-};
 
 export default ForgotPage;

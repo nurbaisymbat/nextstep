@@ -1,8 +1,11 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import Auth from '../modules/Auth';
 import axios from 'axios';
 import moment from 'moment';
 moment.locale('ru');
+
+const today = new Date();
 
 class Trello extends React.Component {
 
@@ -15,7 +18,7 @@ class Trello extends React.Component {
     };
   }
   componentDidMount(){
-    axios.get('/profile/gettrello',  {
+    axios.get('/api/gettrello',  {
       responseType: 'json',
       headers: {
         'Content-type': 'application/x-www-form-urlencoded',
@@ -25,7 +28,7 @@ class Trello extends React.Component {
       .then(res => {
           this.setState({
             myTrello: res.data.myTrello,
-            checkloading: true
+            checkloading: !this.state.checkloading
           });
       });
   }
@@ -56,7 +59,14 @@ class Trello extends React.Component {
                     </div>
                     <div className="col-md-3">
                       <h5>Дата сдачи</h5>
-                      <h5 className="text-muted">{moment(trello.due).format('L')}</h5>
+                      {(new Date(trello.due).getDate() == today.getDate()) && (new Date(trello.due).getMonth() == today.getMonth()) ?(
+                        <h5 className="text-warning">{moment(trello.due).format('L')}</h5>
+                      ):((new Date(trello.due).getDate() > today.getDate()) && (new Date(trello.due).getMonth() >= today.getMonth())) || (new Date(trello.due).getDate() <= today.getDate()) && (new Date(trello.due).getMonth() > today.getMonth()) ?(
+                        <h5 className="text-danger">{moment(trello.due).format('L')}</h5>
+                      ):(
+                        <h5 className="text-muted">{moment(trello.due).format('L')}</h5>
+                      )}
+
                     </div>
                   </div>
                   <hr/>

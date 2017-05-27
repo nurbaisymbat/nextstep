@@ -58,7 +58,7 @@ body {
   padding-left: 25px;
 }
 .profileSend{
-  margin-top: 10px;
+  margin-top: 17px;
 }
 .myPencil{
   margin-top: 10px;
@@ -241,6 +241,9 @@ body {
       cursor: inherit;
       display: block;
   }
+.personal .input-group-addon {
+  padding: 10px;
+}
 .input-file-browse{
   background: #DCDCDC;
 }

@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import Auth from '../modules/Auth';
 import Settings from '../components/Settings.jsx';
 import axios from 'axios';
@@ -27,7 +27,8 @@ class SettingsPage extends React.Component {
     axios.get('/profile/getpoints',  {
       responseType: 'json',
       headers: {
-        'Content-type': 'application/x-www-form-urlencoded'
+        'Content-type': 'application/x-www-form-urlencoded',
+        'Authorization': `bearer ${Auth.getToken()}`
       }
     })
       .then(res => {

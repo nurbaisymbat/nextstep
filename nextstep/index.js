@@ -14,21 +14,21 @@ app.use(bodyParser.urlencoded({extended:false}));
 
 app.use(passport.initialize());
 
-const profileRoutes = require('./server/routes/profile');
-app.use('/profile', profileRoutes);
-
 const localSignupStrategy = require('./server/passport/local-signup');
 const localLoginStrategy = require('./server/passport/local-login');
 passport.use('local-signup', localSignupStrategy);
 passport.use('local-login', localLoginStrategy);
 
-const authCheckMiddleware = require('./server/middleware/auth-check');
-app.use('/api', authCheckMiddleware);
-
 const authRoutes = require('./server/routes/auth');
-const apiRoutes = require('./server/routes/api');
 app.use('/auth', authRoutes);
-app.use('/api', apiRoutes);
+
+const apiRoutes = require('./server/routes/api');
+const authCheckMiddleware = require('./server/middleware/auth-check');
+app.use('/api', authCheckMiddleware, apiRoutes);
+
+const statusCheckMiddleware = require('./server/middleware/status-check');
+const profileRoutes = require('./server/routes/profile');
+app.use('/profile', statusCheckMiddleware, profileRoutes);
 
 app.get("/*", function(req, res) {
 res.sendFile(__dirname + '/server/static/index.html')

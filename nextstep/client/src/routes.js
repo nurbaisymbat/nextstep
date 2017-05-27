@@ -21,21 +21,26 @@ import BookNotePage from './containers/BookNotePage.jsx';
 import LessonNotePage from './containers/LessonNotePage.jsx';
 import InsightNotePage from './containers/InsightNotePage.jsx';
 import Auth from './modules/Auth';
-var jwtDecode = require('jwt-decode');
+const jwt = require('jsonwebtoken');
+const config = require('../../config');
 
 const routes = {
   // base component (wrapper for the whole application).
   getComponent: (location, callback) => {
     if (Auth.isUserAuthenticated()){
       var token = Auth.getToken();
-      var decoded = jwtDecode(token);
-      var userStatus = decoded.userstatus;
-      if(userStatus == 1){
-        callback(null, BaseA);
-      }
-      else {
-        callback(null, Base);
-      }
+      jwt.verify(token, config.jwtSecret, (err, decoded) => {
+        if (err) { return res.status(401).end(); }
+        else {
+          var userStatus = decoded.userstatus;
+          if(userStatus == 1){
+            callback(null, BaseA);
+          }
+          else {
+            callback(null, Base);
+          }
+        }
+      })
     } else {
       callback(null, Base);
     }
@@ -47,14 +52,18 @@ const routes = {
       getComponent: (location, callback) => {
         if (Auth.isUserAuthenticated()){
           var token = Auth.getToken();
-          var decoded = jwtDecode(token);
-          var userStatus = decoded.userstatus;
-          if(userStatus == 1){
-            callback(null, DashboardAdminPage);
-          }
-          else {
-            callback(null, DashboardPage);
-          }
+          jwt.verify(token, config.jwtSecret, (err, decoded) => {
+            if (err) { return res.status(401).end(); }
+            else {
+              var userStatus = decoded.userstatus;
+              if(userStatus == 1){
+                callback(null, DashboardAdminPage);
+              }
+              else {
+                callback(null, DashboardPage);
+              }
+            }
+          })
         } else {
           callback(null, SignUpPage);
         }
@@ -91,7 +100,7 @@ const routes = {
        }
     },
     {
-      path: '/profile',
+      path: '/profile_page',
       getComponent: (location, callback) => {
           if (Auth.isUserAuthenticated()){
             callback(null, ProfilePage);
