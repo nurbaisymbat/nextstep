@@ -34,7 +34,7 @@ const Profile = ({
         {(imagePreviewUrl.length > 0) && (user.myImg.length >= 0) ?(
           <img src={imagePreviewUrl} className="img-thumbnail"/>
         ): (imagePreviewUrl.length == 0) && (user.myImg.length > 0) ?(
-          <img src={require('../../../public/userImgs/'+user.myImg)} className="img-thumbnail"/>
+          <img src={require('/public/userImgs/'+user.myImg)} className="img-thumbnail"/>
         ):(
           <img src={require('../../../public/img/256x256bb.jpg')} className="img-thumbnail"/>
         )}
@@ -47,7 +47,7 @@ const Profile = ({
         </form>
         <div hidden={hide}>
         {(user.myImg.length > 0) ?(
-          <img src={require('../../../public/userImgs/'+user.myImg)} className="img-thumbnail"/>
+          <img src={require('/public/userImgs/'+user.myImg)} className="img-thumbnail"/>
         ):(
           <img src={require('../../../public/img/256x256bb.jpg')} className="img-thumbnail" />
         )}

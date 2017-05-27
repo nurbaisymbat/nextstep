@@ -13,7 +13,7 @@ module.exports = new PassportLocalStrategy({
   session: false,
   passReqToCallback: true
 }, (req, email, password, done) => {
-  const userData = {
+  var userData = {
     email: email.trim(),
     password: password.trim()
   };
@@ -23,7 +23,7 @@ module.exports = new PassportLocalStrategy({
     if (err) { return done(err); }
 
     if (!user) {
-      const error = new Error('Неправильный email или пароль');
+      var error = new Error('Неправильный email или пароль');
       error.name = 'IncorrectCredentialsError';
 
 
@@ -35,19 +35,19 @@ module.exports = new PassportLocalStrategy({
       if (err) { return done(err); }
 
       if (!isMatch) {
-        const error = new Error('Неправильный email или пароль');
+        var error = new Error('Неправильный email или пароль');
         error.name = 'IncorrectCredentialsError';
         return done(error);
       }
 
-      const payload = {
+      var payload = {
         sub: user._id,
         userstatus: user.status
       };
 
       // create a token string
-      const token = jwt.sign(payload, config.jwtSecret);
-      const data = {
+      var token = jwt.sign(payload, config.jwtSecret);
+      var data = {
         user: user
       };
 
