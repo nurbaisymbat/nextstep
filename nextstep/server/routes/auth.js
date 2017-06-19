@@ -203,7 +203,7 @@ router.post('/newpassword', (req, res, next) => {
 
 router.post('/forgot', (req, res, next) => {
   var userEmail = req.body.email.trim();
-  var mailText = 'Для того, чтобы поменять пароль пройдите по ссылке:<br/> http://91.201.215.12/change?email='+userEmail; //http://localhost:8080/change?email='+userEmail;
+  var mailText = 'Для того, чтобы поменять пароль пройдите по ссылке:<br/> http://95.85.22.205:8080/change?email='+userEmail; //http://localhost:8080/change?email='+userEmail;
   User.findOne({email: userEmail}).exec(function(err, user){
       if (err){
         console.log(err);

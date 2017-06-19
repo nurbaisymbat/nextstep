@@ -7,10 +7,7 @@ const UserSchema = new mongoose.Schema({
     type: String,
     index: { unique: true }
   },
-  trelloUser: {
-    type: String,
-    index: { unique: true }
-  },
+  trelloUser: String,
   password: String,
   name: String,
   signedDate: { type: Date, default: Date.now },
