@@ -60,7 +60,8 @@ const LessonNote = ({
         </div>
       </div>
     </div>
-    <div className="col-md-4 description well">
+    <div className="col-md-4">
+    <div className="description well">
       <h4>Описание</h4>
       <h4><small>{lesson.description}</small></h4>
       <h4 className="taskList">Задания</h4>
@@ -79,6 +80,7 @@ const LessonNote = ({
         )}
         </div>
       )}
+    </div>
     </div>
   </div>
 </div>

@@ -4,7 +4,8 @@ const MovieSchema = new mongoose.Schema({
   title: String,
   description: String,
   url: String,
-  day: Number
+  day: Number,
+  department: String
 });
 
 

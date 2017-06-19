@@ -61,11 +61,34 @@ class ProgramPage extends React.Component {
         url: '',
         tasks:['','','']
       }],
+
+      myDepartment: '',
+      chosenDepartment: '',
+      myBookListAll: [{
+        _id: '',
+        title: '',
+        description: '',
+        url: ''
+      }],
+      myMovieListAll: [{
+        _id: '',
+        title: '',
+        description: '',
+        url: ''
+      }],
+      myLessonListAll: [{
+        _id: '',
+        title: '',
+        description: '',
+        url: '',
+        tasks:['','','']
+      }]
     };
     //общие
     this.changeNavBar = this.changeNavBar.bind(this);
     this.onClickReset = this.onClickReset.bind(this);
     this.changeNavWeek = this.changeNavWeek.bind(this);
+    this.changeDepartment = this.changeDepartment.bind(this);
 
     //for book
     this.changeBookTitle = this.changeBookTitle.bind(this);
@@ -150,11 +173,31 @@ class ProgramPage extends React.Component {
       }
     })
       .then(res => {
+        if(res.data.myDepartment == 'all'){
           this.setState({
+            myDepartment: res.data.myDepartment,
+            myBookList: res.data.book.filter(function(b) {
+                              return b.department.indexOf('Дизайн') > -1;
+                          }),
+            myMovieList: res.data.movie.filter(function(m) {
+                              return m.department.indexOf('Дизайн') > -1;
+                          }),
+            myLessonList: res.data.lesson.filter(function(l) {
+                              return l.department.indexOf('Дизайн') > -1;
+                          }),
+            myBookListAll: res.data.book,
+            myMovieListAll: res.data.movie,
+            myLessonListAll: res.data.lesson,
+            chosenDepartment: 'Дизайн'
+          });
+        } else {
+          this.setState({
+            myDepartment: res.data.myDepartment,
             myBookList: res.data.book,
             myMovieList: res.data.movie,
             myLessonList: res.data.lesson
           });
+        }
       });
   }
   onClickReset(){
@@ -188,7 +231,8 @@ class ProgramPage extends React.Component {
     const bookTitle = encodeURIComponent(this.state.myBook.title);
     const bookDescription = encodeURIComponent(this.state.myBook.description);
     const bookUrl = encodeURIComponent(this.state.myBook.url);
-    const formData = `bookId=${bookId}&bookTitle=${bookTitle}&bookDescription=${bookDescription}&bookUrl=${bookUrl}`;
+    const chosenDepartment = encodeURIComponent(this.state.chosenDepartment);
+    const formData = `chosenDepartment=${chosenDepartment}&bookId=${bookId}&bookTitle=${bookTitle}&bookDescription=${bookDescription}&bookUrl=${bookUrl}`;
     axios.post('/profile/addbook', formData, {
       responseType: 'json',
       headers: {
@@ -284,7 +328,8 @@ class ProgramPage extends React.Component {
     const movieTitle = encodeURIComponent(this.state.myMovie.title);
     const movieDescription = encodeURIComponent(this.state.myMovie.description);
     const movieUrl = encodeURIComponent(this.state.myMovie.url);
-    const formData = `movieId=${movieId}&movieTitle=${movieTitle}&movieDescription=${movieDescription}&movieUrl=${movieUrl}`;
+    const chosenDepartment = encodeURIComponent(this.state.chosenDepartment);
+    const formData = `chosenDepartment=${chosenDepartment}&movieId=${movieId}&movieTitle=${movieTitle}&movieDescription=${movieDescription}&movieUrl=${movieUrl}`;
     axios.post('/profile/addmovie', formData, {
       responseType: 'json',
       headers: {
@@ -379,7 +424,8 @@ class ProgramPage extends React.Component {
     const lessonTask1 = encodeURIComponent(this.state.myLesson.tasks[0]);
     const lessonTask2 = encodeURIComponent(this.state.myLesson.tasks[1]);
     const lessonTask3 = encodeURIComponent(this.state.myLesson.tasks[2]);
-    const formData = `lessonId=${lessonId}&lessonTitle=${lessonTitle}&lessonDescription=${lessonDescription}&lessonUrl=${lessonUrl}&lessonTask1=${lessonTask1}&lessonTask2=${lessonTask2}&lessonTask3=${lessonTask3}`;
+    const chosenDepartment = encodeURIComponent(this.state.chosenDepartment);
+    const formData = `chosenDepartment=${chosenDepartment}&lessonId=${lessonId}&lessonTitle=${lessonTitle}&lessonDescription=${lessonDescription}&lessonUrl=${lessonUrl}&lessonTask1=${lessonTask1}&lessonTask2=${lessonTask2}&lessonTask3=${lessonTask3}`;
     axios.post('/profile/addlesson', formData, {
       responseType: 'json',
       headers: {
@@ -408,7 +454,20 @@ class ProgramPage extends React.Component {
         }
         });
   }
-
+  changeDepartment(event){
+    this.setState({
+      chosenDepartment: event.target.value,
+      myBookList: this.state.myBookListAll.filter(function(b) {
+                        return b.department.indexOf(event.target.value) > -1;
+                    }),
+      myMovieList: this.state.myMovieListAll.filter(function(m) {
+                        return m.department.indexOf(event.target.value) > -1;
+                    }),
+      myLessonList: this.state.myLessonListAll.filter(function(l) {
+                        return l.department.indexOf(event.target.value) > -1;
+                    })
+    });
+  }
   render() {
     return (
       <Program
@@ -444,6 +503,9 @@ class ProgramPage extends React.Component {
         getThisLesson={this.getThisLesson}
         setNewLesson={this.setNewLesson}
         changeLessonTask={this.changeLessonTask}
+
+        myDepartment={this.state.myDepartment}
+        changeDepartment={this.changeDepartment}
       />
     );
   }

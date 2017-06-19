@@ -40,10 +40,10 @@ const Profile = ({
         ):(
           <img src={require('../../../public/img/256x256bb.jpg')} className="img-thumbnail"/>
         )}
-          <div className="input-group-addon" style={{borderRadius: '3px'}}>
-            <span className="btn-file">
-                Обзор <input type="file" className="btn btn-default btn-block" onChange={changeImg} style={{height: 'inherit'}}/>
-            </span>
+          <div className="input-group-addon change-img" style={{borderRadius: '3px'}}>
+            <div className="btn-file">
+                Обзор <input type="file" className="btn btn-default btn-block" onChange={changeImg} />
+            </div>
           </div>
           <button type="submit" className="btn btn-default btn-block" style={{marginTop: '5px'}} disabled={!uploaded}> Загрузить </button>
         </form>
@@ -58,7 +58,14 @@ const Profile = ({
       <div className="col-md-8">
         <div className="row">
           <div className="col-md-8">
-            <h4 className="text-left">{user.name}</h4>
+            <h4 className="text-left" style={{marginBottom: '0px'}}>{user.name}</h4>
+            <h4 className="text-left" style={{margin: '0px'}}>
+            {user.department == 'Дизайн' ?(
+                <small>Дизайнер</small>
+            ):(
+              <small>Программист</small>
+            )}
+            </h4>
           </div>
           <div className="col-md-4" hidden={hide}>
             <span className="glyphicon glyphicon-pencil myPencil" onClick={onClick}></span>

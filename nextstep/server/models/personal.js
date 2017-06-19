@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
 
 // define the User model schema
 const PersonalSchema = new mongoose.Schema({

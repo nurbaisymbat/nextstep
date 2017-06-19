@@ -5,7 +5,8 @@ const BookNotesSchema = new mongoose.Schema({
   bookId: {type: mongoose.Schema.Types.ObjectId, ref: 'Book'},
   text: String,
   date: { type: Date, default: Date.now },
-  approved: { type: Number, default: 0}
+  approved: { type: Number, default: 0},
+  department: String
 });
 
 

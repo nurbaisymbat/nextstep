@@ -26,6 +26,7 @@ const Notes = ({
         <div className="col-md-3"><h5><strong>Пользователь</strong></h5></div>
         <div className="col-md-3"><h5><strong>Категория</strong></h5></div>
         <div className="col-md-3"><h5><strong>Дата</strong></h5></div>
+        <div className="col-md-3"><h5><strong>Отдел</strong></h5></div>
       </div>
       <hr style={{marginTop: '10px', marginBottom: '0px'}}/>
       {message && <p style={{ fontSize: '14px', color: 'red' }}>{message}</p>}
@@ -43,6 +44,9 @@ const Notes = ({
                   <div className="col-md-3">
                     {moment(note.date).format('LLL')}
                   </div>
+                  <div className="col-md-3">
+                    {note.department}
+                  </div>
                 </div>
               </Link>
             ):(note.type == 'movie')?(
@@ -56,6 +60,9 @@ const Notes = ({
                   </div>
                   <div className="col-md-3">
                     {moment(note.date).format('LLL')}
+                  </div>
+                  <div className="col-md-3">
+                    {note.department}
                   </div>
                 </div>
               </Link>
@@ -71,6 +78,9 @@ const Notes = ({
                   <div className="col-md-3">
                     {moment(note.date).format('LLL')}
                   </div>
+                  <div className="col-md-3">
+                    {note.department}
+                  </div>
                 </div>
               </Link>
             ):(
@@ -84,6 +94,9 @@ const Notes = ({
                   </div>
                   <div className="col-md-3">
                     {moment(note.date).format('LLL')}
+                  </div>
+                  <div className="col-md-3">
+                    {note.department}
                   </div>
                 </div>
               </Link>

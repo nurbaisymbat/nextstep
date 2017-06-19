@@ -3,7 +3,7 @@ const validator = require('validator');
 const passport = require('passport');
 var User = require('../models/user');
 const nodemailer = require('nodemailer');
-const bcrypt = require('bcrypt');
+const bcryptjs = require('bcryptjs');
 
 const router = new express.Router();
 
@@ -134,13 +134,22 @@ router.post('/login', (req, res, next) => {
       if (err.name === 'IncorrectCredentialsError') {
         return res.status(400).json({
           success: false,
-          message: err.message
+          message: err.message,
+          name: 'IncorrectCredentialsError'
+        });
+      }
+      else if (err.name === 'FirstLogin') {
+        return res.status(400).json({
+          success: false,
+          message: err.message,
+          name: 'FirstLogin'
         });
       }
 
       return res.status(400).json({
         success: false,
-        message: 'Could not process the form.'
+        message: 'Could not process the form.',
+        name: 'Could not process the form.'
       });
     }
     return res.json({
@@ -150,6 +159,46 @@ router.post('/login', (req, res, next) => {
       user: userData
     });
   })(req, res, next);
+});
+
+router.post('/newpassword', (req, res, next) => {
+  var email = req.body.email;
+  var password = req.body.password;
+  User.findOneAndUpdate({email: email}, { $set: {password: bcryptjs.hashSync(password, 10)}}, { new: true }, (err) => {
+    if(err) { console.log(err) }
+    else {
+      return passport.authenticate('local-login', (err, token, userData) => {
+        if (err) {
+          if (err.name === 'IncorrectCredentialsError') {
+            return res.status(400).json({
+              success: false,
+              message: err.message,
+              name: 'IncorrectCredentialsError'
+            });
+          }
+          else if (err.name === 'FirstLogin') {
+            return res.status(400).json({
+              success: false,
+              message: err.message,
+              name: 'FirstLogin'
+            });
+          }
+
+          return res.status(400).json({
+            success: false,
+            message: 'Could not process the form.',
+            name: 'Could not process the form.'
+          });
+        }
+        return res.json({
+          success: true,
+          message: 'Вы успешно авторизовались!',
+          token,
+          user: userData
+        });
+      })(req, res, next);
+    }
+  })
 });
 
 router.post('/forgot', (req, res, next) => {
@@ -202,10 +251,10 @@ router.post('/change', (req, res, next) => {
       console.log(err);
     }
     else {
-       bcrypt.genSalt((saltError, salt) => {
+       bcryptjs.genSalt((saltError, salt) => {
         if (saltError) { return next(saltError); }
 
-        return bcrypt.hash(userNewPwd, salt, (hashError, hash) => {
+        return bcryptjs.hash(userNewPwd, salt, (hashError, hash) => {
           if (hashError) { return next(hashError); }
 
           userNewPwd = hash;

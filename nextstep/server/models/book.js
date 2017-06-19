@@ -4,7 +4,8 @@ const BookSchema = new mongoose.Schema({
   title: String,
   description: String,
   url: String,
-  week: Number
+  week: Number,
+  department: String
 });
 
 

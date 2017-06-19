@@ -12,7 +12,7 @@ var Insight = require('../models/insight');
 var MovieNotes = require('../models/movienotes');
 var BookNotes = require('../models/booknotes');
 var Points = require('../models/points');
-var request  = require('request')
+var request  = require('request');
 var moment = require('moment');
 moment.locale('ru');
 
@@ -45,106 +45,218 @@ router.get('/dashboard', (req, res) => {
       const userId = decoded.sub;
       var maxPoints = 0;
       var maxPointsPercent = 0;
-      User.findOne({_id: userId}).exec(function(err, user){
+      User.findOne({_id: userId}, (err, user) => {
           if (err){
             console.log(err);
           } else {
-            Points.find((err, points) => {
-              if(err) { console.log(err) }
-              else {
-                maxPoints = points[0].video*480 + points[0].book*80 + (points[0].task * 3*480) + points[0].insight*8;
-                User.find({status: 2}, (err, users) => {
-                  if(err) { console.log(err) }
-                  else {
-                    users.sort(function(a,b) {return (a.points > b.points) ? -1 : ((b.points > a.points) ? 1 : 0);} );
-                    if(user.status == 1){
-                      var startOfWeek = moment().startOf('isoweek').toDate();
-                      var endOfWeek   = moment().endOf('isoweek').toDate();
-                      var myStartOfWeek = moment(startOfWeek).utcOffset('+6').format();
-                      var myEndOfWeek = moment(endOfWeek).utcOffset('+6').format()
-                      BookNotes.find({'date': {
-                        $gt: myStartOfWeek,
-                        $lt: myEndOfWeek
-                      }}, (err, booknotes) => {
-                        if(err) { console.log(err) }
-                        else {
-                          MovieNotes.find({'date': {
-                            $gt: myStartOfWeek,
-                            $lt: myEndOfWeek
-                          }}, (err, movienotes) => {
-                            if(err) { console.log(err) }
-                            else {
-                              Insight.find({'date': {
-                                $gt: myStartOfWeek,
-                                $lt: myEndOfWeek
-                              }}, (err, insights) => {
-                                if(err) { console.log(err) }
-                                else {
-                                  var temp = 0;
-                                  var tempObj = {
-                                    name: '',
-                                    movies: 0,
-                                    books: 0,
-                                    insight: 0
-                                  };
-                                  var tempArr = [];
-                                  users.forEach(function(arrayItem){
-                                    booknotes.forEach(function(bookItem){
-                                      if(arrayItem._id.toString() == bookItem.userId.toString()){
-                                        temp++;
+            if (decoded.department == 'all'){
+              Points.find((err, points) => {
+                if(err) { console.log(err) }
+                else {
+                  maxPoints = points[0].video*480 + points[0].book*80 + (points[0].task * 3*480) + points[0].insight*8;
+                  var maxPointsProgramming = points[1].video*480 + points[1].book*80 + (points[1].task * 3*480) + points[1].insight*8;
+                  User.find({status: 2}, (err, users) => {
+                    if(err) { console.log(err) }
+                    else {
+                      var usersDesign = [];
+                      var usersProgramming = [];
+                      users.forEach(function(us){
+                        if(us.department == 'Дизайн'){
+                          usersDesign.push(us);
+                        } else {
+                          usersProgramming.push(us);
+                        }
+                      })
+                      usersDesign.sort(function(a,b) {return (a.points > b.points) ? -1 : ((b.points > a.points) ? 1 : 0);} );
+                      usersProgramming.sort(function(a,b) {return (a.points > b.points) ? -1 : ((b.points > a.points) ? 1 : 0);} );
+                        var startOfWeek = moment().startOf('isoweek').toDate();
+                        var endOfWeek   = moment().endOf('isoweek').toDate();
+                        var myStartOfWeek = moment(startOfWeek).utcOffset('+6').format();
+                        var myEndOfWeek = moment(endOfWeek).utcOffset('+6').format()
+                        BookNotes.find({'date': {
+                          $gt: myStartOfWeek,
+                          $lt: myEndOfWeek
+                        }}, (err, booknotes) => {
+                          if(err) { console.log(err) }
+                          else {
+                            MovieNotes.find({'date': {
+                              $gt: myStartOfWeek,
+                              $lt: myEndOfWeek
+                            }}, (err, movienotes) => {
+                              if(err) { console.log(err) }
+                              else {
+                                Insight.find({'date': {
+                                  $gt: myStartOfWeek,
+                                  $lt: myEndOfWeek
+                                }}, (err, insights) => {
+                                  if(err) { console.log(err) }
+                                  else {
+                                    var temp = 0;
+                                    var tempObj = {
+                                      name: '',
+                                      movies: 0,
+                                      books: 0,
+                                      insight: 0,
+                                      department: ''
+                                    };
+                                    var tempArrDesign = [];
+                                    var tempArrProgramming = [];
+                                    users.forEach(function(arrayItem){
+                                      booknotes.forEach(function(bookItem){
+                                        if(arrayItem._id.toString() == bookItem.userId.toString()){
+                                          temp++;
+                                        }
+                                      });
+                                      tempObj.books = temp;
+                                      temp=0;
+                                      movienotes.forEach(function(movieItem){
+                                        if(arrayItem._id.toString() == movieItem.userId.toString()){
+                                          temp++;
+                                        }
+                                      });
+                                      tempObj.movies = temp;
+                                      temp=0;
+                                      insights.forEach(function(insightItem){
+                                        if(arrayItem._id.toString() == insightItem.userId.toString()){
+                                          temp++;
+                                        }
+                                      });
+                                      tempObj.insight = temp;
+                                      temp=0;
+                                      tempObj.name = arrayItem.name;
+                                      tempObj.department = arrayItem.department;
+                                      if((tempObj.books > 0) || (tempObj.movies > 0) || (tempObj.insight > 0)){
+                                        if(tempObj.department == 'Дизайн'){
+                                          tempArrDesign.push(tempObj);
+                                        } else {
+                                          tempArrProgramming.push(tempObj);
+                                        }
                                       }
+                                      tempObj = {
+                                        name: '',
+                                        movies: 0,
+                                        books: 0,
+                                        insight: 0,
+                                        department: ''
+                                      };
                                     });
-                                    tempObj.books = temp;
-                                    temp=0;
-                                    movienotes.forEach(function(movieItem){
-                                      if(arrayItem._id.toString() == movieItem.userId.toString()){
-                                        temp++;
-                                      }
+                                    res.status(200).send({
+                                      maxPointsDesign: maxPoints,
+                                      maxPointsProgramming: maxPointsProgramming,
+                                      usersDesign: usersDesign,
+                                      usersProgramming: usersProgramming,
+                                      progressDesign: tempArrDesign,
+                                      progressProgramming: tempArrProgramming
                                     });
-                                    tempObj.movies = temp;
-                                    temp=0;
-                                    insights.forEach(function(insightItem){
-                                      if(arrayItem._id.toString() == insightItem.userId.toString()){
-                                        temp++;
-                                      }
-                                    });
-                                    tempObj.insight = temp;
-                                    temp=0;
-                                    tempObj.name = arrayItem.name;
-                                    if((tempObj.books > 0) || (tempObj.movies > 0) || (tempObj.insight > 0)){
-                                      tempArr.push(tempObj);
-                                    }
-                                    tempObj = {
+                                  }
+                                })
+                              }
+                            })
+                          }
+                        })
+                    }
+                  })
+                }
+              })
+            }
+            else {
+              Points.findOne({department: decoded.department}, (err, points) => {
+                if(err) { console.log(err) }
+                else {
+                  maxPoints = points.video*480 + points.book*80 + (points.task * 3*480) + points.insight*8;
+                  User.find({status: 2, department: decoded.department}, (err, users) => {
+                    if(err) { console.log(err) }
+                    else {
+                      users.sort(function(a,b) {return (a.points > b.points) ? -1 : ((b.points > a.points) ? 1 : 0);} );
+                      if(user.status == 1){
+                        var startOfWeek = moment().startOf('isoweek').toDate();
+                        var endOfWeek   = moment().endOf('isoweek').toDate();
+                        var myStartOfWeek = moment(startOfWeek).utcOffset('+6').format();
+                        var myEndOfWeek = moment(endOfWeek).utcOffset('+6').format()
+                        BookNotes.find({'date': {
+                          $gt: myStartOfWeek,
+                          $lt: myEndOfWeek
+                        }, department: decoded.department}, (err, booknotes) => {
+                          if(err) { console.log(err) }
+                          else {
+                            MovieNotes.find({'date': {
+                              $gt: myStartOfWeek,
+                              $lt: myEndOfWeek
+                            }, department: decoded.department}, (err, movienotes) => {
+                              if(err) { console.log(err) }
+                              else {
+                                Insight.find({'date': {
+                                  $gt: myStartOfWeek,
+                                  $lt: myEndOfWeek
+                                }, department: decoded.department}, (err, insights) => {
+                                  if(err) { console.log(err) }
+                                  else {
+                                    var temp = 0;
+                                    var tempObj = {
                                       name: '',
                                       movies: 0,
                                       books: 0,
                                       insight: 0
                                     };
-                                  });
-                                  res.status(200).send({
-                                    maxPoints: maxPoints,
-                                    users: users,
-                                    progress: tempArr
-                                  });
-                                }
-                              })
-                            }
-                          })
-                        }
-                      })
-                    } else {
-                      maxPointsPercent = (user.points * 100)/maxPoints;
-                      res.status(200).send({
-                          user: user,
-                          maxPoints: maxPoints,
-                          maxPointsPercent: maxPointsPercent+'%',
-                          users: users
-                      });
+                                    var tempArr = [];
+                                    users.forEach(function(arrayItem){
+                                      booknotes.forEach(function(bookItem){
+                                        if(arrayItem._id.toString() == bookItem.userId.toString()){
+                                          temp++;
+                                        }
+                                      });
+                                      tempObj.books = temp;
+                                      temp=0;
+                                      movienotes.forEach(function(movieItem){
+                                        if(arrayItem._id.toString() == movieItem.userId.toString()){
+                                          temp++;
+                                        }
+                                      });
+                                      tempObj.movies = temp;
+                                      temp=0;
+                                      insights.forEach(function(insightItem){
+                                        if(arrayItem._id.toString() == insightItem.userId.toString()){
+                                          temp++;
+                                        }
+                                      });
+                                      tempObj.insight = temp;
+                                      temp=0;
+                                      tempObj.name = arrayItem.name;
+                                      if((tempObj.books > 0) || (tempObj.movies > 0) || (tempObj.insight > 0)){
+                                        tempArr.push(tempObj);
+                                      }
+                                      tempObj = {
+                                        name: '',
+                                        movies: 0,
+                                        books: 0,
+                                        insight: 0
+                                      };
+                                    });
+                                    res.status(200).send({
+                                      maxPoints: maxPoints,
+                                      users: users,
+                                      progress: tempArr
+                                    });
+                                  }
+                                })
+                              }
+                            })
+                          }
+                        })
+                      } else {
+                        maxPointsPercent = (user.points * 100)/maxPoints;
+                        res.status(200).send({
+                            user: user,
+                            maxPoints: maxPoints,
+                            maxPointsPercent: maxPointsPercent+'%',
+                            users: users
+                        });
+                      }
                     }
-                  }
-                })
-              }
-            })
+                  })
+                }
+              })
+            }
           }
         })
     }
@@ -161,7 +273,7 @@ router.get('/getbook', (req, res) => {
         var today = new Date();
         var userSignedDate = user.signedDate;
         var findDifferenceWeek = Math.round((today - userSignedDate) /1000/60/60/24/7)+1;
-        Book.findOne({week: findDifferenceWeek}, (err, book) => {
+        Book.findOne({week: findDifferenceWeek, department: user.department}, (err, book) => {
           if(err){
             console.log(err);
           } else if(book) {
@@ -272,7 +384,7 @@ router.get('/getlesson', (req, res) => {
         var today = new Date();
         var millisecondsPerDay = 24 * 60 * 60 * 1000;
         var findDifference = Math.round((today - userSignedDate) / millisecondsPerDay)+1;
-        Lesson.findOne({day: findDifference}, (err, lesson) => {
+        Lesson.findOne({day: findDifference, department: user.department}, (err, lesson) => {
           if(err){
             console.log(err);
           } else {
@@ -297,7 +409,7 @@ router.get('/getmovie', (req, res) => {
         var today = new Date();
         var millisecondsPerDay = 24 * 60 * 60 * 1000;
         var findDifference = Math.round((today - userSignedDate) / millisecondsPerDay)+1;
-        Movie.findOne({day: findDifference}, (err, movie) => {
+        Movie.findOne({day: findDifference, department: user.department}, (err, movie) => {
           if(err){
             console.log(err);
           } else if (movie){
@@ -366,13 +478,13 @@ router.get('/profile', (req, res) => {
               else {
                 var userSignedDate = user.signedDate;
                 var findDifferenceWeek = Math.round((today - userSignedDate) /1000/60/60/24/7)+1;
-                Book.findOne({week: findDifferenceWeek}, (err, book) => {
+                Book.findOne({week: findDifferenceWeek, department: user.department}, (err, book) => {
                   if(err){
                     console.log(err);
                   } else {
                     var millisecondsPerDay = 24 * 60 * 60 * 1000;
                     var findDifference = Math.round((today - userSignedDate) / millisecondsPerDay)+1;
-                    Movie.findOne({day: findDifference}, (err, movie) => {
+                    Movie.findOne({day: findDifference, department: user.department}, (err, movie) => {
                       if(err){
                         console.log(err);
                       } else {
@@ -422,7 +534,9 @@ router.get('/profile', (req, res) => {
                                         }
                                     });
                                     xAll.forEach( function (arrayItem){
-                                      arrayItem.num = tempCount;
+                                      if(arrayItem.type == "movie"){
+                                        arrayItem.num = tempCount;
+                                      }
                                     });
                                     tempCount = 0;
                                     xAll.sort(function(a,b) {return (a.date > b.date) ? -1 : ((b.date > a.date) ? 1 : 0);} );
@@ -465,13 +579,13 @@ router.get('/profile', (req, res) => {
               else {
                 var userSignedDate = user.signedDate;
                 var findDifferenceWeek = Math.round((today - userSignedDate) /1000/60/60/24/7)+1;
-                Book.findOne({week: findDifferenceWeek}, (err, book) => {
+                Book.findOne({week: findDifferenceWeek, department: user.department}, (err, book) => {
                   if(err){
                     console.log(err);
                   } else{
                     var millisecondsPerDay = 24 * 60 * 60 * 1000;
                     var findDifference = Math.round((today - userSignedDate) / millisecondsPerDay)+1;
-                    Movie.findOne({day: findDifference}, (err, movie) => {
+                    Movie.findOne({day: findDifference, department: user.department}, (err, movie) => {
                       if(err){
                         console.log(err);
                       } else {
@@ -524,7 +638,9 @@ router.get('/profile', (req, res) => {
                                     });
 
                                     xAll.forEach( function (arrayItem){
-                                      arrayItem.num = tempCount;
+                                      if(arrayItem.type == "movie"){
+                                        arrayItem.num = tempCount;
+                                      }
                                     });
                                     tempCount = 0;
 
@@ -676,7 +792,8 @@ router.post('/addbooknote', (req, res, err) => {
       const bookNote = {
         userId: userId,
         bookId: bookID,
-        text: req.body.bookNoteText.trim()
+        text: req.body.bookNoteText.trim(),
+        department: decoded.department
       };
       BookNotes.find({userId: userId, bookId: bookID}, (err, bookNoteList) => {
         if (err){
@@ -709,7 +826,8 @@ router.post('/insightUpload', (req, res) => {
       var userId = decoded.sub;
       const insight = {
         userId: userId,
-        url: req.body.myInsight.trim()
+        url: req.body.myInsight.trim(),
+        department: decoded.department
       };
       const newInsight = new Insight(insight);
       newInsight.save((err, insight) => {
@@ -743,7 +861,8 @@ router.post('/upload', (req, res) => {
                 const fileData = {
                   userId: userId,
                   filename: fileName,
-                  lessonId: req.query.lessonId
+                  lessonId: req.query.lessonId,
+                  department: decoded.department
                 }
                 const newFile = new MyFile(fileData);
                 newFile.save((err, fileData) => {
@@ -802,7 +921,8 @@ router.post('/addmovienote', (req, res, err) => {
         const movieNote = {
           userId: userId,
           movieId: movieID,
-          text: req.body.movieNoteText.trim()
+          text: req.body.movieNoteText.trim(),
+          department: decoded.department
         };
         MovieNotes.find({userId: userId, movieId: movieID}, (err, movieNoteList) => {
           if (err){

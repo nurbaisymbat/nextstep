@@ -24,9 +24,10 @@ const Users = ({
       </div>
       <div className="row" style={{marginTop: '20px'}}>
         <div className="col-md-3"><h5><strong>Пользователь</strong></h5></div>
-        <div className="col-md-3"><h5><strong>Возраст</strong></h5></div>
+        <div className="col-md-2"><h5><strong>Возраст</strong></h5></div>
         <div className="col-md-3"><h5><strong>Местоположение</strong></h5></div>
-        <div className="col-md-3"><h5><strong>Дата регистрации</strong></h5></div>
+        <div className="col-md-2"><h5><strong>Отдел</strong></h5></div>
+        <div className="col-md-2"><h5><strong>Дата регистрации</strong></h5></div>
       </div>
       <hr style={{marginTop: '10px', marginBottom: '0px'}}/>
       {users.slice(tempSlice,mySize).map((user, u) =>
@@ -37,13 +38,16 @@ const Users = ({
                   <div className="col-md-3">
                     {user.user.name}
                   </div>
-                  <div className="col-md-3">
+                  <div className="col-md-2">
                      Неизвестно
                   </div>
                   <div className="col-md-3">
                     Неизвестно
                   </div>
-                  <div className="col-md-3">
+                  <div className="col-md-2">
+                    {user.user.department}
+                  </div>
+                  <div className="col-md-2">
                     {moment(user.user.signedDate).format('LL')}
                   </div>
                 </div>
@@ -52,16 +56,18 @@ const Users = ({
               <Link to={{ pathname: '/userProfile', query: { user: user.user._id } }}>
               <div className="row eachUser">
                 <div className="col-md-3">
-
                   {user.user.name}
                 </div>
-                <div className="col-md-3">
+                <div className="col-md-2">
                   {user.age}
                 </div>
                 <div className="col-md-3">
                   {user.personal.city}
                 </div>
-                <div className="col-md-3">
+                <div className="col-md-2">
+                  {user.personal.department}
+                </div>
+                <div className="col-md-2">
                   {moment(user.user.signedDate).format('LL')}
                 </div>
               </div>

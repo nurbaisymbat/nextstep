@@ -1,5 +1,8 @@
 import Base from './components/Base.jsx';
 import BaseA from './components/BaseA.jsx';
+import BaseMainAdmin from './components/BaseMainAdmin.jsx';
+import MainAdmin from './components/MainAdmin.jsx';
+import ChangePasswordAdmin from './components/ChangePasswordAdmin.jsx';
 import DashboardPage from './containers/DashboardPage.jsx';
 import DashboardAdminPage from './containers/DashboardAdminPage.jsx';
 import LoginPage from './containers/LoginPage.jsx';
@@ -20,6 +23,9 @@ import MovieNotePage from './containers/MovieNotePage.jsx';
 import BookNotePage from './containers/BookNotePage.jsx';
 import LessonNotePage from './containers/LessonNotePage.jsx';
 import InsightNotePage from './containers/InsightNotePage.jsx';
+import DashboardMainAdminPage from './containers/DashboardMainAdminPage.jsx';
+import SettingsMainAdminPage from './containers/SettingsMainAdminPage.jsx';
+import AdminsPage from './containers/AdminsPage.jsx';
 import Auth from './modules/Auth';
 const jwt = require('jsonwebtoken');
 const config = require('../../config');
@@ -34,7 +40,12 @@ const routes = {
         else {
           var userStatus = decoded.userstatus;
           if(userStatus == 1){
-            callback(null, BaseA);
+            if(decoded.department == "all"){
+              callback(null, BaseMainAdmin);
+            }
+            else {
+              callback(null, BaseA);
+            }
           }
           else {
             callback(null, Base);
@@ -57,7 +68,11 @@ const routes = {
             else {
               var userStatus = decoded.userstatus;
               if(userStatus == 1){
-                callback(null, DashboardAdminPage);
+                if(decoded.department == 'all'){
+                  callback(null, DashboardMainAdminPage);
+                } else {
+                  callback(null, DashboardAdminPage);
+                }
               }
               else {
                 callback(null, DashboardPage);
@@ -155,7 +170,23 @@ const routes = {
     },
     {
       path: '/settings',
-      component: SettingsPage
+      getComponent: (location, callback) => {
+        if (Auth.isUserAuthenticated()){
+          var token = Auth.getToken();
+          jwt.verify(token, config.jwtSecret, (err, decoded) => {
+            if (err) { console.log(err) }
+            else {
+              if(decoded.department == 'all'){
+                callback(null, SettingsMainAdminPage);
+              } else {
+                callback(null, SettingsPage);
+              }
+            }
+          })
+        } else {
+          callback(null, SignUpPage);
+        }
+      }
     },
     {
       path: '/users',
@@ -184,6 +215,18 @@ const routes = {
     {
       path: '/insightNote',
       component: InsightNotePage
+    },
+    {
+      path: '/admins',
+      component: AdminsPage
+    },
+    {
+      path: '/mainadmin',
+      component: MainAdmin
+    },
+    {
+      path: '/newpassword',
+      component: ChangePasswordAdmin
     },
     {
       path: '/logout',

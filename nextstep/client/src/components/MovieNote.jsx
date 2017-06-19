@@ -20,7 +20,8 @@ const MovieNote = ({
       <h4>Фильм: <span className="text-uppercase text-primary">"{movie.title}"</span></h4>
       <YouTube videoId={videoId} opts={opts} onReady={_onReady} />
     </div>
-    <div className="col-md-4 description well">
+    <div className="col-md-4">
+    <div className="description well">
     <div className="row">
       <div className="col-md-3">
         {user.myImg.length > 0 ?(
@@ -50,6 +51,7 @@ const MovieNote = ({
       ):(
         <h5 className="text-center" style={{color: 'red'}}>Вы отклонили эту заметку!</h5>
       )}
+    </div>
     </div>
   </div>
 </div>

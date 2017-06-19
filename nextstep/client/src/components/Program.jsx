@@ -34,10 +34,26 @@ const Program = ({
   myLessonList,
   getThisLesson,
   setNewLesson,
-  changeLessonTask
+  changeLessonTask,
+
+  myDepartment,
+  changeDepartment
 }) => (
   <div className="container">
   <h3><em>Программа</em></h3>
+  {myDepartment == 'all' ?(
+    <div className="row ">
+      <div className="col-md-11 well"  style={{background: 'white', width: '89.5%'}}>
+        <select className="form-control" onChange={changeDepartment}>
+          <option value="">Выберите отдел</option>
+          <option value="Дизайн">Дизайн</option>
+          <option value="Программирование">Программирование</option>
+        </select>
+      </div>
+    </div>
+  ):(
+    <div></div>
+  )}
     <div className="row">
       <div className="col-md-6 program-schedule well">
         <div className="row">

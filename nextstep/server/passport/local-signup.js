@@ -13,7 +13,8 @@ module.exports = new PassportLocalStrategy({
     name: req.body.name.trim(),
     status: 2,
     points: 0,
-    trelloUser: req.body.trelloUser.trim()
+    trelloUser: req.body.trelloUser.trim(),
+    department: req.body.department.trim()
   };
   const newUser = new User(userData);
   newUser.save((err) => {

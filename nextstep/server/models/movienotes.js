@@ -5,7 +5,8 @@ const MovieNotesSchema = new mongoose.Schema({
   movieId: {type: mongoose.Schema.Types.ObjectId, ref: 'Movie'},
   text: String,
   date: { type: Date, default: Date.now },
-  approved: { type: Number, default: 0}
+  approved: { type: Number, default: 0},
+  department: String
 });
 
 

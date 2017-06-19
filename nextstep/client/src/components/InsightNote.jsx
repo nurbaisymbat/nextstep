@@ -18,7 +18,8 @@ const InsightNote = ({
     <div className="col-md-7 material well">
       <YouTube videoId={videoId} opts={opts} onReady={_onReady} />
     </div>
-    <div className="col-md-4 description well">
+    <div className="col-md-4">
+    <div className="description well">
     <h4>Инсайт пользователя: </h4>
     <div className="row" style={{paddingTop: '20px', paddingBottom: '20px'}}>
       <div className="col-md-3">
@@ -41,6 +42,7 @@ const InsightNote = ({
       ):(
         <h5 className="text-center" style={{color: 'red'}}>Вы отклонили эту заметку!</h5>
       )}
+    </div>
     </div>
   </div>
 </div>

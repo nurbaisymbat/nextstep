@@ -32,9 +32,9 @@ const Lesson = ({
               <div className=" col-md-10 my-input-group input-group ">
                 <input type="text" className="form-control" id="inlineFormInputGroup" value={filename} placeholder="Выберите файл" disabled/>
                 <div className="input-group-addon input-file-browse">
-                  <span className="btn-file">
+                  <div className="btn-file">
                       Обзор <input type="file"  onChange={_handleImageChange}/>
-                  </span>
+                  </div>
                 </div>
               </div>
               <div className="col-md-1 upload-file-div">

@@ -4,7 +4,8 @@ const PointsSchema = new mongoose.Schema({
   video: Number,
   book: Number,
   task: Number,
-  insight: Number
+  insight: Number,
+  department: String
 });
 
 

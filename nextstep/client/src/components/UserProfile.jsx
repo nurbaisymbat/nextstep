@@ -26,7 +26,14 @@ const UserProfile = ({
     <div className="col-md-8">
       <div className="row">
         <div className="col-md-8">
-          <h4 className="text-left">{user.name}</h4>
+        <h4 className="text-left" style={{marginBottom: '0px'}}>{user.name}</h4>
+        <h4 className="text-left" style={{margin: '0px'}}>
+        {user.department == 'design' ?(
+            <small>Дизайнер</small>
+        ):(
+          <small>Программист</small>
+        )}
+        </h4>
         </div>
       </div>
       <div className=" infoDiv">

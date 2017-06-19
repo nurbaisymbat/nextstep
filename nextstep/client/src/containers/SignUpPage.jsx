@@ -14,16 +14,16 @@ class SignUpPage extends React.Component {
         email: '',
         name: '',
         password: '',
-        trelloUser: ''
+        passwordConfirm: '',
+        trelloUser: '',
+        department: ''
       },
-      passwordConfirm: '',
       checked: false
     };
 
     this.processForm = this.processForm.bind(this);
     this.changeUser = this.changeUser.bind(this);
     this.checkPasswordMatch = this.checkPasswordMatch.bind(this);
-    this.checkAccept = this.checkAccept.bind(this);
   }
 
   processForm(event) {
@@ -33,7 +33,8 @@ class SignUpPage extends React.Component {
     const trelloUser = encodeURIComponent(this.state.user.trelloUser);
     const email = encodeURIComponent(this.state.user.email);
     const password = encodeURIComponent(this.state.user.password);
-    const formData = `name=${name}&email=${email}&password=${password}&trelloUser=${trelloUser}`;
+    const department = encodeURIComponent(this.state.user.department);
+    const formData = `name=${name}&email=${email}&password=${password}&trelloUser=${trelloUser}&department=${department}`;
     axios.post('/auth/signup', formData, {
       responseType: 'json',
       headers: {
@@ -66,37 +67,49 @@ class SignUpPage extends React.Component {
     const field = event.target.name;
     const user = this.state.user;
     user[field] = event.target.value;
+
     this.setState({
       user
     });
-  }
-  checkPasswordMatch(event){
-    var pwd = this.state.user.password;
-    var pwdConfirm = event.target.value;
-    this.setState({
-      passwordConfirm: pwdConfirm
-    });
-    if(pwd != pwdConfirm){
-      const errors = this.state.errors;
-      errors.summary = "Пароли не совпадают!";
-      this.setState({
-        errors
-      });
-    }
-    else {
-      const errors = this.state.errors;
-      errors.summary = '';
-      this.setState({
-        errors
-      });
-    }
-  }
-  checkAccept (event){
-    this.setState({
-      checked: !this.state.checked
-    });
-  }
 
+    this.checkPasswordMatch();
+  }
+  checkPasswordMatch(){
+    if((this.state.user.email.length > 0) && (this.state.user.name.length > 0) && (this.state.user.password.length > 0)
+        && (this.state.user.trelloUser.length > 0) && (this.state.user.department.length > 0) && (this.state.user.passwordConfirm.length > 0)){
+          if(this.state.user.password == this.state.user.passwordConfirm){
+            const errors = this.state.errors;
+            errors.summary = '';
+            this.setState({
+              errors,
+              checked: true
+            });
+          } else {
+            const errors = this.state.errors;
+            errors.summary = "Пароли не совпадают!";
+            this.setState({
+              errors,
+              checked: false
+            });
+          }
+        } else {
+          if(this.state.user.password == this.state.user.passwordConfirm){
+            const errors = this.state.errors;
+            errors.summary = '';
+            this.setState({
+              errors,
+              checked: false
+            });
+          } else {
+            const errors = this.state.errors;
+            errors.summary = "Пароли не совпадают!";
+            this.setState({
+              errors,
+              checked: false
+            });
+          }
+        }
+  }
   render() {
     return (
       <HomePage
@@ -104,9 +117,6 @@ class SignUpPage extends React.Component {
         onChange={this.changeUser}
         errors={this.state.errors}
         user={this.state.user}
-        checkPasswordMatch={this.checkPasswordMatch}
-        passwordConfirm={this.state.passwordConfirm}
-        checkAccept={this.checkAccept}
         checked={this.state.checked}
       />
     );

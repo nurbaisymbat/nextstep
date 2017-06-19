@@ -4,7 +4,8 @@ const InsightSchema = new mongoose.Schema({
   userId: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
   url: String,
   date: { type: Date, default: Date.now },
-  approved: { type: Number, default: 0}
+  approved: { type: Number, default: 0},
+  department: String
 });
 
 

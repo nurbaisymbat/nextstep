@@ -58,10 +58,16 @@ class LoginPage extends React.Component {
         if (error.response) {
           const errors = error.response ? error.response : {};
           errors.summary = error.response.data.message;
-          this.setState({
-            errors
-          });
-          console.log(errors.summary);
+          errors.name = error.response.data.name;
+          if(errors.name == 'FirstLogin'){
+            localStorage.setItem('firstlogin', errors.summary);
+            localStorage.setItem('useremail', this.state.user.email);
+            this.context.router.replace('/newpassword');
+          } else {
+            this.setState({
+              errors
+            });
+          }
         }
         });
   }

@@ -19,7 +19,8 @@ const BookNote = ({
         {book.title}
       </div></a>
     </div>
-    <div className="col-md-4 description well">
+    <div className="col-md-4">
+    <div className="description well">
     <div className="row">
       <div className="col-md-3">
       {user.myImg.length > 0 ?(
@@ -49,6 +50,7 @@ const BookNote = ({
       ):(
         <h5 className="text-center" style={{color: 'red'}}>Вы отклонили эту заметку!</h5>
       )}
+    </div>
     </div>
   </div>
 </div>

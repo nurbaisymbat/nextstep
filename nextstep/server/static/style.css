@@ -8,9 +8,7 @@ body {
 .center-block{
   float:none
 }
-/*.container {
-  margin-left: 37%;
-}*/
+
 .logo {
   font-weight: bold;
   margin-top: 10px;
@@ -245,8 +243,9 @@ body {
   }
   .btn-file input[type=file] {
       position: absolute;
-      top: 0;
-      right: 0;
+      top: -10px;
+      width: 100%;
+      height: 240%;
       min-width: 100%;
       min-height: 100%;
       font-size: 100px;
@@ -258,8 +257,11 @@ body {
       cursor: inherit;
       display: block;
   }
-.personal .input-group-addon {
-  padding: 10px;
+  .input-group-addon .input-file-browse {
+    padding: 0px;
+  }
+.input-group-addon .change-img {
+  padding: 10px 0px;
 }
 .input-file-browse{
   background: #DCDCDC;
@@ -418,12 +420,20 @@ body {
 .minimum-points{
   background-color: #fff;
   padding: 15px 20px;
+  padding-bottom: 3%;
   //margin-top: 50px;
   margin-left: 20px;
   width: 46.3%;
   //height: 80%;
   //min-height: 80%;
   //max-height: 100%;
+}
+.minimum-points .table {
+  margin-top: 5%;
+}
+.minimum-points .table td, .minimum-points .table th {
+  padding-top: 3%;
+  padding-bottom: 3%;
 }
 .settings{
   background-color: #fff;
@@ -447,4 +457,7 @@ body {
 }
 .myUsers .eachUser:hover{
   background: #F0F8FF;
+}
+::-webkit-scrollbar {
+  display: none;
 }

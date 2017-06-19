@@ -7,9 +7,6 @@ const HomePage = ({
   onChange,
   errors,
   user,
-  checkPasswordMatch,
-  passwordConfirm,
-  checkAccept,
   checked
 }) => (
 <div className="container">
@@ -47,14 +44,15 @@ const HomePage = ({
         <div className="form-group">
           <input type="password" className="form-control" placeholder="Подтвердите пароль"
           name="passwordConfirm"
-          onChange={checkPasswordMatch}
-          value={passwordConfirm} />
+          onChange={onChange}
+          value={user.passwordConfirm} />
         </div>
-        <div className="form-check">
-        <label className="form-check-label">
-          <input type="checkbox" className="form-check-input" name="accept" checked={checked} onChange={checkAccept}/>
-          <span className="acceptText"> Я принимаю Условия использования</span>
-          </label>
+        <div className="form-group">
+          <select name="department" className="form-control" onChange={onChange} value={user.department}>
+            <option value="">Выберите отдел</option>
+            <option value="Дизайн">Дизайн</option>
+            <option value="Программирования">Программирования</option>
+          </select>
         </div>
         <div>
           <button type="submit" className="btn btn-primary btn-block" disabled={!checked}>Зарегистрироваться</button>
@@ -70,11 +68,8 @@ const HomePage = ({
 HomePage.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
-  checkPasswordMatch: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
-  user: PropTypes.object.isRequired,
-  passwordConfirm: PropTypes.string.isRequired,
-  checkAccept: PropTypes.func.isRequired
+  user: PropTypes.object.isRequired
 };
 
 export default HomePage;

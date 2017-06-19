@@ -20,7 +20,8 @@ class ProfilePage extends React.Component {
       user: {
         email: '',
         name: '',
-        myImg: ''
+        myImg: '',
+        department: ''
       },
       checked: false,
       hide: false,

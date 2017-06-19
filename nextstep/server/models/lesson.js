@@ -5,7 +5,8 @@ const LessonSchema = new mongoose.Schema({
   description: String,
   url: String,
   tasks: Array,
-  day: Number
+  day: Number,
+  department: String
 });
 
 
