@@ -12777,6 +12777,7 @@ exports.default = function (obj, keys) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
+	"./1.jpg": 868,
 	"./doc-flat.png": 849,
 	"./fc32f922.png": 850,
 	"./file-flat.png": 851,
@@ -54568,7 +54569,14 @@ var DashboardMainAdmin = function DashboardMainAdmin(_ref) {
                 _react2.default.createElement('div', { className: 'progress-bar progress-bar-danger', role: 'progressbar', style: { width: pr.insight * 10 + '%' } })
               )
             );
-          })
+          }),
+          _react2.default.createElement('br', null),
+          _react2.default.createElement(
+            'h5',
+            null,
+            '\u041D\u0430 \u044D\u0442\u043E\u0439 \u043D\u0435\u0434\u0435\u043B\u0435 \u043A\u043E\u043D\u0442\u0435\u043D\u0442 \u0435\u0449\u0435 \u043D\u0435 \u0437\u0430\u043F\u043E\u043B\u043D\u044F\u043B\u0441\u044F'
+          ),
+          _react2.default.createElement('br', null)
         ),
         _react2.default.createElement(
           'div',
@@ -57512,14 +57520,14 @@ var Profile = function Profile(_ref) {
                 _react2.default.createElement(
                   'h5',
                   { className: 'col-md-4 text-right myProgressPercent' },
-                  myProgress.task
+                  '36%'
                 )
               ),
               _react2.default.createElement(
                 'div',
                 { className: 'progress myProgressBar' },
                 _react2.default.createElement('div', { className: 'progress-bar', role: 'progressbar', 'aria-valuenow': '70',
-                  'aria-valuemin': '0', 'aria-valuemax': '100', style: { "width": myProgress.task } })
+                  'aria-valuemin': '0', 'aria-valuemax': '100', style: { "width": '36%' } })
               )
             )
           ),
@@ -57540,14 +57548,14 @@ var Profile = function Profile(_ref) {
                 _react2.default.createElement(
                   'h5',
                   { className: 'col-md-4 text-right myProgressPercent' },
-                  myProgress.video
+                  '25%'
                 )
               ),
               _react2.default.createElement(
                 'div',
                 { className: 'progress myProgressBar' },
                 _react2.default.createElement('div', { className: 'progress-bar progress-bar-warning', role: 'progressbar', 'aria-valuenow': '70',
-                  'aria-valuemin': '0', 'aria-valuemax': '100', style: { "width": myProgress.video } })
+                  'aria-valuemin': '0', 'aria-valuemax': '100', style: { "width": '25%' } })
               )
             )
           ),
@@ -57568,14 +57576,14 @@ var Profile = function Profile(_ref) {
                 _react2.default.createElement(
                   'h5',
                   { className: 'col-md-4 text-right myProgressPercent' },
-                  myProgress.book
+                  '20%'
                 )
               ),
               _react2.default.createElement(
                 'div',
                 { className: 'progress myProgressBar' },
                 _react2.default.createElement('div', { className: 'progress-bar progress-bar-info', role: 'progressbar', 'aria-valuenow': '70',
-                  'aria-valuemin': '0', 'aria-valuemax': '100', style: { "width": myProgress.book } })
+                  'aria-valuemin': '0', 'aria-valuemax': '100', style: { "width": '20%' } })
               )
             )
           ),
@@ -57596,14 +57604,14 @@ var Profile = function Profile(_ref) {
                 _react2.default.createElement(
                   'h5',
                   { className: 'col-md-4 text-right myProgressPercent' },
-                  myProgress.insight
+                  '7%'
                 )
               ),
               _react2.default.createElement(
                 'div',
                 { className: 'progress myProgressBar' },
                 _react2.default.createElement('div', { className: 'progress-bar progress-bar-danger', role: 'progressbar', 'aria-valuenow': '70',
-                  'aria-valuemin': '0', 'aria-valuemax': '100', style: { "width": myProgress.insight } })
+                  'aria-valuemin': '0', 'aria-valuemax': '100', style: { "width": '7%' } })
               )
             )
           )
@@ -61555,7 +61563,7 @@ var InsightPage = function (_React$Component) {
       checkDate: false,
       myInsight: '',
       messageErr: '',
-      videoId: 'JPT3bFIwJYA'
+      videoId: 'Jtbw11mXLW4'
     };
 
     _this._onReady = _this._onReady.bind(_this);
@@ -102531,6 +102539,12 @@ module.exports = exports['default'];
 /***/ (function(module, exports) {
 
 /* (ignored) */
+
+/***/ }),
+/* 868 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "2b6ae890f6c8e580a150946ebc1567ec.jpg";
 
 /***/ })
 /******/ ]);

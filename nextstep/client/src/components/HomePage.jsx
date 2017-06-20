@@ -51,7 +51,7 @@ const HomePage = ({
           <select name="department" className="form-control" onChange={onChange} value={user.department}>
             <option value="">Выберите отдел</option>
             <option value="Дизайн">Дизайн</option>
-            <option value="Программирования">Программирования</option>
+            <option value="Программирование">Программирование</option>
           </select>
         </div>
         <div>

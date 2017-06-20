@@ -86,6 +86,9 @@ const DashboardMainAdmin = ({
               </div>
             </div>
           )}
+          <br/>
+          <h5>На этой неделе контент еще не заполнялся</h5>
+          <br/>
         </div>
         <div className="row totalPoints well" style={{marginLeft: '-12%'}}>
         <h4>Топ стажеров <small>(Программирование)</small></h4>

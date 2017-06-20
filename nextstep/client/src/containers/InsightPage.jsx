@@ -19,7 +19,7 @@ class InsightPage extends React.Component {
       checkDate: false,
       myInsight: '',
       messageErr: '',
-      videoId: 'JPT3bFIwJYA'
+      videoId: 'Jtbw11mXLW4'
     };
 
     this._onReady = this._onReady.bind(this);
