@@ -17,10 +17,7 @@ module.exports = {
       },
       {
         test: /\.(jpg|png|gif|svg|mp4)$/,
-        loader: 'url-loader',
-        options: {
-          limit: 25000,
-        },
+        loader: 'url-loader'
       },
       { test: /\.json$/, loader: "json-loader" }
     ]

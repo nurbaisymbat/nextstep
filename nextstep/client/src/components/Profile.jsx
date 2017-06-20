@@ -235,11 +235,11 @@ const Profile = ({
           <div className="col-md-12">
             <div className="row">
               <h5 className="col-md-8 text-left">Урок</h5>
-              <h5 className="col-md-4 text-right myProgressPercent">36%</h5>
+              <h5 className="col-md-4 text-right myProgressPercent">{myProgress.task}</h5>
             </div>
             <div className="progress myProgressBar">
               <div className="progress-bar" role="progressbar" aria-valuenow="70"
-                    aria-valuemin="0" aria-valuemax="100" style={{"width": '36%'}}>
+                    aria-valuemin="0" aria-valuemax="100" style={{"width": myProgress.task}}>
               </div>
             </div>
           </div>
@@ -248,11 +248,11 @@ const Profile = ({
           <div className="col-md-12">
             <div className="row">
               <h5 className="col-md-8 text-left">Фильм</h5>
-              <h5 className="col-md-4 text-right myProgressPercent">25%</h5>
+              <h5 className="col-md-4 text-right myProgressPercent">{myProgress.video}</h5>
             </div>
             <div className="progress myProgressBar">
               <div className="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="70"
-                    aria-valuemin="0" aria-valuemax="100" style={{"width": '25%'}}>
+                    aria-valuemin="0" aria-valuemax="100" style={{"width": myProgress.video}}>
               </div>
             </div>
           </div>
@@ -261,11 +261,11 @@ const Profile = ({
           <div className="col-md-12">
             <div className="row">
               <h5 className="col-md-8 text-left">Книга</h5>
-              <h5 className="col-md-4 text-right myProgressPercent">20%</h5>
+              <h5 className="col-md-4 text-right myProgressPercent">{myProgress.book}</h5>
             </div>
             <div className="progress myProgressBar">
               <div className="progress-bar progress-bar-info" role="progressbar" aria-valuenow="70"
-                    aria-valuemin="0" aria-valuemax="100" style={{"width": '20%'}}>
+                    aria-valuemin="0" aria-valuemax="100" style={{"width": myProgress.book}}>
               </div>
             </div>
           </div>
@@ -274,11 +274,11 @@ const Profile = ({
           <div className="col-md-12">
             <div className="row">
               <h5 className="col-md-8 text-left">Инсайт</h5>
-              <h5 className="col-md-4 text-right myProgressPercent">7%</h5>
+              <h5 className="col-md-4 text-right myProgressPercent">{myProgress.insight}</h5>
             </div>
             <div className="progress myProgressBar">
               <div className="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="70"
-                    aria-valuemin="0" aria-valuemax="100" style={{"width": '7%'}}>
+                    aria-valuemin="0" aria-valuemax="100" style={{"width": myProgress.insight}}>
               </div>
             </div>
           </div>

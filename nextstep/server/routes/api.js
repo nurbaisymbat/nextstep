@@ -623,6 +623,7 @@ router.get('/profile', (req, res) => {
 
                                   MovieNotes.find({userId: user._id}, (err, movienotes) => {
                                     myProgress.video = (Math.round(movienotes.length*100/maxProgress.video))+'%';
+
                                     movienotes.forEach( function (arrayItem){
                                         if((arrayItem.date.toDateString() == today.toDateString())
                                               && (arrayItem.movieId.toString() == movie._id.toString())){
