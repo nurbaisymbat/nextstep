@@ -35,6 +35,6 @@ res.sendFile(__dirname + '/server/static/index.html')
 })
 
 
-app.listen(8080, () => {
+app.listen(80, () => {
   console.log('Server is running on http://localhost:80');
 });
