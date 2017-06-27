@@ -31,6 +31,13 @@ const DashboardMainAdmin = ({
               </div>
             </div>
           )}
+          <br/>
+          {progressDesign.length > 0 ?(
+            <div></div>
+          ):(
+            <h5>На этой неделе контент еще не заполнялся</h5>
+          )}
+          <br/>
         </div>
         <div className="row totalPoints well">
         <h4>Топ стажеров <small>(Дизайн)</small></h4>
@@ -87,7 +94,11 @@ const DashboardMainAdmin = ({
             </div>
           )}
           <br/>
-          <h5>На этой неделе контент еще не заполнялся</h5>
+          {progressProgramming.length > 0 ?(
+            <div></div>
+          ):(
+            <h5>На этой неделе контент еще не заполнялся</h5>
+          )}
           <br/>
         </div>
         <div className="row totalPoints well" style={{marginLeft: '-12%'}}>

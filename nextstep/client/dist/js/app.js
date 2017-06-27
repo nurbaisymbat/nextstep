@@ -55286,7 +55286,14 @@ var DashboardMainAdmin = function DashboardMainAdmin(_ref) {
                 _react2.default.createElement('div', { className: 'progress-bar progress-bar-danger', role: 'progressbar', style: { width: pr.insight * 10 + '%' } })
               )
             );
-          })
+          }),
+          _react2.default.createElement('br', null),
+          progressDesign.length > 0 ? _react2.default.createElement('div', null) : _react2.default.createElement(
+            'h5',
+            null,
+            '\u041D\u0430 \u044D\u0442\u043E\u0439 \u043D\u0435\u0434\u0435\u043B\u0435 \u043A\u043E\u043D\u0442\u0435\u043D\u0442 \u0435\u0449\u0435 \u043D\u0435 \u0437\u0430\u043F\u043E\u043B\u043D\u044F\u043B\u0441\u044F'
+          ),
+          _react2.default.createElement('br', null)
         ),
         _react2.default.createElement(
           'div',
@@ -55434,7 +55441,7 @@ var DashboardMainAdmin = function DashboardMainAdmin(_ref) {
             );
           }),
           _react2.default.createElement('br', null),
-          _react2.default.createElement(
+          progressProgramming.length > 0 ? _react2.default.createElement('div', null) : _react2.default.createElement(
             'h5',
             null,
             '\u041D\u0430 \u044D\u0442\u043E\u0439 \u043D\u0435\u0434\u0435\u043B\u0435 \u043A\u043E\u043D\u0442\u0435\u043D\u0442 \u0435\u0449\u0435 \u043D\u0435 \u0437\u0430\u043F\u043E\u043B\u043D\u044F\u043B\u0441\u044F'
