@@ -28,6 +28,13 @@ const DashboardAdmin = ({
               </div>
             </div>
           )}
+          <br/>
+          {progress.length > 0 ?(
+            <div></div>
+          ):(
+            <h5>На этой неделе контент еще не заполнялся</h5>
+          )}
+          <br/>
         </div>
       </div>
       <div className="col-md-6">
