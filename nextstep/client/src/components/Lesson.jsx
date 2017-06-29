@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 import YouTube from 'react-youtube';
+import getYouTubeID from 'get-youtube-id';
 import moment from 'moment';
 moment.locale('ru');
 
@@ -15,14 +16,22 @@ const Lesson = ({
   videoId,
   myLesson,
   deadline,
-  tasks
+  changeVideo
 }) => (
   <div className="container">
   <h3><em>Урок дня</em></h3>
     <div className="row">
       <div className="col-md-7">
         <div className="row material well">
-          <YouTube videoId={videoId} opts={opts} onReady={_onReady} />
+          <div className="col-md-1 video-arrows" id="video-left" onClick={changeVideo}>
+            <img src={require('../../../public/img/video-left.png')} id="video-left" style={{height: '40px', width: '20px'}}/>
+          </div>
+          <div className="col-md-10">
+            <YouTube videoId={videoId} opts={opts} onReady={_onReady} />
+          </div>
+          <div className="col-md-1 video-arrows" id="video-right" onClick={changeVideo}>
+            <img src={require('../../../public/img/video-right.png')} id="video-right" style={{height: '40px', width: '20px'}}/>
+          </div>
         </div>
         <div className="row addfile well">
           <h4>Загрузить файлы</h4>
@@ -49,19 +58,13 @@ const Lesson = ({
         <h4 className="text-uppercase text-primary">Тема: "{myLesson.title}"</h4>
         <h4><small>{myLesson.description}</small></h4>
         <h4 className="taskList">Задания</h4>
-        {tasks.map((task, i) =>
+        {myLesson.tasks.map((task, i) =>
           <div key={i}>
-          {(tasks[i] != '') ?(
-            <div>
             <div className="eachTask">
-              <h5>{tasks[i]}</h5>
+              <h5>{task}</h5>
               <h5><small>срок до {moment(deadline).format('L')}</small></h5>
             </div>
             <hr/>
-            </div>
-          ):(
-            <div></div>
-          )}
           </div>
         )}
       </div>

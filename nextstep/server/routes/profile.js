@@ -1014,25 +1014,25 @@ router.get('/getlessonnote', (req, res) => {
 //POST REQUESTS
 
 router.post('/addbook', (req, res, err) => {
-    var bookID = req.body.bookId.trim();
+    var myBook = JSON.parse(req.body.myBook);
     var token = req.headers.authorization.split(' ')[1];
+    const bookData = {
+      title: myBook.title,
+      description: myBook.description,
+      url: myBook.url,
+      week: 1,
+      department: req.body.chosenDepartment.trim()
+    };
     jwt.verify(token, config.jwtSecret, (err, decoded) => {
       if(err) {return res.status(401).end();}
       else if (decoded.department == 'all'){
-        const bookData = {
-          title: req.body.bookTitle.trim(),
-          description: req.body.bookDescription.trim(),
-          url: req.body.bookUrl.trim(),
-          week: 1,
-          department: req.body.chosenDepartment.trim()
-        };
         Book.find({department: bookData.department}, (err, book) => {
           if(err){
             console.log(err);
           }
           else if(book){
-            if(bookID.length > 0){
-              Book.findOneAndUpdate({_id: bookID}, { $set: {title: bookData.title, description: bookData.description, url: bookData.url}}, { new: true }, function (err, book) {
+            if(myBook._id.length > 0){
+              Book.findOneAndUpdate({_id: myBook._id}, { $set: {title: bookData.title, description: bookData.description, url: bookData.url}}, { new: true }, function (err, book) {
                 if (err){
                   console.log(err);
                 }
@@ -1045,14 +1045,8 @@ router.post('/addbook', (req, res, err) => {
             }
             else {
               var thisWeek = book.length + 1;
-              const bookDataS = {
-                title: req.body.bookTitle.trim(),
-                description: req.body.bookDescription.trim(),
-                url: req.body.bookUrl.trim(),
-                week: thisWeek,
-                department: req.body.chosenDepartment.trim()
-              };
-              const newBook = new Book(bookDataS);
+              bookData.week = thisWeek;
+              const newBook = new Book(bookData);
               newBook.save((err, book) => {
                 if (err) { console.log(err); }
                   res.json({
@@ -1077,20 +1071,14 @@ router.post('/addbook', (req, res, err) => {
           }
         })
       } else {
-        const bookData = {
-          title: req.body.bookTitle.trim(),
-          description: req.body.bookDescription.trim(),
-          url: req.body.bookUrl.trim(),
-          week: 1,
-          department: decoded.department
-        };
+        bookData.department = decoded.department;
         Book.find({department: decoded.department}, (err, book) => {
           if(err){
             console.log(err);
           }
           else if(book){
-            if(bookID.length > 0){
-              Book.findOneAndUpdate({_id: bookID}, { $set: {title: bookData.title, description: bookData.description, url: bookData.url}}, { new: true }, function (err, book) {
+            if(myBook._id.length > 0){
+              Book.findOneAndUpdate({_id: myBook._id}, { $set: {title: bookData.title, description: bookData.description, url: bookData.url}}, { new: true }, function (err, book) {
                 if (err){
                   console.log(err);
                 }
@@ -1103,14 +1091,8 @@ router.post('/addbook', (req, res, err) => {
             }
             else {
               var thisWeek = book.length + 1;
-              const bookDataS = {
-                title: req.body.bookTitle.trim(),
-                description: req.body.bookDescription.trim(),
-                url: req.body.bookUrl.trim(),
-                week: thisWeek,
-                department: decoded.department
-              };
-              const newBook = new Book(bookDataS);
+              bookData.week = thisWeek;
+              const newBook = new Book(bookData);
               newBook.save((err, book) => {
                 if (err) { console.log(err); }
                   res.json({
@@ -1139,25 +1121,25 @@ router.post('/addbook', (req, res, err) => {
 });
 
 router.post('/addmovie', (req, res, err) => {
-    var movieID = req.body.movieId.trim();
+    var myMovie = JSON.parse(req.body.myMovie);
     var token = req.headers.authorization.split(' ')[1];
+    const movieData = {
+      title: myMovie.title,
+      description: myMovie.description,
+      url: myMovie.url,
+      day: 1,
+      department: req.body.chosenDepartment.trim()
+    };
     jwt.verify(token, config.jwtSecret, (err, decoded) => {
       if(err) {return res.status(401).end();}
       else if (decoded.department == 'all'){
-        const movieData = {
-          title: req.body.movieTitle.trim(),
-          description: req.body.movieDescription.trim(),
-          url: req.body.movieUrl.trim(),
-          day: 1,
-          department: req.body.chosenDepartment.trim()
-        };
         Movie.find({department: movieData.department}, (err, movie) => {
           if(err){
             console.log(err);
           }
           else if(movie){
-            if(movieID.length > 0){
-              Movie.findOneAndUpdate({_id: movieID}, { $set: {title: movieData.title, description: movieData.description, url: movieData.url}}, { new: true }, function (err, movie) {
+            if(myMovie._id.length > 0){
+              Movie.findOneAndUpdate({_id: myMovie._id}, { $set: {title: movieData.title, description: movieData.description, url: movieData.url}}, { new: true }, function (err, movie) {
                 if (err){
                   console.log(err);
                 }
@@ -1175,14 +1157,8 @@ router.post('/addmovie', (req, res, err) => {
                                 || (thisDay == 42) ||(thisDay == 49)){
                 thisDay++;
               }
-              const movieDataS = {
-                title: req.body.movieTitle.trim(),
-                description: req.body.movieDescription.trim(),
-                url: req.body.movieUrl.trim(),
-                day: thisDay,
-                department: req.body.chosenDepartment.trim()
-              };
-              const newMovie = new Movie(movieDataS);
+              movieData.day = thisDay;
+              const newMovie = new Movie(movieData);
               newMovie.save((err, movie) => {
                 if (err) { console.log(err); }
                 res.json({
@@ -1208,20 +1184,14 @@ router.post('/addmovie', (req, res, err) => {
           }
         })
       } else {
-        const movieData = {
-          title: req.body.movieTitle.trim(),
-          description: req.body.movieDescription.trim(),
-          url: req.body.movieUrl.trim(),
-          day: 1,
-          department: decoded.department
-        };
+        movieData.department = decoded.department;
         Movie.find({department: decoded.department}, (err, movie) => {
           if(err){
             console.log(err);
           }
           else if(movie){
-            if(movieID.length > 0){
-              Movie.findOneAndUpdate({_id: movieID}, { $set: {title: movieData.title, description: movieData.description, url: movieData.url}}, { new: true }, function (err, movie) {
+            if(myMovie._id.length > 0){
+              Movie.findOneAndUpdate({_id: myMovie._id}, { $set: {title: movieData.title, description: movieData.description, url: movieData.url}}, { new: true }, function (err, movie) {
                 if (err){
                   console.log(err);
                 }
@@ -1239,14 +1209,8 @@ router.post('/addmovie', (req, res, err) => {
                                 || (thisDay == 42) ||(thisDay == 49)){
                 thisDay++;
               }
-              const movieDataS = {
-                title: req.body.movieTitle.trim(),
-                description: req.body.movieDescription.trim(),
-                url: req.body.movieUrl.trim(),
-                day: thisDay,
-                department: decoded.department
-              };
-              const newMovie = new Movie(movieDataS);
+              movieData.day = thisDay;
+              const newMovie = new Movie(movieData);
               newMovie.save((err, movie) => {
                 if (err) { console.log(err); }
                 res.json({
@@ -1276,27 +1240,26 @@ router.post('/addmovie', (req, res, err) => {
 });
 
 router.post('/addlesson', (req, res, err) => {
-    var lessonID = req.body.lessonId.trim();
+    var myLesson = JSON.parse(req.body.myLesson);
     var token = req.headers.authorization.split(' ')[1];
+    const lessonData = {
+      title: myLesson.title,
+      description: myLesson.description,
+      url: myLesson.url,
+      tasks: myLesson.tasks,
+      day: 1,
+      department: req.body.chosenDepartment.trim()
+    };
     jwt.verify(token, config.jwtSecret, (err, decoded) => {
       if(err) {return res.status(401).end();}
       else if (decoded.department == 'all'){
-        var lessonTasks = [req.body.lessonTask1.trim(), req.body.lessonTask2.trim(), req.body.lessonTask3.trim()];
-        const lessonData = {
-          title: req.body.lessonTitle.trim(),
-          description: req.body.lessonDescription.trim(),
-          url: req.body.lessonUrl.trim(),
-          tasks: lessonTasks,
-          day: 1,
-          department: req.body.chosenDepartment.trim()
-        };
           Lesson.find({department: lessonData.department}, (err, lesson) => {
             if(err){
               console.log(err);
             }
             else if(lesson){
-              if(lessonID.length > 0){
-                Lesson.findOneAndUpdate({_id: lessonID}, { $set: {title: lessonData.title, description: lessonData.description, url: lessonData.url, tasks: lessonData.tasks}}, { new: true }, function (err, lesson) {
+              if(myLesson._id.length > 0){
+                Lesson.findOneAndUpdate({_id: myLesson._id}, { $set: {title: lessonData.title, description: lessonData.description, url: lessonData.url, tasks: lessonData.tasks}}, { new: true }, function (err, lesson) {
                   if (err){
                     console.log(err);
                   }
@@ -1314,15 +1277,8 @@ router.post('/addlesson', (req, res, err) => {
                                   || (thisDay == 42) ||(thisDay == 49)){
                   thisDay++;
                 }
-                const lessonDataS = {
-                  title: req.body.lessonTitle.trim(),
-                  description: req.body.lessonDescription.trim(),
-                  url: req.body.lessonUrl.trim(),
-                  tasks: [req.body.lessonTask1.trim(), req.body.lessonTask2.trim(), req.body.lessonTask3.trim()],
-                  day: thisDay,
-                  department: req.body.chosenDepartment.trim()
-                };
-                const newLesson = new Lesson(lessonDataS);
+                lessonData.day = thisDay;
+                const newLesson = new Lesson(lessonData);
                 newLesson.save((err, lesson) => {
                   if (err) { console.log(err); }
                   res.json({
@@ -1347,22 +1303,14 @@ router.post('/addlesson', (req, res, err) => {
             }
           })
       } else {
-        var lessonTasks = [req.body.lessonTask1.trim(), req.body.lessonTask2.trim(), req.body.lessonTask3.trim()];
-        const lessonData = {
-          title: req.body.lessonTitle.trim(),
-          description: req.body.lessonDescription.trim(),
-          url: req.body.lessonUrl.trim(),
-          tasks: lessonTasks,
-          day: 1,
-          department: decoded.department
-        };
+        lessonData.department = decoded.department;
           Lesson.find({department: decoded.department}, (err, lesson) => {
             if(err){
               console.log(err);
             }
             else if(lesson){
-              if(lessonID.length > 0){
-                Lesson.findOneAndUpdate({_id: lessonID}, { $set: {title: lessonData.title, description: lessonData.description, url: lessonData.url, tasks: lessonData.tasks}}, { new: true }, function (err, lesson) {
+              if(myLesson._id.length > 0){
+                Lesson.findOneAndUpdate({_id: myLesson._id}, { $set: {title: lessonData.title, description: lessonData.description, url: lessonData.url, tasks: lessonData.tasks}}, { new: true }, function (err, lesson) {
                   if (err){
                     console.log(err);
                   }
@@ -1380,15 +1328,8 @@ router.post('/addlesson', (req, res, err) => {
                                   || (thisDay == 42) ||(thisDay == 49)){
                   thisDay++;
                 }
-                const lessonDataS = {
-                  title: req.body.lessonTitle.trim(),
-                  description: req.body.lessonDescription.trim(),
-                  url: req.body.lessonUrl.trim(),
-                  tasks: [req.body.lessonTask1.trim(), req.body.lessonTask2.trim(), req.body.lessonTask3.trim()],
-                  day: thisDay,
-                  department: decoded.department
-                };
-                const newLesson = new Lesson(lessonDataS);
+                lessonData.day = thisDay;
+                const newLesson = new Lesson(lessonData);
                 newLesson.save((err, lesson) => {
                   if (err) { console.log(err); }
                   res.json({

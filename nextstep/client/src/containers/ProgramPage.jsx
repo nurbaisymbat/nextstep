@@ -51,19 +51,19 @@ class ProgramPage extends React.Component {
         _id: '',
         title: '',
         description: '',
-        url: '',
-        tasks: ['','','']
+        url: [''],
+        tasks: ['']
       },
       myLessonList: [{
         _id: '',
         title: '',
         description: '',
-        url: '',
-        tasks:['','','']
+        url: [''],
+        tasks:['']
       }],
 
       myDepartment: '',
-      chosenDepartment: '',
+      chosenDepartment: 'Дизайн',
       myBookListAll: [{
         _id: '',
         title: '',
@@ -80,8 +80,8 @@ class ProgramPage extends React.Component {
         _id: '',
         title: '',
         description: '',
-        url: '',
-        tasks:['','','']
+        url: [''],
+        tasks:['']
       }]
     };
     //общие
@@ -108,6 +108,9 @@ class ProgramPage extends React.Component {
     this.getThisLesson = this.getThisLesson.bind(this);
     this.setNewLesson = this.setNewLesson.bind(this);
     this.changeLessonTask = this.changeLessonTask.bind(this);
+    this.changeLessonURL = this.changeLessonURL.bind(this);
+    this.addURLLesson = this.addURLLesson.bind(this);
+    this.addLessonTask = this.addLessonTask.bind(this);
   }
 
   //общие
@@ -174,21 +177,22 @@ class ProgramPage extends React.Component {
     })
       .then(res => {
         if(res.data.myDepartment == 'all'){
+          var chosenDepartment = this.state.chosenDepartment;
           this.setState({
             myDepartment: res.data.myDepartment,
             myBookList: res.data.book.filter(function(b) {
-                              return b.department.indexOf('Дизайн') > -1;
+                              return b.department.indexOf(chosenDepartment) > -1;
                           }),
             myMovieList: res.data.movie.filter(function(m) {
-                              return m.department.indexOf('Дизайн') > -1;
+                              return m.department.indexOf(chosenDepartment) > -1;
                           }),
             myLessonList: res.data.lesson.filter(function(l) {
-                              return l.department.indexOf('Дизайн') > -1;
+                              return l.department.indexOf(chosenDepartment) > -1;
                           }),
             myBookListAll: res.data.book,
             myMovieListAll: res.data.movie,
             myLessonListAll: res.data.lesson,
-            chosenDepartment: 'Дизайн'
+            chosenDepartment: chosenDepartment
           });
         } else {
           this.setState({
@@ -218,8 +222,8 @@ class ProgramPage extends React.Component {
         _id: '',
         title: '',
         description: '',
-        url: '',
-        tasks: ['','','']
+        url: [''],
+        tasks: ['']
       }
     });
   }
@@ -227,12 +231,9 @@ class ProgramPage extends React.Component {
   //for book
   onSubmitBook(event) {
     event.preventDefault();
-    const bookId = encodeURIComponent(this.state.myBook._id);
-    const bookTitle = encodeURIComponent(this.state.myBook.title);
-    const bookDescription = encodeURIComponent(this.state.myBook.description);
-    const bookUrl = encodeURIComponent(this.state.myBook.url);
     const chosenDepartment = encodeURIComponent(this.state.chosenDepartment);
-    const formData = `chosenDepartment=${chosenDepartment}&bookId=${bookId}&bookTitle=${bookTitle}&bookDescription=${bookDescription}&bookUrl=${bookUrl}`;
+    console.log(this.state.myBook)
+    const formData = `chosenDepartment=${chosenDepartment}&myBook=${JSON.stringify(this.state.myBook)}`;
     axios.post('/profile/addbook', formData, {
       responseType: 'json',
       headers: {
@@ -324,12 +325,9 @@ class ProgramPage extends React.Component {
   }
   onSubmitMovie(event) {
     event.preventDefault();
-    const movieId = encodeURIComponent(this.state.myMovie._id);
-    const movieTitle = encodeURIComponent(this.state.myMovie.title);
-    const movieDescription = encodeURIComponent(this.state.myMovie.description);
-    const movieUrl = encodeURIComponent(this.state.myMovie.url);
     const chosenDepartment = encodeURIComponent(this.state.chosenDepartment);
-    const formData = `chosenDepartment=${chosenDepartment}&movieId=${movieId}&movieTitle=${movieTitle}&movieDescription=${movieDescription}&movieUrl=${movieUrl}`;
+    console.log(this.state.myMovie)
+    const formData = `chosenDepartment=${chosenDepartment}&myMovie=${JSON.stringify(this.state.myMovie)}`;
     axios.post('/profile/addmovie', formData, {
       responseType: 'json',
       headers: {
@@ -366,32 +364,16 @@ class ProgramPage extends React.Component {
     this.setState({
       myLesson
     });
-    console.log(this.state.myLesson);
   }
   changeLessonTask(event) {
-    const field = event.target.name;
-    if(field == "task1"){
-      const tasks = this.state.myLesson.tasks;
-      tasks[0] = event.target.value;
-      this.setState({
-        tasks: tasks
-      });
-      console.log(this.state.myLesson);
-    } else if(field == "task2"){
-      const tasks = this.state.myLesson.tasks;
-      tasks[1] = event.target.value;
-      this.setState({
-        tasks: tasks
-      });
-      console.log(this.state.myLesson);
-    } else if(field == "task3"){
-      const tasks = this.state.myLesson.tasks;
-      tasks[2] = event.target.value;
-      this.setState({
-        tasks: tasks
-      });
-      console.log(this.state.myLesson);
-    }
+    var taskLesson = this.state.myLesson.tasks;
+    taskLesson[event.target.id] = event.target.value;
+    this.setState({tasks: taskLesson});
+  }
+  addLessonTask(){
+    var taskLesson = this.state.myLesson.tasks;
+    taskLesson.push('');
+    this.setState({tasks: taskLesson});
   }
   getThisLesson(event){
     var getId = event.target.id;
@@ -417,15 +399,9 @@ class ProgramPage extends React.Component {
   }
   onSubmitLesson(event) {
     event.preventDefault();
-    const lessonId = encodeURIComponent(this.state.myLesson._id);
-    const lessonTitle = encodeURIComponent(this.state.myLesson.title);
-    const lessonDescription = encodeURIComponent(this.state.myLesson.description);
-    const lessonUrl = encodeURIComponent(this.state.myLesson.url);
-    const lessonTask1 = encodeURIComponent(this.state.myLesson.tasks[0]);
-    const lessonTask2 = encodeURIComponent(this.state.myLesson.tasks[1]);
-    const lessonTask3 = encodeURIComponent(this.state.myLesson.tasks[2]);
+    console.log(this.state.myLesson)
     const chosenDepartment = encodeURIComponent(this.state.chosenDepartment);
-    const formData = `chosenDepartment=${chosenDepartment}&lessonId=${lessonId}&lessonTitle=${lessonTitle}&lessonDescription=${lessonDescription}&lessonUrl=${lessonUrl}&lessonTask1=${lessonTask1}&lessonTask2=${lessonTask2}&lessonTask3=${lessonTask3}`;
+    const formData = `chosenDepartment=${chosenDepartment}&myLesson=${JSON.stringify(this.state.myLesson)}`;
     axios.post('/profile/addlesson', formData, {
       responseType: 'json',
       headers: {
@@ -436,7 +412,6 @@ class ProgramPage extends React.Component {
       .then(res => {
         var tempLessonArray = this.state.myLessonList.slice();
         tempLessonArray.concat(res.data.lesson)
-        console.log(tempLessonArray);
         this.setState({
           myLessonList: tempLessonArray
         });
@@ -467,6 +442,16 @@ class ProgramPage extends React.Component {
                         return l.department.indexOf(event.target.value) > -1;
                     })
     });
+  }
+  changeLessonURL(event){
+    var urlLesson = this.state.myLesson.url;
+    urlLesson[event.target.id] = event.target.value;
+    this.setState({url: urlLesson});
+  }
+  addURLLesson(){
+    var urlLesson = this.state.myLesson.url;
+    urlLesson.push('');
+    this.setState({url: urlLesson});
   }
   render() {
     return (
@@ -503,6 +488,9 @@ class ProgramPage extends React.Component {
         getThisLesson={this.getThisLesson}
         setNewLesson={this.setNewLesson}
         changeLessonTask={this.changeLessonTask}
+        changeLessonURL={this.changeLessonURL}
+        addURLLesson={this.addURLLesson}
+        addLessonTask={this.addLessonTask}
 
         myDepartment={this.state.myDepartment}
         changeDepartment={this.changeDepartment}

@@ -35,6 +35,9 @@ const Program = ({
   getThisLesson,
   setNewLesson,
   changeLessonTask,
+  changeLessonURL,
+  addURLLesson,
+  addLessonTask,
 
   myDepartment,
   changeDepartment
@@ -44,8 +47,8 @@ const Program = ({
   {myDepartment == 'all' ?(
     <div className="row ">
       <div className="col-md-11 well"  style={{background: 'white', width: '89.5%'}}>
+      <p>Выберите отдел</p>
         <select className="form-control" onChange={changeDepartment}>
-          <option value="">Выберите отдел</option>
           <option value="Дизайн">Дизайн</option>
           <option value="Программирование">Программирование</option>
         </select>
@@ -307,35 +310,77 @@ const Program = ({
                   </div>
                   <div className="form-group">
                     <p className="text-muted add-lesson-label">Ссылка на материал</p>
-                    <input type="text"
-                           className="form-control"
-                           value={myLesson.url}
-                           name="url"
-                           onChange={changeLesson}
-                           placeholder="URL"/>
+                    { myLesson.url.map(function(oneUrl, index){
+                          return (
+                            <div className="row" key={index}>
+                              {index==0 ?(
+                                <div>
+                                  <div className="col-md-10">
+                                    <input type="text"
+                                           className="form-control"
+                                           value={myLesson.url[index]}
+                                           name="url"
+                                           onChange={changeLessonURL}
+                                           placeholder={'URL '+(index+1)}
+                                           id={index} />
+                                  </div>
+                                  <div className="col-md-2">
+                                    <button onClick={addURLLesson} type="button" className="btn btn-success btn-block">+</button>
+                                  </div>
+                                </div>
+                              ):(
+                                <div className="col-md-10">
+                                  <input type="text"
+                                         className="form-control"
+                                         value={myLesson.url[index]}
+                                         name="url"
+                                         onChange={changeLessonURL}
+                                         placeholder={'URL '+(index+1)}
+                                         id={index}
+                                         style={{marginTop: '10px'}} />
+                                </div>
+                              )}
+                            </div>
+                          )
+                      })
+                    }
                   </div>
                   <div className="form-group">
                     <p className="text-muted add-lesson-label">Задания</p>
-                    <input type="text"
-                           className="form-control"
-                           value={myLesson.tasks[0]}
-                           name="task1"
-                           onChange={changeLessonTask}
-                           style={{marginBottom: '10px'}}
-                           placeholder="Введите задание"/>
-                    <input type="text"
-                           className="form-control"
-                           value={myLesson.tasks[1]}
-                           name="task2"
-                           onChange={changeLessonTask}
-                           style={{marginBottom: '10px'}}
-                           placeholder="Введите задание"/>
-                    <input type="text"
-                           className="form-control"
-                           value={myLesson.tasks[2]}
-                           name="task3"
-                           onChange={changeLessonTask}
-                           placeholder="Введите задание"/>
+                    { myLesson.tasks.map(function(oneTask, index){
+                          return (
+                            <div className="row" key={index}>
+                              {index==0 ?(
+                                <div>
+                                  <div className="col-md-10">
+                                    <input type="text"
+                                           className="form-control"
+                                           value={myLesson.tasks[index]}
+                                           name="tasks"
+                                           onChange={changeLessonTask}
+                                           placeholder={'Задание '+(index+1)}
+                                           id={index} />
+                                  </div>
+                                  <div className="col-md-2">
+                                    <button onClick={addLessonTask} type="button" className="btn btn-success btn-block">+</button>
+                                  </div>
+                                </div>
+                              ):(
+                                <div className="col-md-10">
+                                  <input type="text"
+                                         className="form-control"
+                                         value={myLesson.tasks[index]}
+                                         name="tasks"
+                                         onChange={changeLessonTask}
+                                         placeholder={'Задание '+(index+1)}
+                                         id={index}
+                                         style={{marginTop: '10px'}} />
+                                </div>
+                              )}
+                            </div>
+                          )
+                      })
+                    }
                   </div>
                   <div className="form-group" style={{marginRight: '-30px'}}>
                     <div className="col-md-4 col-md-offset-4">

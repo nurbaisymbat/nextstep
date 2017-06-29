@@ -5,8 +5,8 @@ import axios from 'axios';
 import getYouTubeID from 'get-youtube-id';
 
 const opts = {
-      height: '390',
-      width: '640',
+      height: '300',
+      width: '500',
       autoplay: 0
     };
 const tomorrow = new Date();
@@ -21,20 +21,21 @@ class LessonPage extends React.Component {
         _id: '',
         title: '',
         description: '',
-        url: '',
-        tasks: ['','','']
+        url: [],
+        tasks: ['']
       },
-      tasks: ['','',''],
       videoId: '',
       file: '',
       filename: '',
       message: '',
-      deadline: tomorrow
+      deadline: tomorrow,
+      currentVideo: 0
     };
 
     this._onReady = this._onReady.bind(this);
     this._handleImageChange = this._handleImageChange.bind(this);
     this._handleSubmit = this._handleSubmit.bind(this);
+    this.changeVideo = this.changeVideo.bind(this);
   }
 
   _onReady(event) {
@@ -49,10 +50,10 @@ class LessonPage extends React.Component {
       }
     })
       .then(res => {
+        var x = res.data.lesson.url[0];
           this.setState({
             myLesson: res.data.lesson,
-            videoId: getYouTubeID(res.data.lesson.url),
-            tasks: res.data.lesson.tasks
+            videoId: getYouTubeID(x)
           });
       });
   }
@@ -92,6 +93,33 @@ class LessonPage extends React.Component {
 
     reader.readAsDataURL(file)
   }
+  changeVideo(event){
+    if(event.target.id == 'video-left'){
+      if(this.state.currentVideo == 0){
+        this.setState({
+          currentVideo: this.state.myLesson.url.length-1,
+          videoId: getYouTubeID(this.state.myLesson.url[this.state.myLesson.url.length-1])
+        });
+      } else {
+        this.setState({
+          currentVideo: this.state.currentVideo-1,
+          videoId: getYouTubeID(this.state.myLesson.url[this.state.currentVideo-1])
+        });
+      }
+    } else {
+      if(this.state.currentVideo == this.state.myLesson.url.length){
+        this.setState({
+          currentVideo: 0,
+          videoId: getYouTubeID(this.state.myLesson.url[0])
+        });
+      } else {
+        this.setState({
+          currentVideo: this.state.currentVideo+1,
+          videoId: getYouTubeID(this.state.myLesson.url[this.state.currentVideo+1])
+        });
+      }
+    }
+  }
   render() {
     return (
       <Lesson
@@ -104,7 +132,7 @@ class LessonPage extends React.Component {
       myLesson={this.state.myLesson}
       videoId={this.state.videoId}
       deadline={this.state.deadline}
-      tasks={this.state.tasks}
+      changeVideo={this.changeVideo}
       />
     );
   }

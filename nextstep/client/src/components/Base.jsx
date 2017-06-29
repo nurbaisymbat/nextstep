@@ -33,7 +33,7 @@ class Base extends React.Component {
   componentWillMount(){
       this.loadImg();
   }
-  componentWillUpdate(){
+  componentWillReceiveProps(){
       this.loadImg();
   }
   render() {
